@@ -513,6 +513,7 @@ if config.gameplay_reworks then
 
     SMODS.Tag:take_ownership('boss', {
         loc_vars = function(self, info_queue)
+            G.P_TAGS[self.key].bunc_special_alerted = true
             info_queue[#info_queue + 1] = {key = 'p_bunc_blind', set = 'Other', vars = {G.P_CENTERS.p_bunc_blind_1.config.extra}}
             return {key = 'tag_bunc_boss'}
         end,
@@ -539,6 +540,7 @@ if config.gameplay_reworks then
 
     SMODS.Tag:take_ownership('d_six', {
         loc_vars = function(self, info_queue)
+            G.P_TAGS[self.key].bunc_special_alerted = true
             return {key = 'tag_bunc_d_six'}
         end,
         config = {type = 'shop_final_pass'},
