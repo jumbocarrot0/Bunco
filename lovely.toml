@@ -3593,3 +3593,143 @@ position = 'at'
 match_indent = true
 payload = '''if not self.children.back then
     self.children.back = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, G.ASSET_ATLAS[(G.GAME.viewed_back or G.GAME.selected_back) and ((G.GAME.viewed_back or G.GAME.selected_back)[G.SETTINGS.colourblind_option and 'hc_atlas' or 'lc_atlas'] or (G.GAME.viewed_back or G.GAME.selected_back).atlas) or 'centers'], self.params.bypass_back or (self.playing_card and G.GAME[self.back].pos or G.P_CENTERS['b_red'].pos))'''
+
+# Patches for alerting reworked cards 1/?
+[[patches]]
+[patches.pattern]
+target = 'game.lua'
+pattern = '''G.ARGS.save_progress.UDA[k] = (v.unlocked and 'u' or '')..(v.discovered and 'd' or '')..(v.alerted and 'a' or '')'''
+position = 'after'
+match_indent = true
+payload = '''
+G.ARGS.save_progress.UDA[k] = G.ARGS.save_progress.UDA[k] .. (v.bunc_alerted and 'b' or '')
+'''
+times = 4
+
+# Patches for alerting reworked cards 2/?
+[[patches]]
+[patches.pattern]
+target = 'engine/save_manager.lua'
+pattern = '''meta.alerted = meta.alerted or {}'''
+position = 'after'
+match_indent = true
+payload = '''
+meta.bunc_special_alerted = meta.bunc_special_alerted or {}
+'''
+
+# Patches for alerting reworked cards 3/?
+[[patches]]
+[patches.pattern]
+target = 'game.lua'
+pattern = '''meta.alerted = meta.alerted or {}'''
+position = 'after'
+match_indent = true
+payload = '''
+meta.bunc_special_alerted = meta.bunc_special_alerted or {}
+'''
+
+# Patches for alerting reworked cards 4/?
+[[patches]]
+[patches.pattern]
+target = 'card.lua'
+pattern = '''if self.children.alert and not self.config.center.alerted then'''
+position = 'before'
+match_indent = true
+payload = '''
+if self.children.alert and not self.config.center.bunc_special_alerted then
+    self.config.center.bunc_special_alerted = true
+    G:save_progress()
+end
+'''
+
+# Patches for alerting reworked cards 5/?
+[[patches]]
+[patches.pattern]
+target = 'engine/save_manager.lua'
+pattern = '''if string.find(v, 'a') and not meta.alerted[k]*'''
+position = 'after'
+match_indent = true
+payload = '''
+if string.find(v, 'b') and not meta.bunc_special_alerted[k] then 
+    meta.bunc_special_alerted[k] = true
+    _append = true
+end
+'''
+
+# Patches for alerting reworked cards 6/?
+[[patches]]
+[patches.pattern]
+target = 'card.lua'
+pattern = '''function Card:update_alert()'''
+position = 'after'
+match_indent = true
+payload = '''
+    if BUNCOMOD.content.config.gameplay_reworks and (self.config.center.key == "j_luchador" or self.config.center.key == "j_red_card") then 
+        if self.area and (self.area == G.jokers or self.area == G.shop_jokers or self.area == G.pack_cards) and self.config.center then
+            if self.config.center.bunc_special_alerted and self.children.alert  then
+                self.children.alert:remove()
+                self.children.alert = nil
+            elseif not self.config.center.bunc_special_alerted and not self.children.alert then
+                self.children.alert = UIBox{
+                    definition = create_UIBox_card_alert(), 
+                    config = {align=(self.ability.set == 'Voucher' and (self.config.center.order%2)==1) and "tli" or "tri",
+                            offset = {x = (self.ability.set == 'Voucher' and (self.config.center.order%2)==1) and 0.1 or -0.1, y = 0.1},
+                            parent = self}
+                }
+            end
+        end
+        return
+    end
+'''
+
+# Patches for alerting reworked cards 7/?
+# Adds alerts for tags
+[[patches]]
+[patches.pattern]
+target = 'tag.lua'
+pattern = '''return tag_sprite_tab, tag_sprite'''
+position = 'before'
+match_indent = true
+payload = '''
+
+
+G.E_MANAGER:add_event(Event({
+trigger = 'immediate',
+func = (function()
+    if BUNCOMOD.content.config.gameplay_reworks and (self.name == "Boss Tag" or self.name == "D6 Tag") then
+        if not G.P_TAGS[self.key].bunc_special_alerted and not tag_sprite.children.alert and not G.SETTINGS.paused then
+            tag_sprite.children.alert = UIBox{
+                definition = create_UIBox_card_alert(), 
+                config = { align="tri", offset = {x = 0.1, y = 0.1}, parent = tag_sprite}
+            }
+            tag_sprite.children.alert.states.collide.can = false
+        end
+    end
+    return true
+end)
+}))
+'''
+
+# # Patches for alerting reworked cards 8/?
+# # Adds alerts for tags
+# [[patches]]
+# [patches.pattern]
+# target = 'tag.lua'
+# pattern = '''tag_sprite.hover = function(_self)'''
+# position = 'after'
+# match_indent = true
+# payload = '''
+#     if _self.children.alert and self.key and G.P_TAGS[self.key] then G.P_TAGS[self.key].bunc_special_alerted = true end
+# '''
+
+# Patches for alerting reworked cards 9/?
+# Removes alert when tag is used (can't work out removingh on hover for now)
+[[patches]]
+[patches.pattern]
+target = 'tag.lua'
+pattern = '''function Tag:yep(message, _colour, func)'''
+position = 'after'
+match_indent = true
+payload = '''
+    if self.key and G.P_TAGS[self.key] then G.P_TAGS[self.key].bunc_special_alerted = true end
+'''
