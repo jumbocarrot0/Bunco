@@ -48,6 +48,7 @@ return {
             bunc_accepted = 'Accepted!',
             bunc_robbed = 'Robbed!',
             bunc_ouch = 'OUCH!',
+            bunc_inactive = 'inactive',
             bunc_repeat = 'Repeat!',
             bunc_thoth_tarot = 'Thoth Tarot',
             bunc_mysterious_tarot = 'Tarot?',
@@ -154,6 +155,14 @@ return {
         Other = {
             bunc_temporary_extra_chips = {['text'] = {[1] = '{C:chips}+#1#{} extra chips this round'}},
             bunc_linked_cards = {['text'] = {[1] = '{C:attention}Linked{} in this group:'}},
+            bunc_linked_group = {
+                ['name'] = 'Linked group',
+                ['text'] = {
+                    [1] = 'Linked cards in group',
+                    [2] = 'are drawn, selected',
+                    [3] = 'and destroyed {C:attention}together'
+                }
+            },
             bunc_drawn_linked_cards = {['text'] = {[1] = '{C:attention}Linked{} in drawn group'}},
             bunc_light_suits = {
                 ['name'] = 'Light suits',
@@ -749,7 +758,6 @@ return {
                     [2] = '{C:attention}destroy{} a random Joker to',
                     [3] = 'go one Ante back, next time',
                     [4] = 'works only on a greater Ante'
-                    -- TODO needs a line for whether it's active / ante it will be active
                 },
                 ['unlock'] = {
                     [1] = 'Reach Ante',

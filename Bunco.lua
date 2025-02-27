@@ -989,11 +989,11 @@ create_joker({ -- Cassette
     blueprint = true, eternal = true,
     unlocked = true,
     calculate = function(self, card, context)
-        if context.pre_discard then
+        if context.pre_discard and not context.blueprint then
             card:flip()
         end
 
-        if context.flip then
+        if context.flip and not context.blueprint then
             forced_message(G.localization.misc.dictionary['bunc_'..(card.ability.extra.side == 'A' and 'b' or 'a')..'_side'], card, G.C.RED)
             if card.ability.extra.side == 'A' then
                 card.ability.extra.side = 'B'
@@ -1699,6 +1699,17 @@ create_joker({ -- Fiendish
 create_joker({ -- Carnival
     name = 'Carnival', position = 19,
     vars = {{ante = -huge_number}},
+    custom_vars = function (self, info_queue, card)
+        local active = (G.GAME and G.GAME.round_resets and (G.GAME.round_resets.ante > card.ability.extra.ante)) or false
+        local main_end = {
+            {n=G.UIT.C, config={align = "bm", minh = 0.4}, nodes={
+                {n=G.UIT.C, config={ref_table = self, align = "m", colour = active and G.C.GREEN or G.C.RED, r = 0.05, padding = 0.06}, nodes={
+                    {n=G.UIT.T, config={text = ' '..localize(active and 'k_active' or 'bunc_inactive')..' ',colour = G.C.UI.TEXT_LIGHT, scale = 0.32*0.9}},
+                }}
+            }}
+        }
+        return {main_end = main_end}
+    end,
     rarity = 'Rare', cost = 10,
     blueprint = false, eternal = true,
     unlocked = false,
@@ -3355,6 +3366,20 @@ create_joker({ -- Domino
 create_joker({ -- Glue Gun
     name = 'Glue Gun', position = 56,
     vars = {{amount = 4}},
+    custom_vars = function (self, info_queue, card)
+
+        info_queue[#info_queue+1] = {set = 'Other', key = 'bunc_linked_group'}
+
+        local active = (G.hand and G.hand.highlighted and (#G.hand.highlighted > 1) and (#G.hand.highlighted <= card.ability.extra.amount)) or false
+        local main_end = {
+            {n=G.UIT.C, config={align = "bm", minh = 0.4}, nodes={
+                {n=G.UIT.C, config={ref_table = self, align = "m", colour = active and G.C.GREEN or G.C.RED, r = 0.05, padding = 0.06}, nodes={
+                    {n=G.UIT.T, config={text = ' '..localize(active and 'k_active' or 'bunc_inactive')..' ',colour = G.C.UI.TEXT_LIGHT, scale = 0.32*0.9}},
+                }}
+            }}
+        }
+        return {vars = {card.ability.extra.amount}, main_end = main_end}
+    end,
     rarity = 'Uncommon', cost = 4,
     blueprint = false, eternal = false,
     unlocked = true,
@@ -3379,6 +3404,9 @@ create_joker({ -- Glue Gun
 
 create_joker({ -- Taped
     name = 'Taped', custom_atlas = 'bunco_jokers_taped', position = 1,
+    custom_vars = function (self, info_queue, card)
+        info_queue[#info_queue+1] = {set = 'Other', key = 'bunc_linked_group'}
+    end,
     rarity = 'Rare', cost = 6,
     blueprint = false, eternal = true,
     unlocked = true,
@@ -3431,6 +3459,10 @@ create_joker({ -- Taped
 create_joker({ -- Rubber Band Ball
     name = 'Rubber Band Ball', position = 57,
     vars = {{bonus = 1}, {xmult = 1}},
+    custom_vars = function (self, info_queue, card)
+        info_queue[#info_queue+1] = {set = 'Other', key = 'bunc_linked_group'}
+        return {vars = {card.ability.extra.bonus, card.ability.extra.xmult}}
+    end,
     rarity = 'Uncommon', cost = 6,
     blueprint = true, eternal = true, perishable = false,
     unlocked = true,
@@ -3460,6 +3492,11 @@ create_joker({ -- Rubber Band Ball
 create_joker({ -- Headache
     name = 'Headache', custom_atlas = 'bunco_jokers_headache', position = 1,
     vars = {{amount = 4}, {destroyed = 0}},
+    custom_vars = function (self, info_queue, card)
+        info_queue[#info_queue+1] = {set = 'Tag', key = 'tag_bunc_arcade'}
+        info_queue[#info_queue + 1] = {key = 'p_bunc_virtual_mega', set = 'Other', vars = {G.P_CENTERS.p_bunc_virtual_mega.config.choose, G.P_CENTERS.p_bunc_virtual_mega.config.extra}}
+        return {vars = {card.ability.extra.amount, card.ability.extra.destroyed}}
+    end,
     rarity = 'Uncommon', cost = 4,
     blueprint = true, eternal = true,
     unlocked = true,
@@ -3478,6 +3515,10 @@ create_joker({ -- Headache
 create_joker({ -- Games Collector
     name = 'Games Collector', position = 58,
     vars = {{bonus = 10}, {chips = 0}},
+    custom_vars = function (self, info_queue, card)
+        info_queue[#info_queue+1] = {set = 'Other', key = 'bunc_linked_group'}
+        return {vars = {card.ability.extra.bonus, card.ability.extra.chips}}
+    end,
     rarity = 'Common', cost = 5,
     blueprint = true, eternal = true, perishable = false,
     unlocked = true,
@@ -4587,6 +4628,9 @@ SMODS.Consumable{ -- The I
     key = 'the_i',
 
     loc_vars = function(self, info_queue, card)
+
+        info_queue[#info_queue+1] = {set = 'Other', key = 'bunc_linked_group'}
+
         local example = {
             {'S_2', true},
             {'S_6', true},
@@ -4648,6 +4692,9 @@ SMODS.Consumable{ -- The O
     key = 'the_o',
 
     loc_vars = function(self, info_queue, card)
+
+        info_queue[#info_queue+1] = {set = 'Other', key = 'bunc_linked_group'}
+
         local example = {
             {'D_Q', true},
             {'D_Q', true},
@@ -4725,6 +4772,9 @@ SMODS.Consumable{ -- The T
     key = 'the_t',
 
     loc_vars = function(self, info_queue, card)
+
+        info_queue[#info_queue+1] = {set = 'Other', key = 'bunc_linked_group'}
+
         local example = {
             {'H_7', true},
             {'C_7', true},
@@ -4812,6 +4862,9 @@ SMODS.Consumable{ -- The S
     key = 'the_s',
 
     loc_vars = function(self, info_queue, card)
+
+        info_queue[#info_queue+1] = {set = 'Other', key = 'bunc_linked_group'}
+
         local example = {
             {'D_2', true},
             {'C_2', true},
@@ -4901,6 +4954,9 @@ SMODS.Consumable{ -- The Z
     key = 'the_z',
 
     loc_vars = function(self, info_queue, card)
+
+        info_queue[#info_queue+1] = {set = 'Other', key = 'bunc_linked_group'}
+
         local example = {
             {'S_4', true},
             {'S_A', true},
@@ -4987,6 +5043,9 @@ SMODS.Consumable{ -- The J
     key = 'the_j',
 
     loc_vars = function(self, info_queue, card)
+
+        info_queue[#info_queue+1] = {set = 'Other', key = 'bunc_linked_group'}
+
         local example = {
             {'D_Q', true},
             {'H_Q', true},
@@ -5086,6 +5145,9 @@ SMODS.Consumable{ -- The L
     key = 'the_l',
 
     loc_vars = function(self, info_queue, card)
+
+        info_queue[#info_queue+1] = {set = 'Other', key = 'bunc_linked_group'}
+
         local example = {
             {'S_2', true},
             {'S_3', true},
@@ -5181,6 +5243,9 @@ SMODS.Consumable{ -- The /
     key = 'the_slash',
 
     loc_vars = function(self, info_queue, card)
+
+        info_queue[#info_queue+1] = {set = 'Other', key = 'bunc_linked_group'}
+
         local example = {
             {'S_2', true},
             {'C_T', true},
@@ -5273,6 +5338,10 @@ SMODS.Consumable{ -- The /
 SMODS.Consumable{ -- The 8
     set = 'Spectral', atlas = 'bunco_polyminoes',
     key = 'the_8',
+
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue+1] = {set = 'Other', key = 'bunc_linked_group'}
+    end,
 
     hidden = true,
     soul_rate = 0.002,
@@ -5963,12 +6032,27 @@ SMODS.Blind{ -- The Knoll
     boss = {min = 4},
 
     stay_flipped = function(self, area, card)
-        if not G.GAME.blind.disabled and card.area ~= G.jokers and
+        if not G.GAME.blind.disabled and (area == G.hand) and
         G.GAME.current_round.hands_played == 0 and G.GAME.current_round.discards_used == 0 then
             if G.GAME.dollars > 5 then
+                G.GAME.Knoll = G.GAME.Knoll or {}
+                table.insert(G.GAME.Knoll, card)
                 card:set_debuff(true)
             end
         end
+    end,
+    recalc_debuff = function(self, card, from_blind)
+        if not G.GAME.blind.disabled and G.GAME.Knoll then
+            for _, debuffed_card in ipairs(G.GAME.Knoll) do
+                if debuffed_card == card then
+                    return true
+                end
+            end
+            return false
+        end
+    end,
+    defeat = function(self)
+        G.GAME.Knoll = nil
     end,
 
     boss_colour = HEX('6d8f2d'),
@@ -7674,14 +7758,14 @@ SMODS.Enhancement({ -- Copper
             end
 
             local last_in_streak = true
-            if context.scoring_hand[card_position + 1] and context.scoring_hand[card_position + 1].config.center == card.config.center then
+            if context.scoring_hand[card_position + 1] and context.scoring_hand[card_position + 1].config.center == card.config.center and not (context.scoring_hand[card_position + 1].debuff) then
                 last_in_streak = false
             end
 
             if last_in_streak then
 
                 local streak = false
-                if context.scoring_hand[card_position - 1] and context.scoring_hand[card_position - 1].config.center == card.config.center then
+                if context.scoring_hand[card_position - 1] and context.scoring_hand[card_position - 1].config.center == card.config.center and not (context.scoring_hand[card_position - 1].debuff) then
                     streak = true
                 end
 
@@ -7696,7 +7780,8 @@ SMODS.Enhancement({ -- Copper
 
                                 while true do
                                     if context.scoring_hand[card_position - i]
-                                    and context.scoring_hand[card_position - i].config.center == card.config.center then
+                                    and context.scoring_hand[card_position - i].config.center == card.config.center
+                                    and not (context.scoring_hand[card_position - i].debuff) then
                                         table.insert(streak_cards, context.scoring_hand[card_position - i])
                                     else
                                         break
