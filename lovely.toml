@@ -186,7 +186,7 @@ payload = '''
 G.FORCEFIELD_CARDS = G.FORCEFIELD_CARDS or {}
 
 for index, card in ipairs(G.FORCEFIELD_CARDS) do
-    if BUNCOMOD.content.config.colorful_finishers
+    if BUNCOMOD.content.config.high_quality_shaders
     and card
     and not card.removed
     and card.states.visible
@@ -233,12 +233,12 @@ end
 [[patches]]
 [patches.pattern]
 target = 'card.lua'
-pattern = 'function Card:set_sprites(_center, _front)'
+pattern = 'Moveable.init(self,X, Y, W, H)'
 position = 'after'
 match_indent = true
 payload = '''
 
-if _center and _center.name == 'Black Hole' then
+if center and center.name == 'Black Hole' then
     G.FORCEFIELD_CARDS = G.FORCEFIELD_CARDS or {}
     self.config.forcefield = {}
     self.config.forcefield.radius = 160
@@ -534,10 +534,9 @@ position = 'before'
 match_indent = true
 payload = '''
 
-local grouped, grouped_area_cards
-if self.ability.group then
+local grouped
+if self.ability.group and not self.fake_card then
     grouped = self
-    grouped_area_cards = self.area and self.area.config.type ~= 'title' and self.area.cards or nil
 end
 
 '''
@@ -551,14 +550,14 @@ position = 'after'
 match_indent = true
 payload = '''
 
-if grouped and grouped_area_cards and #grouped_area_cards > 0 then
+if grouped and G.playing_cards and #G.playing_cards > 0 then
 
     local next_card
     local destroyed_cards = {}
-    for i=1, #grouped_area_cards do
-        if grouped_area_cards[i].ability.group and grouped_area_cards[i].ability.group then
-            if (grouped_area_cards[i].ability.group.id == grouped.ability.group.id) and (not grouped_area_cards[i].destroyed) and (not grouped_area_cards[i].shattered) then
-                table.insert(destroyed_cards, grouped_area_cards[i])
+    for i=1, #G.playing_cards do
+        if G.playing_cards[i].ability.group then
+            if (G.playing_cards[i].ability.group.id == grouped.ability.group.id) and (not G.playing_cards[i].destroyed) and (not G.playing_cards[i].shattered) then
+                table.insert(destroyed_cards, G.playing_cards[i])
             end
         end
     end
@@ -633,6 +632,7 @@ if (_c.set == 'Default' or _c.set == 'Enhanced') and card and card.ability and t
         )
         for k, v in ipairs(all_cards_from_group) do
             local group_card = copy_card(v, nil, 0.5)
+            group_card.fake_card = true
             group_card.states.hover.can = false
             group_card:juice_up(0.3, 0.2)
             if k == 1 then play_sound('paper1', 0.95 + math.random() * 0.1, 0.3) end
@@ -1002,7 +1002,9 @@ payload = '''
 if G.jokers ~= nil then
     for _, v in ipairs(G.jokers.cards) do
         if v.config.center.key == 'j_bunc_doorhanger' and not v.debuff then
-            if _rarity == nil or _rarity < 0.9 then
+            if _rarity == nil
+            or ((type(_rarity) == 'number') and (_rarity < 0.9))
+            or ((type(_rarity) == 'string') and (_rarity == 'Common')) then
 
                 _rarity = 0.9
 
@@ -1976,7 +1978,11 @@ payload = '''
 
 if G.GAME.blind and G.GAME.blind.name == 'bl_bunc_paling' and not G.GAME.blind.disabled then
     for i=1, highlighted_count do
-        G.E_MANAGER:add_event(Event({func = function() G.hand.highlighted[i]:juice_up(); return true end })) 
+        G.E_MANAGER:add_event(Event({func = function()
+            if G.hand.highlighted[i] and not G.hand.highlighted[i].removed then
+                G.hand.highlighted[i]:juice_up()
+            end
+        return true end }))
         ease_dollars(-1)
         delay(0.23)
     end
