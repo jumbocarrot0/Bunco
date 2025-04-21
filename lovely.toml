@@ -1589,6 +1589,9 @@ match_indent = true
 payload = '''
 
 if to_big(mod) < to_big(0) then
+    if (G.GAME.money_spend_this_round == nil) then
+        G.GAME.money_spend_this_round = 0
+    end
     G.GAME.money_spend_this_round = G.GAME.money_spend_this_round - mod
 
     local locked_card
