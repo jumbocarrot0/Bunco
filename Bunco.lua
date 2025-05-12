@@ -74,7 +74,21 @@ end
 -- Exotic in_pool function
 
 BUNCOMOD.funcs.exotic_in_pool = function()
-    return G.GAME and G.GAME.Exotic
+    if G.GAME and G.GAME.Exotic then return true end
+    --In case a Spectrum somehow gets played without enabling exotics, check directly:
+    local spectrum_played = false
+    if G and G.GAME and G.GAME.hands then
+        for k, v in pairs(G.GAME.hands) do
+            if string.find(k, "Spectrum", nil, true) then
+                if G.GAME.hands[k].played > 0 then
+                    spectrum_played = true
+                    break
+                end
+            end
+        end
+    end
+
+    return spectrum_played
 end
 
 -- Dictionary wrapper

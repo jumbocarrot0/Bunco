@@ -12,10 +12,7 @@ position = 'after'
 match_indent = true
 payload = '''
 
-if text == 'bunc_Spectrum'
-or text == 'bunc_Straight Spectrum'
-or text == 'bunc_Spectrum House'
-or text == 'bunc_Spectrum Five' then
+if string.find(text, "Spectrum") then
     enable_exotics()
     unlock_card(G.P_CENTERS.b_bunc_fairy)
 end
