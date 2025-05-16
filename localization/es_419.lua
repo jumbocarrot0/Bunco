@@ -737,7 +737,7 @@ return {
                 ['name'] = 'Martillo',
                 ['text'] = {
                     [1] = 'Las {C:attention}cartas de vidrio{} otorgan {X:mult,C:white}X#1#{}',
-                    [2] = 'multi multi pero siempre se rompen'
+                    [2] = 'multi pero siempre se rompen'
                 },
                 ['unlock'] = {
                     [1] = 'Juega una mano de 5 cartas',
