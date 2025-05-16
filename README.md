@@ -1,15 +1,15 @@
 A mod that aims to add more content in a way that'd seamlessly exist within the vanilla Balatro!
+## ¡Un mod que busca agregar más contenido que se integre con las mecánicas de Balatro!
+### Mod Hecho originalmente por Finch (https://github.com/Firch/Bunco) y Siendo mantenido por jumbocarrot0 (https://github.com/jumbocarrot0/Bunco)
 
-# Youtube Trailer
+# Trailer de Bunco
 [![Bunco Mod Trailer](https://github.com/user-attachments/assets/b8dea09b-b671-424b-a6f1-fa3f60aa787e)](https://youtu.be/RnH17Wx91no)
 
-# About this fork
+# Sobre este fork
 
-Bunco was originally lead by Firch with contributions across the community. Now that the original mod is finished, Firch has move on from Balatro and is no longer maintaining the original mod. This fork is implementing critical (and non-critical) bug fixes that arise as modding continues to evolve beyond Bunco's final release.
+Hice este fork para poder traducir correctamente el mod, pero el contenido de las traducciones se va a integrar al fork de jumbocarrot0 (https://github.com/jumbocarrot0/Bunco), cualquier versión actualizada más allá del 16 de Mayo va a ser su fork
 
-This fork adds no additional gameplay content.
-
-# Previews
+# Imagenes
 
 ![Trailer 1](https://github.com/user-attachments/assets/0ab38c79-c4b4-4f53-bbec-5136437cfbf6)
 ![Trailer 2](https://github.com/user-attachments/assets/95d8ab26-ca4c-4026-94b3-f59f134c96f6)
