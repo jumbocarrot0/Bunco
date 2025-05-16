@@ -3994,21 +3994,24 @@ create_joker({ -- Stylophone
                 return 2^(pitch / 12)
             end
 
-            if SMODS.has_no_suit(other_card) then
+            if SMODS.has_no_rank(other_card) then
                 event({trigger = 'after', func = function() play_sound(instrument, 1.0, 2.0) return true end})
             else
-                if other_card.base.suit == 'Spades' then
-                    instrument = 'bunc_spade'
-                elseif other_card.base.suit == 'Clubs' then
-                    instrument = 'bunc_club'
-                elseif other_card.base.suit == 'Hearts' then
-                    instrument = 'bunc_heart'
-                elseif other_card.base.suit == 'Diamonds' then
-                    instrument = 'bunc_diamond'
-                elseif other_card.base.suit == 'bunc_Fleurons' then
-                    instrument = 'bunc_fleuron'
-                elseif other_card.base.suit == 'bunc_Halberds' then
-                    instrument = 'bunc_halberd'
+                -- For a theoretical suitless card with a rank
+                if not SMODS.has_no_suit(other_card) then
+                    if other_card.base.suit == 'Spades' then
+                        instrument = 'bunc_spade'
+                    elseif other_card.base.suit == 'Clubs' then
+                        instrument = 'bunc_club'
+                    elseif other_card.base.suit == 'Hearts' then
+                        instrument = 'bunc_heart'
+                    elseif other_card.base.suit == 'Diamonds' then
+                        instrument = 'bunc_diamond'
+                    elseif other_card.base.suit == 'bunc_Fleurons' then
+                        instrument = 'bunc_fleuron'
+                    elseif other_card.base.suit == 'bunc_Halberds' then
+                        instrument = 'bunc_halberd'
+                    end
                 end
                 event({trigger = 'after', func = function() play_sound(instrument, calculate_pitch(other_card:get_id()), 2.0) return true end})
             end
