@@ -643,91 +643,91 @@ if config.fixed_sprites then
 
     end
 
-end
+    if next(SMODS.find_mod("malverk")) then
+        AltTexture({
+            key = 'tarots_fixed_sprites',
+            set = 'Tarot',
+            path = 'Resprites/Tarots.png',
+            keys = {
+            'c_fool',
+            'c_lovers',
+            'c_chariot',
+            'c_wheel_of_fortune',
+            'c_tower',
+            'c_moon',
+            'c_world',
+            },
+            loc_txt = {
+            name = 'Tarot Fixes'
+            }
+        })
+        AltTexture({
+            key = 'planets_fixed_sprites',
+            set = 'Planet',
+            path = 'Resprites/Planets.png',
+            keys = {
+            'c_ceres',
+            'c_mercury',
+            'c_uranus',
+            'c_pluto',
+            },
+            loc_txt = {
+            name = 'Planet Fixes'
+            }
+        })
+        AltTexture({
+            key = 'spectrals_fixed_sprites',
+            set = 'Spectral',
+            path = 'Resprites/Spectrals.png',
+            keys = {
+            'c_soul',
+            'c_incantation',
+            'c_black_hole'
+            },
+            loc_txt = {
+            name = 'Spectral Fixes'
+            }
+        })
+        AltTexture({
+            key = 'jokers_fixed_sprites',
+            set = 'Joker',
+            path = 'Resprites/Jokers.png',
+            keys = {
+            'j_juggler',
+            'j_drunkard',
+            'j_acrobat',
+            'j_credit_card',
+            'j_troubadour',
+            'j_even_steven',
+            'j_odd_todd',
+            'j_fibonacci',
+            'j_drivers_license',
+            'j_gift',
+            'j_flash',
+            'j_ramen',
+            'j_selzer',
+            'j_scholar'
+            },
+            loc_txt = {
+            name = 'Joker Fixes'
+            }
+        })
+        
+        TexturePack({
+            key = 'bunc_fixed_sprites',
+            textures = {
+            'bunc_jokers_fixed_sprites',
+            'bunc_tarots_fixed_sprites',
+            'bunc_planets_fixed_sprites',
+            'bunc_spectrals_fixed_sprites',
+            },
+            loc_txt = {
+            name = 'Bunco Resprites',
+            text = {'Port of Bunco sprite fixes'}
+            }
+        })
+    end
 
-if next(SMODS.find_mod("malverk")) then
-    AltTexture({
-        key = 'tarots_fixed_sprites',
-        set = 'Tarot',
-        path = 'Resprites/Tarots.png',
-        keys = {
-          'c_fool',
-          'c_lovers',
-          'c_chariot',
-          'c_wheel_of_fortune',
-          'c_tower',
-          'c_moon',
-          'c_world',
-        },
-        loc_txt = {
-          name = 'Tarot Fixes'
-        }
-    })
-    AltTexture({
-        key = 'planets_fixed_sprites',
-        set = 'Planet',
-        path = 'Resprites/Planets.png',
-        keys = {
-          'c_ceres',
-          'c_mercury',
-          'c_uranus',
-          'c_pluto',
-        },
-        loc_txt = {
-          name = 'Planet Fixes'
-        }
-    })
-    AltTexture({
-        key = 'spectrals_fixed_sprites',
-        set = 'Spectral',
-        path = 'Resprites/Spectrals.png',
-        keys = {
-          'c_soul',
-          'c_incantation',
-          'c_black_hole'
-        },
-        loc_txt = {
-          name = 'Spectral Fixes'
-        }
-    })
-    AltTexture({
-        key = 'jokers_fixed_sprites',
-        set = 'Joker',
-        path = 'Resprites/Jokers.png',
-        keys = {
-          'j_juggler',
-          'j_drunkard',
-          'j_acrobat',
-          'j_credit_card',
-          'j_troubadour',
-          'j_even_steven',
-          'j_odd_todd',
-          'j_fibonacci',
-          'j_drivers_license',
-          'j_gift',
-          'j_flash',
-          'j_ramen',
-          'j_selzer',
-          'j_scholar'
-        },
-        loc_txt = {
-          name = 'Joker Fixes'
-        }
-    })
-    
-    TexturePack({
-        key = 'bunc_fixed_sprites',
-        textures = {
-          'bunc_jokers_fixed_sprites',
-          'bunc_tarots_fixed_sprites',
-          'bunc_planets_fixed_sprites',
-          'bunc_spectrals_fixed_sprites',
-        },
-        loc_txt = {
-          name = 'Bunco Resprites',
-          text = {'Port of Bunco sprite fixes'}
-        }
-    })
 end
 
 -- Text icons
