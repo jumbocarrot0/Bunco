@@ -16,3 +16,16 @@ payload = '''
     if to_big(mod) == to_big(0) then return end
 
 '''
+
+# G.FUNCS.play_cards_from_highlighted (Magenta Dagger 4/5)
+[[patches]]
+[patches.pattern]
+target = 'functions/state_events.lua'
+pattern = "function evaluate_play_intro()"
+position = 'after'
+match_indent = true
+payload = '''
+
+local antiscore = G.GAME.blind.antiscore
+
+'''
