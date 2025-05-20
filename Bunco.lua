@@ -8404,7 +8404,7 @@ SMODS.Enhancement({ -- Copper
             end
         end
         -- Reset the retrigger thingy
-        if context.after then
+        if context.after and context.scoring_hand then
             for _, other_card in ipairs(context.scoring_hand) do
                 other_card.config.copper_rescored_times = 0
             end
