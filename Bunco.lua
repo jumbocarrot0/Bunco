@@ -1683,7 +1683,7 @@ create_joker({ -- Prehistoric
         if context.individual and context.cardarea == G.play then
             for k, v in pairs(card.ability.extra.card_list) do
                 if (v:get_id() == context.other_card:get_id())
-                and (v:is_suit(context.other_card.base.suit) or context.other_card.config.center == G.P_CENTERS.m_wild)
+                and (v:is_suit(context.other_card.base.suit) or SMODS.has_any_suit(context.other_card))
                 and context.other_card.config.center ~= G.P_CENTERS.m_stone then
                     return {
                         mult = card.ability.extra.mult,
@@ -7482,7 +7482,7 @@ SMODS.Tag{ -- Filigree
                         enable_exotics()
 
                         for _, v in ipairs(G.pack_cards.cards) do
-                            if (not v:is_suit('bunc_Fleurons') and not v:is_suit('bunc_Halberds')) or v.config.center == G.P_CENTERS.m_wild then
+                            if (not v:is_suit('bunc_Fleurons') and not v:is_suit('bunc_Halberds')) or SMODS.has_any_suit(v) then
                                 local suits = {'bunc_Fleurons', 'bunc_Halberds'}
                                 local suit = pseudorandom_element(suits, pseudoseed('filigree'..G.SEED))
                                 v:change_suit(suit)
