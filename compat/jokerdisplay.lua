@@ -163,18 +163,36 @@ jd_def["j_bunc_prehistoric"] = { -- Prehistoric Joker
         local mult = 0
         local hand = next(G.play.cards) and G.play.cards or G.hand.highlighted
         local text, _, scoring_hand = JokerDisplay.evaluate_hand(hand)
+        local card_list = {}
         if text ~= "Unknown" then
+            for _, previously_played_card in ipairs(card.ability.extra.card_list) do
+                local include = true
+                for _, scoring_card in ipairs(scoring_hand) do
+                    if scoring_card.unique_val == previously_played_card.ID then
+                        include = false
+                        break
+                    end
+                end
+                if include then
+                    table.insert(card_list, previously_played_card)
+                end
+            end
             for _, scoring_card in pairs(scoring_hand) do
-                if not SMODS.has_no_suit(scoring_card.config.center) then
-                    for _, previously_played_card in pairs(card.ability.extra.card_list) do
-                        if (previously_played_card:get_id() == scoring_card:get_id())
-                            and (previously_played_card:is_suit(scoring_card.base.suit) or scoring_card.config.center == G.P_CENTERS.m_wild) then
+                if not(SMODS.has_no_suit(scoring_card) or SMODS.has_no_rank(scoring_card)) then
+                    for _, previously_played_card in pairs(card_list) do
+                        if (ids_op(scoring_card, '==', previously_played_card.rank))
+                            and (previously_played_card.has_any_suit or scoring_card:is_suit(previously_played_card.suit)) then
                             mult = mult +
                                 card.ability.extra.mult *
                                 JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
                             break
                         end
                     end
+                    table.insert(card_list, {
+                        rank = scoring_card:get_id(),
+                        suit = scoring_card.base.suit,
+                        has_any_suit = SMODS.has_any_suit(scoring_card)
+                    })
                 end
             end
         end

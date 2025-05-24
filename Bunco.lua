@@ -1681,10 +1681,9 @@ create_joker({ -- Prehistoric
     end,
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
-            for k, v in pairs(card.ability.extra.card_list) do
-                if (v:get_id() == context.other_card:get_id())
-                and (v:is_suit(context.other_card.base.suit) or SMODS.has_any_suit(context.other_card))
-                and context.other_card.config.center ~= G.P_CENTERS.m_stone then
+            for _, v in ipairs(card.ability.extra.card_list) do
+                if (ids_op(context.other_card, '==', v.rank))
+                and (v.has_any_suit or context.other_card:is_suit(v.suit)) then
                     return {
                         mult = card.ability.extra.mult,
                         card = card
@@ -1693,8 +1692,13 @@ create_joker({ -- Prehistoric
             end
 
             if not context.blueprint then
-                if context.other_card.config.center ~= G.P_CENTERS.m_stone then
-                    table.insert(card.ability.extra.card_list, context.other_card) -- Add the card to the list
+                if not (SMODS.has_no_suit(context.other_card) or SMODS.has_no_rank(context.other_card)) then
+                    table.insert(card.ability.extra.card_list, {
+                        rank = context.other_card:get_id(),
+                        suit = context.other_card.base.suit,
+                        has_any_suit = SMODS.has_any_suit(context.other_card),
+                        ID = context.other_card.unique_val
+                    }) -- Add the card to the list
                 end
             end
 
