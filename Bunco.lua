@@ -1103,6 +1103,14 @@ SMODS.Tag:take_ownership('double', {
     end,
 }, true)
 
+-- All in Jest compat
+-- AiJ implemented this in a way that usually specific compat isn't required
+-- However in this case I did weird stuff, so putting in a specific fix
+-- Used in Prehistoric Joker
+ids_op = next(SMODS.find_mod("allinjest")) and ids_op or function (card, op, b)
+    return card:get_id() == b
+end
+
 -- Joker creation setup
 
 SMODS.Atlas({key = 'bunco_jokers', path = 'Jokers/Jokers.png', px = 71, py = 95})
