@@ -402,19 +402,21 @@ jd_def["j_bunc_bierdeckel"] = { -- Bierdeckel
 
 }
 jd_def["j_bunc_registration_plate"] = { -- Registration Plate
-    reminder_text = {
+    text = {
         { text = "(" },
-        { ref_table = "card.ability.extra.combination", ref_value = 1 },
-        { text = " " },
-        { ref_table = "card.ability.extra.combination", ref_value = 2 },
-        { text = " " },
-        { ref_table = "card.ability.extra.combination", ref_value = 3 },
-        { text = " " },
-        { ref_table = "card.ability.extra.combination", ref_value = 4 },
-        { text = " " },
-        { ref_table = "card.ability.extra.combination", ref_value = 5 },
+        { ref_table = "card.joker_display_values", ref_value = "combination" },
         { text = ")" },
     },
+    calc_function = function(card)
+        local vars = ""
+        for i = 1, #card.ability.extra.combination do
+            vars = vars .. localize(card.ability.extra.combination[i], 'ranks')
+            if i ~= #card.ability.extra.combination then
+                vars = vars .. " "
+            end
+        end
+        card.joker_display_values.combination = vars
+    end
 }
 jd_def["j_bunc_slothful"] = { -- Slothful Joker
     text = {
