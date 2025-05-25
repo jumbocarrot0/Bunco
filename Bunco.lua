@@ -6276,49 +6276,43 @@ SMODS.PokerHand{ -- Spectrum Five (Referenced from SixSuits)
 SMODS.PokerHandPart{ -- Deal base
     key = 'deal',
     func = function(hand)
+        if #hand < 5 then
+            return {}
+        end
         local current_ranks = {}
         local deals = {}
-        for i = 1, #hand do
-            table.insert(current_ranks, hand[i]:get_id())
-        end
 
         for _, v in ipairs(SMODS.find_card("j_bunc_registration_plate")) do
             table.insert(deals, v.ability.extra.ranks)
         end
 
-        local count1 = {}
-        for _, value in ipairs(current_ranks) do
-            if count1[value] then
-                count1[value] = count1[value] + 1
-            else
-                count1[value] = 1
-            end
-        end
-
         for i, deal in ipairs(deals) do
-            local count2 = {}
-            for _, value in ipairs(deal) do
-                if count2[value] then
-                    count2[value] = count2[value] + 1
-                else
-                    count2[value] = 1
+            local deal_count = {} -- Counts # of each rank in deal requirement
+            local hand_count = {} -- Counts # of each rank in the selected cards
+
+            for _, rank in ipairs(deal) do
+                hand_count[rank] = 0
+                deal_count[rank] = (deal_count[rank] or 0) + 1
+            end
+
+            for j = 1, #hand do
+                local match = false -- Every card must match a rank.
+                for rank, _ in pairs(deal_count) do
+                    if hand[j]:get_id() == rank then
+                        match = true
+                        hand_count[rank] = hand_count[rank] + 1
+                    end
+                end
+                if not match then
+                    return {}
                 end
             end
 
             local equal = true
-            for key, count in pairs(count1) do
-                if count2[key] ~= count then
-                    equal = false
-                    break
-                end
-            end
 
-            if equal then
-                for key, count in pairs(count2) do
-                    if count1[key] ~= count then
-                        equal = false
-                        break
-                    end
+            for rank, count in pairs(deal_count) do
+                if hand_count[rank] < count then -- If deal requires more of a rank than in hand, mark as invalid
+                    equal = false
                 end
             end
 
