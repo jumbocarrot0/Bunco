@@ -98,38 +98,32 @@ jd_def["j_bunc_crop_circles"] = { -- Crop Circles
     },
     text_config = { colour = G.C.MULT },
     calc_function = function(card)
-        local mult = 0
+        local rank_mult = 0
+        local suit_mult = 0
         local hand = next(G.play.cards) and G.play.cards or G.hand.highlighted
         local text, _, scoring_hand = JokerDisplay.evaluate_hand(hand)
         if text ~= "Unknown" then
             for _, scoring_card in pairs(scoring_hand) do
+                local retriggers = JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+
                 if not SMODS.has_no_suit(scoring_card) then
-                    local retriggers = JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
-                    if scoring_card.base.suit == ('bunc_Fleurons') then
-                        if scoring_card:get_id() == 8 then
-                            mult = mult + 6 * retriggers
-                        elseif scoring_card:get_id() == 12 or scoring_card:get_id() == 10 or scoring_card:get_id() == 9 or scoring_card:get_id() == 6 then
-                            mult = mult + 5 * retriggers
-                        else
-                            mult = mult + 4 * retriggers
-                        end
-                    elseif scoring_card.base.suit == ('Clubs') then
-                        if scoring_card:get_id() == 8 then
-                            mult = mult + 5 * retriggers
-                        elseif scoring_card:get_id() == 12 or scoring_card:get_id() == 10 or scoring_card:get_id() == 9 or scoring_card:get_id() == 6 then
-                            mult = mult + 4 * retriggers
-                        else
-                            mult = mult + 3 * retriggers
-                        end
-                    elseif scoring_card:get_id() == 8 then
-                        mult = mult + 2 * retriggers
+                    if scoring_card.base.suit == "bunc_Fleurons" then
+                        suit_mult = suit_mult + 4 * retriggers
+                    elseif scoring_card.base.suit == "Clubs" then
+                        suit_mult = suit_mult + 3 * retriggers
+                    end
+                end
+
+                if not SMODS.has_no_rank(scoring_card) then
+                    if scoring_card:get_id() == 8 then
+                        rank_mult = rank_mult + 2 * retriggers
                     elseif scoring_card:get_id() == 12 or scoring_card:get_id() == 10 or scoring_card:get_id() == 9 or scoring_card:get_id() == 6 then
-                        mult = mult + 1 * retriggers
+                        rank_mult = rank_mult + 1 * retriggers
                     end
                 end
             end
         end
-        card.joker_display_values.mult = mult
+        card.joker_display_values.mult = rank_mult + suit_mult
     end
 }
 jd_def["j_bunc_xray"] = { -- X-Ray
@@ -292,9 +286,12 @@ jd_def["j_bunc_dogs_playing_poker"] = { -- Dogs Playing Poker
         if #hand > 0 and text ~= "Unknown" then
             is_dogs_hand = true
             for _, scoring_card in pairs(scoring_hand) do
-                if scoring_card:get_id() >= 6 or
-                    scoring_card:get_id() < 2 and
-                    SMODS.has_no_rank(scoring_card.config.center) then
+                if not (
+                    scoring_card:get_id() == 2 or 
+                    scoring_card:get_id() == 3 or
+                    scoring_card:get_id() == 4 or
+                    scoring_card:get_id() == 5
+                ) or SMODS.has_no_rank(scoring_card) then
                     is_dogs_hand = false
                 end
             end
@@ -377,6 +374,11 @@ jd_def["j_bunc_fingerprints"] = { -- Fingerprints
 
 }
 jd_def["j_bunc_zero_shapiro"] = { -- Zero Shapiro
+    text = {
+        { text = "+" },
+        { ref_table = "card.joker_display_values", ref_value = "count", retrigger_type = "mult" },
+    },
+    text_config = { colour = G.C.GREEN },
     extra = {
         {
             { text = "(" },
@@ -388,6 +390,16 @@ jd_def["j_bunc_zero_shapiro"] = { -- Zero Shapiro
     },
     extra_config = { colour = G.C.GREEN, scale = 0.3 },
     calc_function = function(card)
+        local count = 0
+        local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+        if text ~= 'Unknown' then
+            for _, scoring_card in pairs(scoring_hand) do
+                if scoring_card:get_id() == 11 or scoring_card:get_id() == 12 or scoring_card:get_id() == 13 or SMODS.has_no_rank(scoring_card) then
+                    count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+                end
+            end
+        end
+        card.joker_display_values.count = count
         card.joker_display_values.odds = G.GAME and G.GAME.probabilities.normal or 1
     end
 }

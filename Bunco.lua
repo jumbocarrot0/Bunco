@@ -1505,53 +1505,30 @@ create_joker({ -- Crop Circles
 
             local other_card = context.other_card
 
-            if other_card.config.center ~= G.P_CENTERS.m_stone then
+            local rank_mult = 0
+            local suit_mult = 0
 
-                if other_card.base.suit == ('bunc_Fleurons') then
-                    if other_card:get_id() == 8 then
-                        return {
-                            mult = 6,
-                            card = card
-                        }
-                    elseif other_card:get_id() == 12 or other_card:get_id() == 10 or other_card:get_id() == 9 or other_card:get_id() == 6 then
-                        return {
-                            mult = 5,
-                            card = card
-                        }
-                    else
-                        return {
-                            mult = 4,
-                            card = card
-                        }
-                    end
-                elseif other_card.base.suit == ('Clubs') then
-                    if other_card:get_id() == 8 then
-                        return {
-                            mult = 5,
-                            card = card
-                        }
-                    elseif other_card:get_id() == 12 or other_card:get_id() == 10 or other_card:get_id() == 9 or other_card:get_id() == 6 then
-                        return {
-                            mult = 4,
-                            card = card
-                        }
-                    else
-                        return {
-                            mult = 3,
-                            card = card
-                        }
-                    end
-                elseif other_card:get_id() == 8 then
-                    return {
-                        mult = 2,
-                        card = card
-                    }
-                elseif other_card:get_id() == 12 or other_card:get_id() == 10 or other_card:get_id() == 9 or other_card:get_id() == 6 then
-                    return {
-                        mult = 1,
-                        card = card
-                    }
+            if not SMODS.has_no_suit(other_card) then
+                if other_card.base.suit == "bunc_Fleurons" then
+                    suit_mult = suit_mult + 4
+                elseif other_card.base.suit == "Clubs" then
+                    suit_mult = suit_mult + 3
                 end
+            end
+
+            if not SMODS.has_no_rank(other_card) then
+                if other_card:get_id() == 8 then
+                    rank_mult = rank_mult + 2
+                elseif other_card:get_id() == 12 or other_card:get_id() == 10 or other_card:get_id() == 9 or other_card:get_id() == 6 then
+                    rank_mult = rank_mult + 1
+                end
+            end
+
+            if (suit_mult + rank_mult) > 0 then
+                return {
+                    mult = suit_mult + rank_mult,
+                    card = card
+                }
             end
         end
     end
@@ -1965,9 +1942,12 @@ create_joker({ -- Dogs Playing Poker
 
             if context.scoring_hand then
                 for i = 1, #context.scoring_hand do
-                    if (context.scoring_hand[i]:get_id() >= 6 or
-                    context.scoring_hand[i]:get_id() < 2) and
-                    context.scoring_hand[i].config.center ~= G.P_CENTERS.m_stone then
+                    if not (
+                        context.scoring_hand[i]:get_id() == 2 or 
+                        context.scoring_hand[i]:get_id() == 3 or
+                        context.scoring_hand[i]:get_id() == 4 or
+                        context.scoring_hand[i]:get_id() == 5
+                    ) or SMODS.has_no_rank(context.scoring_hand[i]) then
                         condition = false
                     end
                 end
@@ -2224,7 +2204,7 @@ create_joker({ -- Zero Shapiro
     unlocked = true,
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
-            if context.other_card.config.center.key == 'm_stone' or context.other_card:get_id() == 0 or not tonumber(context.other_card.base.value) and context.other_card.base.value ~= 'Ace' then
+            if context.other_card:get_id() == 11 or context.other_card:get_id() == 12 or context.other_card:get_id() == 13 or SMODS.has_no_rank(context.other_card) then
                 if pseudorandom('zero_shapiro'..G.SEED) < G.GAME.probabilities.normal / card.ability.extra.odds then
                     return {
                         extra = {message = '+'..localize{type = 'name_text', key = 'tag_d_six', set = 'Tag'}, colour = G.C.GREEN},
