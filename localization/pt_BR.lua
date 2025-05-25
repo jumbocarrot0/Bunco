@@ -420,16 +420,23 @@ return {
 
             -- Main Jokers
 
-            j_bunc_cassette = {
-                ['name'] = 'Cassete',
+            j_bunc_cassette_a = {
+                ['name'] = 'Cassete (Lado A)',
+                ['text'] = {
+                    [1] = 'Cartas com naipe claro dão',
+                    [2] = '{C:chips}+#1#{} Fichas quando pontuadas',
+                }
+            },
+            j_bunc_cassette_b = {
+                ['name'] = 'Cassete (Lado B)',
+                ['text'] = {
+                    [1] = 'Cartas com naipe escuro dão',
+                    [2] = '{C:mult}+#2#{} Multi quando pontuadas'
+                }
+            },
+            j_bunc_cassette_extra = {
                 ['text'] = {
                     [1] = 'Ao descartar, vire o Curinga para o outro lado',
-                    [2] = '{C:attention}Lado A:{} Cartas com naipe claro',
-                    [3] = 'dão {C:chips}+#1#{} Fichas quando pontuadas',
-                    [4] = '{C:attention}Lado B:{} Cartas com naipe escuro',
-                    [5] = 'dão {C:mult}+#2#{} Multi quando pontuadas'
-                    -- TODO would be good to have a line for the side
-                    -- or colorize the active side
                 }
             },
             j_bunc_mosaic = {
@@ -670,17 +677,17 @@ return {
                     [3] = 'na próxima rodada apenas',
                 }
             },
-            j_bunc_zero_shapiro = {
-                ['name'] = 'Zé Zero',
-                ['text'] = {
-                    [1] = 'Este Curinga aumenta em {C:attention}#1#X{} as',
-                    [2] = '{C:green,E:1,S:1.1}probabilidades{} {C:attention}nesta rodada{} quando uma',
-                    [3] = 'carta com classe {C:attention}nula{}, {C:attention}zero{}, or {C:attention}incontável{}',
-                    [4] = 'pontua {C:inactive}(K, Q, J, 0, Sem classe)',
-                    [5] = '{C:inactive}(No momento, {C:attention}X#2#{C:inactive} {C:green,E:1,S:1.1}probabilidades{C:inactive})'
-                    -- TODO not sure how to word non-countable
-                }
-            },
+            -- j_bunc_zero_shapiro = {
+            --     ['name'] = 'Zé Zero',
+            --     ['text'] = {
+            --         [1] = 'Este Curinga aumenta em {C:attention}#1#X{} as',
+            --         [2] = '{C:green,E:1,S:1.1}probabilidades{} {C:attention}nesta rodada{} quando uma',
+            --         [3] = 'carta com classe {C:attention}nula{}, {C:attention}zero{}, or {C:attention}incontável{}',
+            --         [4] = 'pontua {C:inactive}(K, Q, J, 0, Sem classe)',
+            --         [5] = '{C:inactive}(No momento, {C:attention}X#2#{C:inactive} {C:green,E:1,S:1.1}probabilidades{C:inactive})'
+            --         -- TODO not sure how to word non-countable
+            --     }
+            -- },
             j_bunc_nil_bill = {
                 ['name'] = 'Nil Bill',
                 ['text'] = {
@@ -722,19 +729,19 @@ return {
                     [3] = '{C:attention,E:1}Cartas Naipe Curinga{}'
                 }
             },
-            j_bunc_neon = {
-                ['name'] = 'Curinga Neon',
-                ['text'] = {
-                    [1] = 'Este Curinga Ganha {X:mult,C:white}X#1#{} Multi',
-                    [2] = 'por carta com {C:attention}desvantagem{} pontuada',
-                    [3] = '{C:inactive}(No momento, {X:mult,C:white}X#2#{C:inactive} Multi)'
-                },
-                ['unlock'] = {
-                    [1] = 'Jogue uma mão de 5 cartas',
-                    [2] = 'que contém apenas',
-                    [3] = '{C:attention,E:1}Cartas com desvantagem{}'
-                }
-            },
+            -- j_bunc_neon = {
+            --     ['name'] = 'Curinga Neon',
+            --     ['text'] = {
+            --         [1] = 'Este Curinga Ganha {X:mult,C:white}X#1#{} Multi',
+            --         [2] = 'por carta com {C:attention}desvantagem{} pontuada',
+            --         [3] = '{C:inactive}(No momento, {X:mult,C:white}X#2#{C:inactive} Multi)'
+            --     },
+            --     ['unlock'] = {
+            --         [1] = 'Jogue uma mão de 5 cartas',
+            --         [2] = 'que contém apenas',
+            --         [3] = '{C:attention,E:1}Cartas com desvantagem{}'
+            --     }
+            -- },
             j_bunc_gameplan = {
                 ['name'] = 'Plano de Jogo',
                 ['text'] = {
@@ -1323,12 +1330,12 @@ return {
                     [2] = 'são viradas de cabeça para baixo'
                 }
             },
-            bl_bunc_cadaver = {
-                ['name'] = 'O Cadáver',
-                ['text'] = {
-                    [1] = 'Não deve jogar cartas de realeza'
-                }
-            },
+            -- bl_bunc_cadaver = {
+            --     ['name'] = 'O Cadáver',
+            --     ['text'] = {
+            --         [1] = 'Não deve jogar cartas de realeza'
+            --     }
+            -- },
             bl_bunc_wind = {
                 ['name'] = 'O Vento',
                 ['text'] = {
@@ -1367,12 +1374,12 @@ return {
                     [2] = 'Copas, Paus e Ouros recebem desvantagem'
                 }
             },
-            bl_bunc_final_trident = {
-                ['name'] = 'Tridente Carmesim',
-                ['text'] = {
-                    [1] = 'Sem lojas nesta Aposta'
-                }
-            },
+            -- bl_bunc_final_trident = {
+            --     ['name'] = 'Tridente Carmesim',
+            --     ['text'] = {
+            --         [1] = 'Sem lojas nesta Aposta'
+            --     }
+            -- },
             bl_bunc_final_tower = {
                 ['name'] = 'Torre Índigo',
                 ['text'] = {

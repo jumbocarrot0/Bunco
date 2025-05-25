@@ -871,19 +871,19 @@ return { -- Translation by Shinosan
                     [3] = 'lá {C:attention,E:1}Tùy Chất{}'
                 }
             },
-            j_bunc_neon = {
-                ['name'] = 'Neon Joker',
-                ['text'] = {
-                    [1] = 'Lá Joker này nhận {X:mult,C:white}X#1#{} Nhân',
-                    [2] = 'mỗi lá {C:attention}suy yếu{} được tính điểm',
-                    [3] = '{C:inactive}(Hiện tại là {X:mult,C:white}X#2#{C:inactive} Nhân)'
-                },
-                ['unlock'] = {
-                    [1] = 'Chơi một tay bài 5 lá',
-                    [2] = 'mà chỉ chứa',
-                    [3] = 'lá {C:attention,E:1}Suy yếu{}'
-                }
-            },
+            -- j_bunc_neon = {
+            --     ['name'] = 'Neon Joker',
+            --     ['text'] = {
+            --         [1] = 'Lá Joker này nhận {X:mult,C:white}X#1#{} Nhân',
+            --         [2] = 'mỗi lá {C:attention}suy yếu{} được tính điểm',
+            --         [3] = '{C:inactive}(Hiện tại là {X:mult,C:white}X#2#{C:inactive} Nhân)'
+            --     },
+            --     ['unlock'] = {
+            --         [1] = 'Chơi một tay bài 5 lá',
+            --         [2] = 'mà chỉ chứa',
+            --         [3] = 'lá {C:attention,E:1}Suy yếu{}'
+            --     }
+            -- },
             j_bunc_gameplan = {
                 ['name'] = 'Chiến Thuật',
                 ['text'] = {
@@ -1327,10 +1327,10 @@ return { -- Translation by Shinosan
             j_bunc_magic_wand = {
                 ['name'] = 'Đũa Phép Thuật',
                 ['text'] = {
-                    [1] = 'Lá Joker này {X:mult,C:white}X#1#{} Nhân',
+                    [1] = 'Lá Joker này {C:mult}+#1#{} Nhân',
                     [2] = 'mỗi tay bài chơi {C:attention}liên tiếp{}',
                     [3] = 'có chứa {C:attention}Phổ{}',
-                    [4] = '{C:inactive}(Hiện tại là {X:mult,C:white}X#2#{C:inactive} Nhân)'
+                    [4] = '{C:inactive}(Hiện tại là {C:mult}+#2#{C:inactive} Nhân)'
                 }
             },
             j_bunc_starfruit = {
