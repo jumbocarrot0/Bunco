@@ -593,9 +593,9 @@ jd_def["j_bunc_hopscotch"] = { -- Hopscotch
 
 }
 jd_def["j_bunc_pawn"] = { -- Pawn
-    reminder_text = {
+    text = {
         { text = "(" },
-        { ref_table = "card.joker_display_values", ref_value = "active" },
+        { ref_table = "card.joker_display_values", ref_value = "lowest_rank" },
         { text = ")" },
     },
     calc_function = function(card)
