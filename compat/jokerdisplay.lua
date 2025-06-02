@@ -873,7 +873,7 @@ jd_def["j_bunc_glue_gun"] = {   -- Glue Gun
     },
     calc_function = function(card)
         local active = (G.hand and G.hand.highlighted and (#G.hand.highlighted > 1) and (#G.hand.highlighted <= card.ability.extra.amount)) or false
-        card.joker_display_values.active_text = localize(active and 'k_active' or 'k_inactive')
+        card.joker_display_values.active_text = localize(active and 'k_active' or 'bunc_inactive')
     end,
     style_function = function(card, text, reminder_text, extra)
         if reminder_text and reminder_text.children[1] then
