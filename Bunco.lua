@@ -1549,8 +1549,10 @@ create_joker({ -- Xray
     calculate = function(self, card, context)
         if context.emplaced_card and context.emplaced_card.facing == 'back' and not context.blueprint then
             card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.bonus
-
-            forced_message('X'..tostring(card.ability.extra.xmult)..' '..localize('k_mult'), card, G.C.RED, card.ability.extra.bonus)
+            return {
+                message = localize('k_upgrade_ex'),
+                instant = true
+            }
         end
 
         if context.joker_main then
@@ -1823,7 +1825,7 @@ create_joker({ -- Shepherd
     end
 })
 
-create_joker({ -- Knight
+create_joker({ -- Joker Knight
     name = 'Knight', position = 14,
     vars = {{bonus = 6}, {mult = 0}},
     rarity = 'Uncommon', cost = 6,
@@ -1845,16 +1847,21 @@ create_joker({ -- Knight
                 delay(0.15)
                 event({ func = function() G.jokers:shuffle('aajk'); play_sound('cardSlide1', 1);return true end })
                 delay(0.5)
-            return true end })
+                return true 
+            end })
 
-            forced_message('+'..tostring(card.ability.extra.mult)..' '..localize('k_mult'), card, G.C.RED)
+            return {
+                message = '+'..tostring(card.ability.extra.mult)..' '..localize('k_mult'),
+                colour = G.C.RED
+            }
         end
 
         if context.break_positions and not context.blueprint then
             if card.ability.extra.mult ~= 0 then
                 card.ability.extra.mult = 0
-
-                forced_message(localize('k_reset'), card, G.C.RED)
+                return {
+                    message = localize('k_reset')
+                }
             end
         end
 
@@ -2799,7 +2806,8 @@ create_joker({ -- Head in the Clouds
                     update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(hand, 'poker_hands'),chips = G.GAME.hands[hand].chips, mult = G.GAME.hands[hand].mult, level=G.GAME.hands[hand].level})
                     level_up_hand(context.blueprint_card or card, self.name, nil, 1)
                     update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
-                return true end})
+                    return true 
+                end})
             end
         end
     end
@@ -2856,12 +2864,12 @@ create_joker({ -- Trigger Finger
         end
     end,
     calculate = function(self, card, context)
-        if context.highlight_card and (G.STATE == G.STATES.SELECTING_HAND or G.STATE == G.STATES.DRAW_TO_HAND) then
+        if context.bunc_trigger_finger_highlight_card and (G.STATE == G.STATES.SELECTING_HAND or G.STATE == G.STATES.DRAW_TO_HAND) then
             local cards = {}
             for i = 1, #G.hand.highlighted do
                 table.insert(cards, G.hand.highlighted[i])
             end
-            event({trigger = 'after', func = function()
+            if #cards > 0 and pseudorandom('trigger_finger'..G.SEED) < G.GAME.probabilities.normal / card.ability.extra.odds then
                 for i = 1, #cards do
                     if not cards[i].highlighted then
                         cards[i]:highlight()
@@ -2869,10 +2877,16 @@ create_joker({ -- Trigger Finger
                 end
                 if G.hand.highlighted then
                     G.FUNCS.play_cards_from_highlighted()
-                    play_sound('bunc_gunshot')
-                    forced_message(G.localization.misc.dictionary.bunc_pew, card, G.C.RED)
                 end
-            return true end})
+                return {
+                    message = G.localization.misc.dictionary.bunc_pew,
+                    colour = G.C.RED,
+                    sound = 'bunc_gunshot',
+                    instant = true,
+                    func = function()
+                    end
+                }
+            end
         end
         if context.joker_main then
             return {
@@ -3034,13 +3048,22 @@ create_joker({ -- Vandalism
         end
     end,
     calculate = function(self, card, context)
-        if context.stay_flipped and not context.blueprint and context.to_area == G.hand then
+        if context.stay_flipped and context.to_area == G.hand then
             -- Does not juice while in booster packs
             if G.STATE == G.STATES.SELECTING_HAND or G.STATE == G.STATES.DRAW_TO_HAND then
-                big_juice(card)
+                if (pseudorandom('vandalism'..G.SEED) < G.GAME.probabilities.normal / card.ability.extra.odds) then
+                    big_juice(context.blueprint_card or card)
+                    return {
+                        stay_flipped = true
+                    }
+                else
+                    return {
+                        stay_flipped = false
+                    }
+                end
             end
         end
-        if context.play_cards then
+        if context.bunc_play_cards then
             card.ability.extra.card_list = {}
             for i = 1, #G.hand.highlighted do
                 if G.hand.highlighted[i].facing == 'back' then
@@ -3250,7 +3273,7 @@ create_joker({ -- Running Joke
     blueprint = false, eternal = true,
     unlocked = true,
     calculate = function(self, card, context)
-        if context.enter_shop then
+        if context.bunc_enter_shop then
             big_juice(card)
             local area = G.shop_jokers
             local shop_card = Card(area.T.x + area.T.w/2, area.T.y, G.CARD_W, G.CARD_H, nil, G.P_CENTERS['j_joker'],
@@ -8399,6 +8422,25 @@ SMODS.Enhancement({ -- Copper
 })
 
 -- Stickers
+
+function Card:calculate_hindered()
+    if self.ability.bunc_hindered and self.ability.bunc_hindered_sold then
+        self:start_dissolve({G.C.GOLD}, nil, 1.6)
+    end
+end
+function Card:calculate_reactive()
+    if self.ability.bunc_reactive then
+        local skipped_blinds = 0
+        for _, v in pairs(G.GAME.round_resets.blind_states) do
+            if v == 'Skipped' then
+                skipped_blinds = skipped_blinds + 1
+            end
+        end
+        if skipped_blinds == 1 then
+            self:juice_up(0.3, 0.3)
+        end
+    end
+end
 
 SMODS.Atlas({key = 'bunco_stickers', path = 'Stickers/Stickers.png', px = 71, py = 95})
 

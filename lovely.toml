@@ -789,12 +789,8 @@ position = 'before'
 match_indent = true
 payload = '''
 
-if G.jokers ~= nil and self == G.hand then
-    for _, v in ipairs(G.jokers.cards) do
-        if v.config.center.key == 'j_bunc_xray' then
-            v:calculate_joker({emplaced_card = card})
-        end
-    end
+if G.jokers ~= nil and self == G.hand and next(SMODS.find_card('j_bunc_xray')) then
+    SMODS.calculate_context({emplaced_card = card})
 end
 
 '''
@@ -881,30 +877,26 @@ position = 'after'
 match_indent = true
 payload = '''
 
-if G.jokers ~= nil and self == break_table.node then
-    for _, v in ipairs(G.jokers.cards) do
-        if v.config.center.key == 'j_bunc_knight' and not v.debuff then
-            function do_tables_match(a, b)
-                return table.concat(a) == table.concat(b)
-            end
+if G.jokers ~= nil and self == break_table.node and next(SMODS.find_card('j_bunc_knight')) then
+    function do_tables_match(a, b)
+        return table.concat(a) == table.concat(b)
+    end
 
-            if break_table.before ~= nil then
+    if break_table.before ~= nil then
 
-            break_table.before = {}
+        break_table.before = {}
 
-            for _, v in ipairs(G.jokers.cards) do
-                table.insert(break_table.before, v.ability.name)
-            end
-
-            if not do_tables_match(break_table.before, break_table.after) then
-                v:calculate_joker({ break_positions = true })
-            end
-
-                break_table.before = nil
-                break_table.after = nil
-
-            end
+        for _, v in ipairs(G.jokers.cards) do
+            table.insert(break_table.before, v.ability.name)
         end
+
+        if not do_tables_match(break_table.before, break_table.after) then
+            SMODS.calculate_context({ break_positions = true })
+        end
+
+        break_table.before = nil
+        break_table.after = nil
+
     end
 end
 
@@ -1023,17 +1015,12 @@ position = 'after'
 match_indent = true
 payload = '''
 
-if G.jokers ~= nil then
-    for _, v in ipairs(G.jokers.cards) do
-        if v.config.center.key == 'j_bunc_head_in_the_clouds' and not v.debuff then
-            if (amount == nil) or not (amount <= 0) then
-                v:calculate_joker({level_up_hand = hand})
-            end
-        end
+if G.jokers ~= nil and next(SMODS.find_card('j_bunc_head_in_the_clouds')) then
+    if (amount == nil) or not (amount <= 0) then
+        SMODS.calculate_context({level_up_hand = hand})
     end
 end
-
-if hand == 'Head in the Clouds' then hand = 'High Card' end
+if hand == 'Head in the Clouds' then hand = 'High Card' end -- Prevents Head in the Clouds triggering itself
 
 '''
 
@@ -1046,15 +1033,8 @@ position = 'after'
 match_indent = true
 payload = '''
 
-if G.jokers ~= nil then
-    for _, v in ipairs(G.jokers.cards) do
-        if v.config.center.key == 'j_bunc_trigger_finger' and not v.debuff and is_higlighted and self.area == G.hand then
-            if pseudorandom('trigger_finger'..G.SEED) < G.GAME.probabilities.normal / v.ability.extra.odds then
-                v:calculate_joker({highlight_card = true})
-                break
-            end
-        end
-    end
+if G.jokers ~= nil and next(SMODS.find_card('j_bunc_trigger_finger')) then
+    SMODS.calculate_context({bunc_trigger_finger_highlight_card = true})
 end
 
 '''
@@ -1083,14 +1063,10 @@ position = 'before'
 match_indent = true
 payload = '''
 
-if G.jokers ~= nil then
-    for _, v in ipairs(G.jokers.cards) do
-        if v.config.center.key == 'j_bunc_vandalism' and not v.debuff then
-            if (pseudorandom('vandalism'..G.SEED) < G.GAME.probabilities.normal / v.ability.extra.odds) and (G.STATE == G.STATES.SELECTING_HAND or G.STATE == G.STATES.DRAW_TO_HAND) then
-                v:calculate_joker({stay_flipped = true})
-                return true
-            end
-        end
+if G.jokers ~= nil and next(SMODS.find_card('j_bunc_vandalism')) then
+    local ret = SMODS.calculate_context({stay_flipped = true})
+    if ret.stay_flipped then
+        return true
     end
 end
 
@@ -1106,11 +1082,7 @@ match_indent = true
 payload = '''
 
 if G.jokers ~= nil then
-    for _, v in ipairs(G.jokers.cards) do
-        if v.config.center.key == 'j_bunc_vandalism' and not v.debuff then
-            v:calculate_joker({play_cards = true})
-        end
-    end
+    SMODS.calculate_context({bunc_play_cards = true})
 end
 
 '''
@@ -1125,11 +1097,7 @@ match_indent = true
 payload = '''
 
 if G.jokers ~= nil then
-    for _, v in ipairs(G.jokers.cards) do
-        if v.config.center.key == 'j_bunc_running_joke' and not v.debuff then
-            v:calculate_joker({enter_shop = true})
-        end
-    end
+    SMODS.calculate_context({bunc_enter_shop = true})
 end
 
 '''
@@ -1341,11 +1309,7 @@ match_indent = true
 payload = '''
 
 if G.jokers ~= nil then
-    for _, v in ipairs(G.jokers.cards) do
-        if v.config.center.key == 'j_bunc_stylophone' and not v.debuff then
-            v:calculate_joker({click = true, other_card = self})
-        end
-    end
+    SMODS.calculate_context({click = true, other_card = self})
 end
 
 '''
@@ -2881,7 +2845,7 @@ end
 
 '''
 
-# Hindered Sticker 1/4
+# Hindered Sticker 1/3
 [[patches]]
 [patches.pattern]
 target = 'card.lua'
@@ -2900,7 +2864,7 @@ end
 
 '''
 
-# Hindered Sticker 2/4
+# Hindered Sticker 2/3
 [[patches]]
 [patches.pattern]
 target = 'card.lua'
@@ -2909,7 +2873,7 @@ position = 'after'
 match_indent = true
 payload = '''not self.ability.bunc_hindered_sold and'''
 
-# Hindered Sticker 3/4
+# Hindered Sticker 3/3
 [[patches]]
 [patches.pattern]
 target = 'card.lua'
@@ -2918,47 +2882,6 @@ position = 'before'
 match_indent = true
 payload = '''if self.ability.bunc_hindered_sold and self.children.use_button then self.children.use_button:remove(); self.children.use_button = nil end'''
 
-# Hindered Sticker 4/4
-[[patches]]
-[patches.pattern]
-target = 'card.lua'
-pattern = 'function Card:calculate_joker(context)'
-position = 'before'
-match_indent = true
-payload = '''
-
-function Card:calculate_hindered()
-    if self.ability.bunc_hindered and self.ability.bunc_hindered_sold then
-        self:start_dissolve({G.C.GOLD}, nil, 1.6)
-    end
-end
-
-'''
-
-# Reactive Sticker
-[[patches]]
-[patches.pattern]
-target = 'card.lua'
-pattern = 'function Card:calculate_joker(context)'
-position = 'before'
-match_indent = true
-payload = '''
-
-function Card:calculate_reactive()
-    if self.ability.bunc_reactive then
-        local debuffed_blinds = 0
-        for _, v in pairs(G.GAME.round_resets.blind_states) do
-            if v == 'Skipped' then
-                debuffed_blinds = debuffed_blinds + 1
-            end
-        end
-        if debuffed_blinds == 1 then
-            self:juice_up(0.3, 0.3)
-        end
-    end
-end
-
-'''
 
 # Eternal Sticker compat
 [[patches]]
