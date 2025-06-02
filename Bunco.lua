@@ -365,12 +365,12 @@ SMODS.current_mod.extra_tabs = function()
                             }},
                             {n=G.UIT.R, config={align = "cm", padding = 0}, nodes={
                                 {n=G.UIT.T, config={text = 'Shinosan', scale = text_scale*0.5, colour = G.C.UI.TEXT_LIGHT, shadow = true}},
-                            }}
-                        }},
-                        {n=G.UIT.C, config={align = "tl", padding = 0.05, minw = 2.0}, nodes={
+                            }},
                             {n=G.UIT.R, config={align = "cm", padding = 0}, nodes={
                                 {n=G.UIT.T, config={text = 'Mikadoe', scale = text_scale*0.5, colour = G.C.UI.TEXT_LIGHT, shadow = true}},
                             }},
+                        }},
+                        {n=G.UIT.C, config={align = "tl", padding = 0.05, minw = 2.0}, nodes={
                             {n=G.UIT.R, config={align = "cm", padding = 0}, nodes={
                                 {n=G.UIT.T, config={text = 'Lyman', scale = text_scale*0.5, colour = G.C.UI.TEXT_LIGHT, shadow = true}},
                             }},
@@ -433,6 +433,15 @@ SMODS.current_mod.extra_tabs = function()
                             }},
                             {n=G.UIT.R, config={align = "cm", padding = 0}, nodes={
                                 {n=G.UIT.T, config={text = 'VisJoker', scale = text_scale*0.5, colour = G.C.UI.TEXT_LIGHT, shadow = true}},
+                            }},
+                            {n=G.UIT.R, config={align = "cm", padding = 0}, nodes={
+                                {n=G.UIT.T, config={text = 'LucasBondDavid', scale = text_scale*0.5, colour = G.C.UI.TEXT_LIGHT, shadow = true}},
+                            }},
+                            {n=G.UIT.R, config={align = "cm", padding = 0}, nodes={
+                                {n=G.UIT.T, config={text = 'JayJayDee', scale = text_scale*0.5, colour = G.C.UI.TEXT_LIGHT, shadow = true}},
+                            }},
+                            {n=G.UIT.R, config={align = "cm", padding = 0}, nodes={
+                                {n=G.UIT.T, config={text = 'Marffe', scale = text_scale*0.5, colour = G.C.UI.TEXT_LIGHT, shadow = true}},
                             }}
                         }},
                     }},
