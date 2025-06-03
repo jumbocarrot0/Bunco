@@ -355,11 +355,6 @@ return { -- Translation by VisJoker
                     [2] = '所选卡牌至',
                     [3] = '{C:attention}#2#级'
                 },
-                ['unlock'] = {
-                    [1] = '从你的收藏中发现至少',
-                    [2] = '{C:attention}#1#{}个物品',
-                    [3] = ''
-                }
             },
             c_bunc_art = {
                 ['name'] = '艺术',
@@ -368,11 +363,6 @@ return { -- Translation by VisJoker
                     [2] = '所选卡牌至',
                     [3] = '{C:attention}#2#级'
                 },
-                ['unlock'] = {
-                    [1] = '从你的收藏中发现至少',
-                    [2] = '{C:attention}#1#{}个物品',
-                    [3] = ''
-                }
             },
             c_bunc_universe = {
                 ['name'] = '宇宙',
@@ -382,11 +372,6 @@ return { -- Translation by VisJoker
                     [3] = '牌级、增强、版本',
                     [4] = '和封印'
                 },
-                ['unlock'] = {
-                    [1] = '从你的收藏中发现至少',
-                    [2] = '{C:attention}#1#{}个物品',
-                    [3] = ''
-                }
             },
             c_bunc_lust = {
                 ['name'] = '色欲',
@@ -396,11 +381,6 @@ return { -- Translation by VisJoker
                     [3] = '{C:inactive}(最多{C:money}$#2#{C:inactive})',
                     [4] = '{C:inactive}(当前{C:money}$#3#{C:inactive})'
                 },
-                ['unlock'] = {
-                    [1] = '从你的收藏中发现至少',
-                    [2] = '{C:attention}#1#{}个物品',
-                    [3] = ''
-                }
             },
             c_bunc_sky = {
                 ['name'] = '天空',

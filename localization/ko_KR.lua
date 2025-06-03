@@ -350,10 +350,6 @@ return {
                     [2] = '선택된 카드를',
                     [3] = '{C:attention}#2#로 강화'
                 },
-                ['unlock'] = {
-                    [1] = '최소 {C:attention}#1#{} 아이템을',
-                    [2] = '컬렉션에서 발견하기'
-                }
             },
             c_bunc_art = {
                 ['name'] = '예술',
@@ -362,10 +358,6 @@ return {
                     [2] = 'selected cards to',
                     [3] = '{C:attention}#2#s'
                 },
-                ['unlock'] = {
-                    [1] = '최소 {C:attention}#1#{} 아이템을',
-                    [2] = '컬렉션에서 발견하기'
-                }
             },
             c_bunc_universe = {
                 ['name'] = '우주',
@@ -375,10 +367,6 @@ return {
                     [3] = 'and seal of up to {C:attention}#1#{}',
                     [4] = 'selected cards'
                 },
-                ['unlock'] = {
-                    [1] = '최소 {C:attention}#1#{} 아이템을',
-                    [2] = '컬렉션에서 발견하기'
-                }
             },
             c_bunc_lust = {
                 ['name'] = '색욕',
@@ -388,10 +376,6 @@ return {
                     [3] = '(최대 {C:money}$#2#{C:inactive})',
                     [4] = '{C:inactive}(현재 {C:money}$#3#{C:inactive})'
                 },
-                ['unlock'] = {
-                    [1] = '최소 {C:attention}#1#{} 아이템을',
-                    [2] = '컬렉션에서 발견하기'
-                }
             },
             c_bunc_sky = {
                 ['name'] = '창공',

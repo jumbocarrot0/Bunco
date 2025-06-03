@@ -359,11 +359,6 @@ return {
                     [2] = 'cartes sélectionnées en',
                     [3] = '{C:attention}#2#'
                 },
-                ['unlock'] = {
-                    [1] = 'Découvrez au moins',
-                    [2] = '{C:attention}#1#{} objets de',
-                    [3] = 'votre collection'
-                }
             },
             c_bunc_art = {
                 ['name'] = "L'Art",
@@ -372,11 +367,6 @@ return {
                     [2] = 'cartes sélectionnées en',
                     [3] = '{C:attention}#2#'
                 },
-                ['unlock'] = {
-                    [1] = 'Découvrez au moins',
-                    [2] = '{C:attention}#1#{} objets de',
-                    [3] = 'votre collection'
-                }
             },
             c_bunc_universe = {
                 ['name'] = "L'Univers",
@@ -386,11 +376,6 @@ return {
                     [3] = "et sceau de jusqu'à {C:attention}#1#{}",
                     [4] = 'cartes sélectionnées'
                 },
-                ['unlock'] = {
-                    [1] = 'Découvrez au moins',
-                    [2] = '{C:attention}#1#{} objets de',
-                    [3] = 'votre collection'
-                }
             },
             c_bunc_lust = {
                 ['name'] = 'Luxure',
@@ -400,11 +385,6 @@ return {
                     [3] = ' {C:inactive}({C:money}$#2#{} {C:inactive}au maximum){}',
                     [4] = '{C:inactive}(Actuellement {C:money}$#3#{C:inactive}){}'
                 },
-                ['unlock'] = {
-                    [1] = 'Découvrez au moins',
-                    [2] = '{C:attention}#1#{} objets de',
-                    [3] = 'votre collection'
-                }
             },
             c_bunc_sky = {
                 ['name'] = 'Le Ciel',

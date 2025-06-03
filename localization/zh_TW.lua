@@ -366,10 +366,6 @@ return {
                     [3] = '{C:inactive}（最多{C:money}$#2#{C:inactive}）',
                     [4] = '{C:inactive}（目前會給予{C:money}$#3#{C:inactive}）'
                 },
-                ['unlock'] = {
-                    [1] = "在收藏中發現至少",
-                    [2] = "{C:attention}#1#{}個項目",
-                }
             },
             c_bunc_sky = {
                 ['name'] = '天空',

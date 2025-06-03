@@ -378,11 +378,6 @@ return {
                     [2] = 'selected cards to',
                     [3] = '{C:attention}#2#s'
                 },
-                ['unlock'] = {
-                    [1] = 'Discover at least',
-                    [2] = '{C:attention}#1#{} items from',
-                    [3] = 'your collection'
-                }
             },
             c_bunc_art = {
                 ['name'] = 'The Art',
@@ -391,11 +386,6 @@ return {
                     [2] = 'selected cards to',
                     [3] = '{C:attention}#2#s'
                 },
-                ['unlock'] = {
-                    [1] = 'Discover at least',
-                    [2] = '{C:attention}#1#{} items from',
-                    [3] = 'your collection'
-                }
             },
             c_bunc_universe = {
                 ['name'] = 'The Universe',
@@ -405,11 +395,6 @@ return {
                     [3] = 'and seal of up to {C:attention}#1#{}',
                     [4] = 'selected cards'
                 },
-                ['unlock'] = {
-                    [1] = 'Discover at least',
-                    [2] = '{C:attention}#1#{} items from',
-                    [3] = 'your collection'
-                }
             },
             c_bunc_lust = {
                 ['name'] = 'Lust',
@@ -419,11 +404,6 @@ return {
                     [3] = 'in hand {C:inactive}(Max of {C:money}$#2#{C:inactive})',
                     [4] = '{C:inactive}(Currently {C:money}$#3#{C:inactive})'
                 },
-                ['unlock'] = {
-                    [1] = 'Discover at least',
-                    [2] = '{C:attention}#1#{} items from',
-                    [3] = 'your collection'
-                }
             },
             c_bunc_sky = {
                 ['name'] = 'The Sky',

@@ -319,11 +319,6 @@ return {
                     [2] = 'cartas seleccionadas a',
                     [3] = '{C:attention}#2#'
                 },
-                ['unlock'] = {
-                    [1] = 'Discover at least',
-                    [2] = '{C:attention}#1#{} items from',
-                    [3] = 'your collection'
-                }
             },
             c_bunc_universe = {
                 ['name'] = 'El Universo',
@@ -333,11 +328,6 @@ return {
                     [3] = 'y sello de hasta {C:attention}#1#{}',
                     [4] = 'cartas seleccionadas'
                 },
-                ['unlock'] = {
-                    [1] = 'Discover at least',
-                    [2] = '{C:attention}#1#{} items from',
-                    [3] = 'your collection'
-                }
             },
             c_bunc_lust = {
                 ['name'] = 'Lujuría',
@@ -347,11 +337,6 @@ return {
                     [3] = '{C:inactive}(Máximo de {C:money}$#2#{C:inactive})',
                     [4] = '{C:inactive}(Actualmente {C:money}$#3#{C:inactive})'
                 },
-                ['unlock'] = {
-                    [1] = 'Discover at least',
-                    [2] = '{C:attention}#1#{} items from',
-                    [3] = 'your collection'
-                }
             },
             c_bunc_sky = {
                 ['name'] = 'El cielo',

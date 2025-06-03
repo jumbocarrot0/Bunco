@@ -354,11 +354,6 @@ return { -- Translation by Shinosan
                     [2] = 'lá được chọn trở thành',
                     [3] = '{C:attention}#2#'
                 },
-                ['unlock'] = {
-                    [1] = 'Khám phá ít nhất',
-                    [2] = '{C:attention}#1#{} vật phẩm trong',
-                    [3] = 'bộ sưu tập của bạn'
-                }
             },
             c_bunc_art = {
                 ['name'] = 'Nghệ thuật',
@@ -367,11 +362,6 @@ return { -- Translation by Shinosan
                     [2] = 'lá được chọn trở thành',
                     [3] = '{C:attention}#2#'
                 },
-                ['unlock'] = {
-                    [1] = 'Khám phá ít nhất',
-                    [2] = '{C:attention}#1#{} vật phẩm trong',
-                    [3] = 'bộ sưu tập của bạn'
-                }
             },
             c_bunc_universe = {
                 ['name'] = 'Vũ Trụ',
@@ -381,11 +371,6 @@ return { -- Translation by Shinosan
                     [3] = 'và dấu lên tới',
                     [4] = '{C:attention}#1#{} lá được chọn'
                 },
-                ['unlock'] = {
-                    [1] = 'Khám phá ít nhất',
-                    [2] = '{C:attention}#1#{} vật phẩm trong',
-                    [3] = 'bộ sưu tập của bạn'
-                }
             },
             c_bunc_lust = {
                 ['name'] = 'Ham Muốn',
@@ -395,11 +380,6 @@ return { -- Translation by Shinosan
                     [3] = '{C:inactive}(Tối đa là {C:money}$#2#{C:inactive})',
                     [4] = '{C:inactive}(Hiện tại là {C:money}$#3#{C:inactive})'
                 },
-                ['unlock'] = {
-                    [1] = 'Khám phá ít nhất',
-                    [2] = '{C:attention}#1#{} vật phẩm trong',
-                    [3] = 'bộ sưu tập của bạn'
-                }
             },
             c_bunc_sky = {
                 ['name'] = 'Bầu trời',
