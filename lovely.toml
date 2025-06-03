@@ -2058,19 +2058,19 @@ end
 
 '''
 
-# G.FUNCS.play_cards_from_highlighted (Magenta Dagger 4/5)
-# Will fail with talisman installed
-[[patches]]
-[patches.pattern]
-target = 'functions/state_events.lua'
-pattern = "G.FUNCS.evaluate_play = function(e)"
-position = 'after'
-match_indent = true
-payload = '''
+# # G.FUNCS.play_cards_from_highlighted (Magenta Dagger 4/5)
+# # Will fail with talisman installed
+# [[patches]]
+# [patches.pattern]
+# target = 'functions/state_events.lua'
+# pattern = "G.FUNCS.evaluate_play = function(e)"
+# position = 'after'
+# match_indent = true
+# payload = '''
 
-local antiscore = G.GAME.blind.antiscore
+# local antiscore = G.GAME.blind.antiscore
 
-'''
+# '''
 
 # function update_hand_text (Magenta Dagger 5/5)
 [[patches]]
@@ -2079,7 +2079,7 @@ target = 'functions/state_events.lua'
 pattern = "ease_to = G.GAME.chips + math.floor(hand_chips*mult),"
 position = 'at'
 match_indent = true
-payload = '''ease_to = G.GAME.chips + math.floor(hand_chips * mult) * (antiscore and -1 or 1),'''
+payload = '''ease_to = G.GAME.chips + math.floor(hand_chips * mult) * (G.GAME.blind.antiscore and -1 or 1),'''
 
 # # function get_new_boss() (Turquoise Shield 1/2)
 # [[patches]]
