@@ -3577,9 +3577,28 @@ create_joker({ -- Mousetrap
     blueprint = true, eternal = true,
     unlocked = true,
     calculate = function(self, card, context)
+        if (context.end_of_round or context.hand_drawn or context.after) and card.children.center.sprite_pos.y == 15 then
+            G.E_MANAGER:add_event(Event({
+                trigger = 'immediate',
+                func = function()
+                    card:juice_up(0.3, 0.3)
+                    local center = card.children.center
+                    center:set_sprite_pos({ x = 2, y = 5 })
+                    return true
+                end
+            }))
+        end
         if context.joker_main then
             if pseudorandom('mousetrap'..G.SEED) < G.GAME.probabilities.normal / card.ability.extra.odds then
                 if G.GAME.current_round.hands_left ~= 0 then ease_hands_played(-1) end
+                G.E_MANAGER:add_event(Event({
+                    trigger = 'immediate',
+                    func = function()
+                        local center = card.children.center
+                        center:set_sprite_pos({ x = 9, y = 15 })
+                        return true
+                    end
+                }))
                 if G.SETTINGS.SOUND.bunc_mousetrap_volume == 0 then
                     return {
                         message = G.localization.misc.dictionary.bunc_ouch,
