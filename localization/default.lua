@@ -60,6 +60,7 @@ return {
             bunc_exceeded_score = 'Exceeded the limit!',
             bunc_min_ante = 'Minimum Ante:',
             bunc_final_blind = 'Final Blind',
+            bunc_volume = 'Volume',
 
             -- Consumable types
 

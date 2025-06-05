@@ -64,6 +64,7 @@ return {
             bunc_exceeded_score = 'Limite de score dépassée!',
             bunc_min_ante = 'Mise Minimale :',
             bunc_final_blind = 'Blinde Finale',
+            bunc_volume = 'Volume',
 
             -- Consumable types
 

@@ -60,6 +60,7 @@ return { -- Translation by Shinosan
             bunc_exceeded_score = 'Đã vượt quá giới hạn!',
             bunc_min_ante = 'Ante tối thiểu:',
             bunc_final_blind = 'Blind cuối cùng',
+            bunc_volume = "Âm lượng",
 
             -- Consumable types
 
@@ -1349,7 +1350,7 @@ return { -- Translation by Shinosan
                 ['text'] = {
                     [1] = '{C:green}#1# trên #2#{} khả năng thêm',
                     [2] = 'ấn bản {C:dark_edition}Đa Sắc{} cho',
-                    [3] = 'lá bài ngẫu nhiên được tính điểm',
+                    [3] = 'tất cả lá bài được tính điểm',
                     [4] = 'nếu trên tay có {C:attention}Phổ'
                 }
             },

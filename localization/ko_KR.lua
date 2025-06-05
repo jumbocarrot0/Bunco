@@ -61,6 +61,7 @@ return {
             bunc_exceeded_score = '한도 초과!',
             bunc_min_ante = '최소 앤티:',
             bunc_final_blind = '마지막 블라인드',
+            bunc_volume = '볼륨',
 
             -- Consumable types
 

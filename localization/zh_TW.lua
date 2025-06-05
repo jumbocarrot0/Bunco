@@ -60,6 +60,7 @@ return {
             bunc_exceeded_score = '超出限制！',
             bunc_min_ante = '最小底注：',
             bunc_final_blind = '最終盲注',
+            bunc_volume = '音量',
 
             -- Consumable types
 

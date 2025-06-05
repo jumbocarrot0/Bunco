@@ -60,6 +60,7 @@ return { -- Translation by VisJoker
             bunc_exceeded_score = '超过限制！',
             bunc_min_ante = '最小底注：',
             bunc_final_blind = '最终盲注',
+            bunc_volume = '音量',
 
             -- 消耗品类型
 

@@ -282,11 +282,32 @@ function BUNCOMOD.content.config_tab()
     }}
 end
 
--- Credits tab
+-- Audio + Credits tab
 
+G.SETTINGS.SOUND.bunc_trigger_finger_volume = G.SETTINGS.SOUND.bunc_trigger_finger_volume or 100
+G.SETTINGS.SOUND.bunc_mousetrap_volume = G.SETTINGS.SOUND.bunc_mousetrap_volume or 100
+G.SETTINGS.SOUND.bunc_stylophone_volume = G.SETTINGS.SOUND.bunc_stylophone_volume or 100
 SMODS.current_mod.extra_tabs = function()
     local text_scale = 0.6
 	return {
+		{
+			label = localize('b_set_audio'),
+			tab_definition_function = function()
+				return {n = G.UIT.ROOT, config = {r = 0.1, minw = 4, align = "tm", padding = 0.2, colour = G.C.BLACK}, nodes = {
+                    {n=G.UIT.R, config={align = "cm", padding = 0.1, outline_colour = G.C.JOKER_GREY, r = 0.1, outline = 1}, nodes={
+                        {n=G.UIT.R, config={align = "tm", padding = 0}, nodes={
+                            create_slider({label = G.localization.descriptions.Joker.j_bunc_trigger_finger.name .. " (" .. G.localization.misc.dictionary.bunc_volume .. ")", w = 5, h = 0.4, ref_table = G.SETTINGS.SOUND, ref_value = 'bunc_trigger_finger_volume', min = 0, max = 100}),
+                        }},
+                        {n=G.UIT.R, config={align = "tm", padding = 0}, nodes={
+                            create_slider({label = G.localization.descriptions.Joker.j_bunc_mousetrap.name .. " (" .. G.localization.misc.dictionary.bunc_volume .. ")", w = 5, h = 0.4, ref_table = G.SETTINGS.SOUND, ref_value = 'bunc_mousetrap_volume', min = 0, max = 100}),
+                        }},
+                        {n=G.UIT.R, config={align = "tm", padding = 0}, nodes={
+                            create_slider({label = G.localization.descriptions.Joker.j_bunc_stylophone.name .. " (" .. G.localization.misc.dictionary.bunc_volume .. ")", w = 5, h = 0.4, ref_table = G.SETTINGS.SOUND, ref_value = 'bunc_stylophone_volume', min = 0, max = 100}),
+                        }},
+                    }}
+				}}
+			end,
+		},
 		{
 			label = G.localization.misc.dictionary.b_credits,
 			tab_definition_function = function()
@@ -1133,6 +1154,7 @@ SMODS.Atlas({key = 'bunco_jokers_taped', path = 'Jokers/JokerTaped.png', px = 12
 SMODS.Atlas({key = 'bunco_jokers_headache', path = 'Jokers/JokerHeadache.png', px = 71, py = 95})
 SMODS.Atlas({key = 'bunco_jokers_winking', path = 'Jokers/JokerWinking.png', px = 71, py = 95})
 SMODS.Atlas({key = 'bunco_jokers_border', path = 'Jokers/JokerBorder.png', px = 71, py = 95})
+SMODS.Atlas({key = 'settings_icon', path = 'settings.png', px = 32, py = 32})
 
 SMODS.Sound({key = 'gunshot', path = 'gunshot.ogg'})
 SMODS.Sound({key = 'mousetrap', path = 'mousetrap.ogg'})
@@ -2857,6 +2879,22 @@ create_joker({ -- Headshot
     end
 })
 
+function create_UIBox_bunc_trigger_finger_config()    
+    local t = create_UIBox_generic_options({ contents = {
+        {n=G.UIT.R, config={align = "cm", padding = 0.15, colour = G.C.CLEAR}, nodes={
+            {n=G.UIT.C, config={align = "cm", padding = 0.15}, nodes={
+                create_slider({label = G.localization.descriptions.Joker.j_bunc_trigger_finger.name .. " (" .. G.localization.misc.dictionary.bunc_volume .. ")", w = 5, h = 0.4, ref_table = G.SETTINGS.SOUND, ref_value = 'bunc_trigger_finger_volume', min = 0, max = 100}),
+            }}
+        }}
+    }})
+    return t
+end
+G.FUNCS.j_bunc_trigger_finger_settings = function(e)
+	G.FUNCS.overlay_menu{
+		definition = create_UIBox_bunc_trigger_finger_config(),
+        config = {offset = {x=0,y=10}}
+	}
+end
 create_joker({ -- Trigger Finger
     name = 'Trigger Finger', position = 38,
     vars = {{xmult = 4}, {odds = 10}},
@@ -2892,14 +2930,21 @@ create_joker({ -- Trigger Finger
                 if G.hand.highlighted then
                     G.FUNCS.play_cards_from_highlighted()
                 end
-                return {
-                    message = G.localization.misc.dictionary.bunc_pew,
-                    colour = G.C.RED,
-                    sound = 'bunc_gunshot',
-                    instant = true,
-                    func = function()
-                    end
-                }
+                if G.SETTINGS.SOUND.bunc_trigger_finger_volume == 0 then
+                    return {
+                        message = G.localization.misc.dictionary.bunc_pew,
+                        colour = G.C.RED,
+                        instant = true
+                    }
+                else
+                    return {
+                        message = G.localization.misc.dictionary.bunc_pew,
+                        colour = G.C.RED,
+                        sound = 'bunc_gunshot',
+                        volume = G.SETTINGS.SOUND.bunc_trigger_finger_volume / 100,
+                        instant = true
+                    }
+                end
             end
         end
         if context.joker_main then
@@ -3500,6 +3545,22 @@ create_joker({ -- Bounty Hunter
     end
 })
 
+function create_UIBox_bunc_mousetrap_config()    
+    local t = create_UIBox_generic_options({ contents = {
+        {n=G.UIT.R, config={align = "cm", padding = 0.15, colour = G.C.CLEAR}, nodes={
+            {n=G.UIT.C, config={align = "cm", padding = 0.15}, nodes={
+                create_slider({label = G.localization.descriptions.Joker.j_bunc_mousetrap.name .. " (" .. G.localization.misc.dictionary.bunc_volume .. ")", w = 5, h = 0.4, ref_table = G.SETTINGS.SOUND, ref_value = 'bunc_mousetrap_volume', min = 0, max = 100}),
+            }}
+        }}
+    }})
+    return t
+end
+G.FUNCS.j_bunc_mousetrap_settings = function(e)
+	G.FUNCS.overlay_menu{
+		definition = create_UIBox_bunc_mousetrap_config(),
+        config = {offset = {x=0,y=10}}
+	}
+end
 create_joker({ -- Mousetrap
     name = 'Mousetrap', position = 53,
     vars = {{chips = 300}, {odds = 3}},
@@ -3519,8 +3580,19 @@ create_joker({ -- Mousetrap
         if context.joker_main then
             if pseudorandom('mousetrap'..G.SEED) < G.GAME.probabilities.normal / card.ability.extra.odds then
                 if G.GAME.current_round.hands_left ~= 0 then ease_hands_played(-1) end
-                event({func = function() play_sound('bunc_mousetrap') return true end})
-                forced_message(G.localization.misc.dictionary.bunc_ouch, card, G.C.RED, true)
+                if G.SETTINGS.SOUND.bunc_mousetrap_volume == 0 then
+                    return {
+                        message = G.localization.misc.dictionary.bunc_ouch,
+                        colour = G.C.RED,
+                    }
+                else
+                    return {
+                        message = G.localization.misc.dictionary.bunc_ouch,
+                        colour = G.C.RED,
+                        sound = "bunc_mousetrap",
+                        volume = G.SETTINGS.SOUND.bunc_mousetrap_volume / 100
+                    }
+                end
             else
                 return {
                     message = localize{type='variable', key='a_chips', vars={card.ability.extra.chips}},
@@ -4008,6 +4080,22 @@ create_joker({ -- Jumper
     end
 })
 
+function create_UIBox_bunc_stylophone_config()    
+    local t = create_UIBox_generic_options({ contents = {
+        {n=G.UIT.R, config={align = "cm", padding = 0.15, colour = G.C.CLEAR}, nodes={
+            {n=G.UIT.C, config={align = "cm", padding = 0.15}, nodes={
+                create_slider({label = G.localization.descriptions.Joker.j_bunc_stylophone.name .. " (" .. G.localization.misc.dictionary.bunc_volume .. ")", w = 5, h = 0.4, ref_table = G.SETTINGS.SOUND, ref_value = 'bunc_stylophone_volume', min = 0, max = 100}),
+            }}
+        }}
+    }})
+    return t
+end
+G.FUNCS.j_bunc_stylophone_settings = function(e)
+	G.FUNCS.overlay_menu{
+		definition = create_UIBox_bunc_stylophone_config(),
+        config = {offset = {x=0,y=10}}
+	}
+end
 create_joker({ -- Stylophone
     name = 'Stylophone', position = 60,
     vars = {{x = 0.3}},
@@ -4017,6 +4105,9 @@ create_joker({ -- Stylophone
     calculate = function(self, card, context)
 
         local function play_stylophone(other_card)
+            if G.SETTINGS.SOUND.bunc_stylophone_volume == 0 then
+                return
+            end
             local instrument = 'bunc_stone'
 
             local function calculate_pitch(pitch)
@@ -4046,12 +4137,14 @@ create_joker({ -- Stylophone
                         instrument = 'bunc_paperback_crown'
                     end
                 end
-                event({trigger = 'after', func = function() play_sound(instrument, calculate_pitch(other_card:get_id()), 2.0) return true end})
+                event({trigger = 'after', func = function() play_sound(instrument, calculate_pitch(other_card:get_id()), 2.0 * G.SETTINGS.SOUND.bunc_stylophone_volume / 100) return true end})
             end
         end
 
         if context.individual and context.cardarea == G.play then
-            play_stylophone(context.other_card)
+            if G.SETTINGS.SOUND.bunc_stylophone_volume > 0 then
+                play_stylophone(context.other_card)
+            end
             if not SMODS.has_no_rank(context.other_card) then
                 return {
                     mult = context.other_card:get_id() * card.ability.extra.x,
@@ -4059,7 +4152,7 @@ create_joker({ -- Stylophone
                 }
             end
         end
-        if context.click and context.other_card.area == G.hand then
+        if context.click and context.other_card.area == G.hand and G.SETTINGS.SOUND.bunc_stylophone_volume > 0 then
             extra_juice(card)
             play_stylophone(context.other_card)
         end

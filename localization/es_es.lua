@@ -53,6 +53,7 @@ return {
             bunc_least_played_hand = '(mano menos jugada)',
             bunc_blade = '(1.5X puntuación de la ciega)',
             bunc_exceeded_score = '¡Excedió el límite!',
+            bunc_volume = 'Volumen',
 
             -- Consumable types
 
