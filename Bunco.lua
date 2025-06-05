@@ -1143,6 +1143,8 @@ SMODS.Sound({key = 'diamond', path = 'diamond.ogg'})
 SMODS.Sound({key = 'fleuron', path = 'fleuron.ogg'})
 SMODS.Sound({key = 'halberd', path = 'halberd.ogg'})
 SMODS.Sound({key = 'stone', path = 'stone.ogg'})
+SMODS.Sound({key = 'paperback_crown', path = 'crown.ogg'})
+SMODS.Sound({key = 'paperback_star', path = 'star.ogg'})
 
 SMODS.Shader({key = 'headache', path = 'headache.fs'})
 
@@ -4038,6 +4040,10 @@ create_joker({ -- Stylophone
                         instrument = 'bunc_fleuron'
                     elseif other_card.base.suit == 'bunc_Halberds' then
                         instrument = 'bunc_halberd'
+                    elseif other_card.base.suit == 'paperback_Stars' then
+                        instrument = 'bunc_paperback_star'
+                    elseif other_card.base.suit == 'paperback_Crowns' then
+                        instrument = 'bunc_paperback_crown'
                     end
                 end
                 event({trigger = 'after', func = function() play_sound(instrument, calculate_pitch(other_card:get_id()), 2.0) return true end})
@@ -4594,7 +4600,6 @@ SMODS.Consumable{ -- The Universe
 SMODS.Consumable{ -- Lust
     set = 'Tarot', atlas = 'bunco_tarots',
     key = 'lust',
-    --unlocked = false,
 
     config = {bonus = 1, limit = 52},
     pos = coordinate(4),
@@ -4609,9 +4614,6 @@ SMODS.Consumable{ -- Lust
             reward = #G.hand.cards * self.config.bonus
         end
         return {vars = {self.config.bonus, self.config.limit, (reward <= self.config.limit) and reward or self.config.limit}}
-    end,
-    locked_loc_vars = function(self, info_queue, card)
-        return {vars = {thoth_unlock_amount}}
     end,
 
     can_use = function(self, card)
