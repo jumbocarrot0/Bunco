@@ -4024,7 +4024,7 @@ create_joker({ -- Headache
 
 create_joker({ -- Games Collector
     name = 'Games Collector', position = 58,
-    vars = {{bonus = 10}, {chips = 0}},
+    vars = {{bonus = 10}, {chips = 0}, {drawn_this_round = {}}},
     custom_vars = function (self, info_queue, card)
         info_queue[#info_queue+1] = {set = 'Other', key = 'bunc_linked_group'}
         return {vars = {card.ability.extra.bonus, card.ability.extra.chips}}
@@ -4041,11 +4041,22 @@ create_joker({ -- Games Collector
         -- "naturally" (so it didn't request other cards)
         -- the Joker won't recieve its bonus
 
-        if context.groups_drawn and not context.blueprint then
-            for _, group in ipairs(context.groups_drawn) do
-                card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.bonus
+        if context.bunc_groups_drawn and not context.blueprint then
+            local upgrade = false
+            for _, group_id in ipairs(context.bunc_groups_drawn) do
+                if not card.ability.extra.drawn_this_round[group_id] then
+                    card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.bonus
+                    card.ability.extra.drawn_this_round[group_id] = true
+                    upgrade = true
+                end
             end
-            forced_message(localize('k_upgrade_ex'), card, G.C.CHIPS)
+            if upgrade then
+                return {
+                    message = localize('k_upgrade_ex'),
+                    colour = G.C.CHIPS
+                }
+            end
+            -- forced_message(localize('k_upgrade_ex'), card, G.C.CHIPS)
         end
         if context.joker_main then
             if card.ability.extra.chips ~= 0 then
@@ -4059,6 +4070,9 @@ create_joker({ -- Games Collector
                     card = card
                 }
             end
+        end
+        if context.end_of_round then
+            card.ability.extra.drawn_this_round = {}
         end
     end,
     custom_in_pool = function()
@@ -5011,79 +5025,37 @@ SMODS.DrawStep({
     end
 })
 
--- Pseudoinjections for Polyminoes
-
-local original_draw_from_deck_to_hand = G.FUNCS.draw_from_deck_to_hand
-G.FUNCS.draw_from_deck_to_hand = function(e)
-    original_draw_from_deck_to_hand(e)
-
-    event({delay = 0.0, trigger = 'before', func = function()
-
-        local groups = {}
-        local cards_from_groups = {}
-
-        -- Check for linked cards in the G.hand
-
-        for i = 1, #G.hand.cards do
-            local card = G.hand.cards[i]
-            if card.ability.group then
-                local can_insert = true
-
-                for _, group in ipairs(groups) do
-                    if group.id == card.ability.group.id then
-                        can_insert = false
-                    end
-                end
-
-                if can_insert then
-                    table.insert(groups, card.ability.group)
-                end
-            end
-        end
-
-        local m = 1
-        for _, group in ipairs(groups) do
-
+CardArea.original_cardarea_emplace = CardArea.emplace
+function CardArea:emplace(card, location, stay_flipped)
+    local ret = self:original_cardarea_emplace(card, location, stay_flipped)
+    if self == G.hand and card.ability.group and card.ability.group.id then
+        event({trigger = 'immediate', func = function()
             local n = 0
             while n < #G.deck.cards do
-                local card = G.deck.cards[#G.deck.cards - n]
+                local other_card = G.deck.cards[#G.deck.cards - n]
 
-                if card.ability.group and (card.ability.group.id == group.id) then
-                    cards_from_groups[m] = card
-                    m = m + 1
+                if other_card == card or other_card.area == G.hand or not other_card then
+
+                else
+                    if other_card.ability.group and other_card.ability.group.id == card.ability.group.id and other_card.area == G.deck then
+                        event({trigger = 'immediate', func = function()
+                            draw_card(G.deck, G.hand, percent, 'up', true, other_card)
+                            return true
+                        end})
+                    end
                 end
 
                 n = n + 1
             end
-        end
 
-        local drawn = false
-
-        for i = 1, #cards_from_groups do
-            local n = 0
-            while n < #G.deck.cards do
-                local card = G.deck.cards[#G.deck.cards - n]
-
-                if card == cards_from_groups[i] then
-                    draw_card(G.deck, G.hand, i * 100 / #cards_from_groups, 'up', true, card)
-                    drawn = true
-                end
-
-                n = n + 1
-            end
-        end
-
-        if groups and drawn then
-            if G.jokers ~= nil then
-                for _, v in ipairs(G.jokers.cards) do
-                    if v.config.center.key == 'j_bunc_games_collector' and not v.debuff then
-                        v:calculate_joker({groups_drawn = groups})
-                    end
-                end
-            end
-        end
-
-    return true end})
+            event({trigger = 'immediate', func = function()
+                SMODS.calculate_context({bunc_groups_drawn = {card.ability.group.id}})
+                return true
+            end})
+            return true 
+        end})
+    end
+    return ret
 end
 
 local original_add_to_highlighted = CardArea.add_to_highlighted

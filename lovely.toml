@@ -453,14 +453,37 @@ G.E_MANAGER:add_event(Event({func = function() G.DRAWING_CARDS = nil return true
 
 '''
 
+# Linked cards drawing fix
+# A fix for ghost cards
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "if from then card = from:remove_card(card) end"
+position = "before"
+match_indent = true
+payload = '''
+
+local in_area = false
+for n = 0, #from.cards do
+    if from.cards[n] == card then
+        in_area = true
+        break
+    end
+end
+if not in_area and from == G.deck then
+    return true
+end
+
+'''
+
 # Linked cards can discard
 [[patches]]
 [patches.pattern]
 target = "functions/button_callbacks.lua"
-pattern = "if G.GAME.current_round.discards_left <= 0 or #G.hand.highlighted <= 0 then"
+pattern = "if G.GAME.current_round.discards_left <= 0 or #G.hand.highlighted <= 0 or #G.hand.highlighted > math.max(G.GAME.starting_params.discard_limit, 0) then"
 position = "at"
 match_indent = true
-payload = '''if G.GAME.current_round.discards_left <= 0 or #G.hand.highlighted <= 0 or (G.GAME.THE_8_BYPASS and (#G.hand.highlighted > G.hand.config.highlighted_limit)) then'''
+payload = '''if G.GAME.current_round.discards_left <= 0 or #G.hand.highlighted <= 0 or #G.hand.highlighted > math.max(G.GAME.starting_params.discard_limit, 0) or (G.GAME.THE_8_BYPASS and (#G.hand.highlighted > G.GAME.starting_params.discard_limit)) then'''
 
 # Linked cards selection 1/2
 [[patches]]
@@ -611,8 +634,8 @@ if (_c.set == 'Default' or _c.set == 'Enhanced') and card and card.ability and t
         local all_cards_from_group = {}
         if card and card.area then
             if card.area.config.type == 'title' then
-                for i = 1, #G.deck.cards do
-                    local check_card = G.deck.cards[i]
+                for i = 1, #G.playing_cards do
+                    local check_card = G.playing_cards[i]
                     if check_card.ability and type(check_card.ability) == 'table' and check_card.ability.group then
                         if check_card.ability.group.id == card.ability.group.id then
                             table.insert(all_cards_from_group, check_card)
@@ -675,10 +698,11 @@ end
 
 '''
 
+# Can play more than 5 cards with linked cards
 [[patches]]
 [patches.pattern]
 target = 'functions/button_callbacks.lua'
-pattern = 'if #G.hand.highlighted <= 0 or G.GAME.blind.block_play or #G.hand.highlighted > 5 then'
+pattern = 'if #G.hand.highlighted <= 0 or G.GAME.blind.block_play or #G.hand.highlighted > math.max(G.GAME.starting_params.play_limit, 1) then'
 position = 'at'
 match_indent = true
 payload = '''
@@ -693,7 +717,7 @@ if G.hand and G.hand.highlighted then
     end
 end
 
-if #G.hand.highlighted <= (G.GAME.blind and G.GAME.blind.name == 'cry-Sapphire Stamp' and not G.GAME.blind.disabled and 1 or 0) or G.GAME.blind.block_play or (#G.hand.highlighted > G.hand.config.highlighted_limit and group_size <= G.hand.config.highlighted_limit) then
+if #G.hand.highlighted <= (G.GAME.blind and G.GAME.blind.name == 'cry-Sapphire Stamp' and not G.GAME.blind.disabled and 1 or 0) or G.GAME.blind.block_play or (#G.hand.highlighted > G.GAME.starting_params.play_limit and group_size <= G.GAME.starting_params.play_limit) or (G.GAME.THE_8_BYPASS and (#G.hand.highlighted > G.GAME.starting_params.play_limit)) then
 
 '''
 
