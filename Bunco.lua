@@ -5066,7 +5066,7 @@ function CardArea:add_to_highlighted(card, silent)
             for i = 1, #self.cards do
                 if self.cards[i].ability.group
                 and self.cards[i].ability.group.id == card.ability.group.id then
-                    if self.config.type == 'hand' and not self.cards[i].highlighted then
+                    if self.config.type == 'hand' and not self.cards[i].highlighted and not (card ~= self.cards[i] and self.cards[i].edition and self.cards[i].edition.bunc_fluorescent) then
                         table.insert(group, self.cards[i])
                     end
                 end
