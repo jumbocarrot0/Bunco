@@ -2395,6 +2395,7 @@ end
 '''
 
 # Fluorescent edition 1/3
+# Prevent flipping
 [[patches]]
 [patches.pattern]
 target = 'card.lua'
@@ -2410,6 +2411,7 @@ end
 '''
 
 # Fluorescent edition 2/3
+# Prevent forced selection
 [[patches]]
 [patches.pattern]
 target = 'cardarea.lua'
@@ -2425,6 +2427,7 @@ end
 '''
 
 # Fluorescent edition 3/3
+# Prevent debuff
 [[patches]]
 [patches.pattern]
 target = 'card.lua'
