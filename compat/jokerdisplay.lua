@@ -174,7 +174,7 @@ jd_def["j_bunc_prehistoric"] = { -- Prehistoric Joker
             for _, scoring_card in pairs(scoring_hand) do
                 if not(SMODS.has_no_suit(scoring_card) or SMODS.has_no_rank(scoring_card)) then
                     for _, previously_played_card in pairs(card_list) do
-                        if (ids_op(scoring_card, '==', previously_played_card.rank))
+                        if (aij_ids_op(scoring_card, '==', previously_played_card.rank))
                             and (previously_played_card.has_any_suit or scoring_card:is_suit(previously_played_card.suit)) then
                             mult = mult +
                                 card.ability.extra.mult *
