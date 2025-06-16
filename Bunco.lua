@@ -1140,7 +1140,7 @@ SMODS.Tag:take_ownership('double', {
 -- AiJ implemented this in a way that usually specific compat isn't required
 -- However in this case I did weird stuff, so putting in a specific fix
 -- Used in Prehistoric Joker
-ids_op = next(SMODS.find_mod("allinjest")) and ids_op or function (card, op, b)
+aij_ids_op = next(SMODS.find_mod("allinjest")) and ids_op or function (card, op, b)
     return card:get_id() == b
 end
 
@@ -1705,7 +1705,7 @@ create_joker({ -- Prehistoric
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
             for _, v in ipairs(card.ability.extra.card_list) do
-                if (ids_op(context.other_card, '==', v.rank))
+                if (aij_ids_op(context.other_card, '==', v.rank))
                 and (v.has_any_suit or context.other_card:is_suit(v.suit)) then
                     return {
                         mult = card.ability.extra.mult,
