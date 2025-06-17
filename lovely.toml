@@ -1340,55 +1340,18 @@ end
 
 # function Card:is_suit (Myopia & Astigmatism)
 [[patches]]
-[patches.pattern]
+[patches.regex]
 target = 'card.lua'
-pattern = "if next(find_joker('Smeared Joker')) and SMODS.smeared_check(self, suit) then"
+pattern = "(?<indent>[\t ]*)if (?:next\\(find_joker\\('Smeared Joker'\\)\\) and )?SMODS\\.smeared_check\\(self, suit\\) then"
 position = 'before'
-match_indent = true
+line_prepend = "$indent"
 payload = '''
-
-if G.jokers ~= nil then
-    for _, v in ipairs(G.jokers.cards) do
-        if v.config.center.key == 'j_bunc_myopia' and not v.debuff then
-            if self.base.suit == 'Spades' and (self.base.suit == 'Spades') == (suit == 'Spades' or suit == 'bunc_Halberds') then
-                return true
-            end
-            if self.base.suit == 'Clubs' and (self.base.suit == 'Clubs') == (suit == 'Clubs' or suit == 'bunc_Halberds') then
-                return true
-            end
-        end
-    end
+if BUNCOMOD.funcs.myopia_check(self, suit) then
+    return true
 end
-
-if G.jokers ~= nil then
-    for _, v in ipairs(G.jokers.cards) do
-        if v.config.center.key == 'j_bunc_astigmatism' and not v.debuff then
-            if self.base.suit == 'Hearts' and (self.base.suit == 'Hearts') == (suit == 'Hearts' or suit == 'bunc_Fleurons') then
-                return true
-            end
-            if self.base.suit == 'Diamonds' and (self.base.suit == 'Diamonds') == (suit == 'Diamonds' or suit == 'bunc_Fleurons') then
-                return true
-            end
-        end
-    end
+if BUNCOMOD.funcs.astigmatism_check(self, suit) then
+    return true
 end
-
-if G.jokers ~= nil then
-    for _, v in ipairs(G.jokers.cards) do
-        if v.ability.name == 'Smeared Joker' and not v.debuff then
-            if self.base.suit == 'bunc_Fleurons' and (suit ~= 'bunc_Fleurons') then
-                return false
-            end
-            if self.base.suit == 'bunc_Halberds' and (suit ~= 'bunc_Halberds') then
-                return false
-            end
-            if (self.base.suit ~= 'bunc_Fleurons' and self.base.suit ~= 'bunc_Halberds') and (suit == 'bunc_Fleurons' or suit == 'bunc_Halberds') then
-                return false
-            end
-        end
-    end
-end
-
 '''
 
 # Challenge cards unlocking 1/2

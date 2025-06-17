@@ -4521,6 +4521,18 @@ create_joker({ -- Fondue
     end
 })
 
+BUNCOMOD.funcs.myopia_check = function (card, suit)
+    if not next(SMODS.find_card('j_bunc_myopia')) then
+        return false
+    end
+    if card.base.suit == 'Spades' and ((card.base.suit == 'Spades') == (suit == 'Spades' or suit == 'bunc_Halberds')) then
+        return true
+    end
+    if card.base.suit == 'Clubs' and ((card.base.suit == 'Clubs') == (suit == 'Clubs' or suit == 'bunc_Halberds')) then
+        return true
+    end
+    return false
+end
 create_joker({ -- Myopia
     type = 'Exotic',
     name = 'Myopia', position = 11,
@@ -4529,6 +4541,18 @@ create_joker({ -- Myopia
     unlocked = true
 })
 
+BUNCOMOD.funcs.astigmatism_check = function (card, suit)
+    if not next(SMODS.find_card('j_bunc_myopia')) then
+        return false
+    end
+    if card.base.suit == 'Hearts' and (card.base.suit == 'Hearts') == (suit == 'Hearts' or suit == 'bunc_Fleurons') then
+        return true
+    end
+    if card.base.suit == 'Diamonds' and (card.base.suit == 'Diamonds') == (suit == 'Diamonds' or suit == 'bunc_Fleurons') then
+        return true
+    end
+    return false
+end
 create_joker({ -- Astigmatism
     type = 'Exotic',
     name = 'Astigmatism', position = 12,
