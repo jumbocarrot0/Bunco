@@ -1167,6 +1167,7 @@ SMODS.Sound({key = 'halberd', path = 'halberd.ogg'})
 SMODS.Sound({key = 'stone', path = 'stone.ogg'})
 SMODS.Sound({key = 'paperback_crown', path = 'crown.ogg'})
 SMODS.Sound({key = 'paperback_star', path = 'star.ogg'})
+SMODS.Sound({key = 'minty_3', path = 'meow3.wav'})
 
 SMODS.Shader({key = 'headache', path = 'headache.fs'})
 
@@ -4168,6 +4169,8 @@ create_joker({ -- Stylophone
                         instrument = 'bunc_paperback_star'
                     elseif other_card.base.suit == 'paperback_Crowns' then
                         instrument = 'bunc_paperback_crown'
+                    elseif other_card.base.suit == 'minty_3s' then
+                        instrument = 'bunc_minty_3'
                     end
                 end
                 event({trigger = 'after', func = function() play_sound(instrument, calculate_pitch(other_card:get_id()), 2.0 * G.SETTINGS.SOUND.bunc_stylophone_volume / 100) return true end})
