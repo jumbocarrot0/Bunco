@@ -7136,8 +7136,8 @@ SMODS.Back{ -- Fairy
     apply = function()
         enable_exotics()
     end,
-    trigger_effect = function(self, args)
-        if args.context == 'eval' and G.GAME.last_blind and G.GAME.last_blind.boss then
+    calculate = function(self, back, context)
+        if context.round_eval and G.GAME.last_blind and G.GAME.last_blind.boss then
             event({
                 func = (function()
                     local numbers = {}
