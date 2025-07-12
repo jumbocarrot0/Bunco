@@ -21,8 +21,8 @@ return {
             bunc_gameplay_reworks_desc_2 = 'to make the game more enjoyable',
 
             bunc_fixed_badges = 'Fixed Badges',
-            bunc_fixed_badges_desc = 'Changes the badges on Planet Cards:',
-            bunc_fixed_badges_desc_2 = 'replaces flavor text with indication of their way of obtaining',
+            bunc_fixed_badges_desc = 'Changes the badges on Planet Cards: replaces',
+            bunc_fixed_badges_desc_2 = 'flavor text with indication of their way of obtaining',
 
             bunc_jokerlike_consumable_editions = 'Editions in Consumables Slot',
             bunc_jokerlike_consumable_editions_desc = 'Reverts the vanilla behavior of consumables with',
@@ -291,7 +291,7 @@ return {
                 ['text'] = {
                     [1] = 'Choose one of up to',
                     [2] = '{C:attention}#1# Boss Blinds{} to replace',
-                    [3] = '{C:attention}this Ante\'s{} Boss Blind'
+                    [3] = '{C:attention}this Ante\'s Boss Blind{}'
                 }
             },
             p_bunc_virtual_normal = {
@@ -343,8 +343,8 @@ return {
             bunc_reactive = {
                 ['name'] = 'Reactive',
                 ['text'] = {
-                    [1] = 'Each Ante, debuffed',
-                    [2] = 'until you',
+                    [1] = 'Each Ante,',
+                    [2] = 'debuffed until you',
                     [3] = 'skip a blind'
                 }
             },
