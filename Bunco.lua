@@ -6163,6 +6163,7 @@ SMODS.PokerHandPart{ -- Spectrum base (Referenced from SixSuits)
         -- < 5 hand cant be a spectrum
         if #hand < 5 then return {} end
 
+        local extraCardsAllowed = #hand - 5
         local nonwilds = {}
         for i = 1, #hand do
             local cardsuits = {}
@@ -6173,13 +6174,17 @@ SMODS.PokerHandPart{ -- Spectrum base (Referenced from SixSuits)
                 end
             end
 
-            -- if somehow no suits: spectrum is impossible
+            -- a card with no suit can't contribute to a spectrum
             if #cardsuits == 0 then
-                return {}
+                if extraCardsAllowed <= 0 then return {} end
+                extraCardsAllowed = extraCardsAllowed - 1
             -- if only 1 suit: can be handled immediately
             elseif #cardsuits == 1 then
-                -- if suit is already present, not a spectrum, otherwise remove suit from "not yet used suits"
-                if suits[cardsuits[1]] == 0 then return {} end
+                -- if suit is already present, this card isn't contributing; otherwise remove suit from "not yet used suits"
+                if suits[cardsuits[1]] == 0 then
+                    if extraCardsAllowed <= 0 then return {} end
+                    extraCardsAllowed = extraCardsAllowed - 1
+                end
                 suits[cardsuits[1]] = 0
             -- add all cards with 2-4 suits to a table to be looked at
             elseif #cardsuits < 5 then
