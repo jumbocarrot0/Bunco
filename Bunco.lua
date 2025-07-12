@@ -106,8 +106,8 @@ end
 SMODS.Atlas({
     key = 'modicon',
     path = 'Icon/Icon.png',
-    px = 34,
-    py = 34
+    px = 32,
+    py = 32
 })
 
 -- Config globals
@@ -1256,6 +1256,8 @@ local function create_joker(joker)
         blueprint_compat = joker.blueprint,
         eternal_compat = joker.eternal,
         perishable_compat = joker.perishable,
+
+        pools = joker.pools,
 
         process_loc_text = joker.process_loc_text,
 
@@ -4475,6 +4477,9 @@ create_joker({ -- Starfruit
     rarity = 'Uncommon', cost = 5,
     blueprint = false, eternal = false,
     unlocked = true,
+pools = {
+        Food = true
+    },
     calculate = function(self, card, context)
         if context.before and context.poker_hands ~= nil and next(context.poker_hands['bunc_Spectrum']) and not context.blueprint then
             forced_message(localize('k_level_up_ex'), card, G.C.RED, true)
@@ -4503,6 +4508,9 @@ create_joker({ -- Fondue
     rarity = 'Rare', cost = 8,
     blueprint = false, eternal = true,
     unlocked = true,
+pools = {
+        Food = true
+    },
     calculate = function(self, card, context)
         if context.after and G.GAME.current_round.hands_played == 0 and context.scoring_hand and not context.blueprint then
             enable_exotics()
