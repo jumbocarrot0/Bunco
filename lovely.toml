@@ -933,7 +933,11 @@ target = 'functions/common_events.lua'
 pattern = 'card:set_edition(edition)'
 position = 'before'
 match_indent = true
-payload = '''if card.config.center.key == 'j_bunc_jmjb' then edition = poll_edition(nil, nil, true, true) end'''
+payload = '''
+if card.config.center.key == 'j_bunc_jmjb' then
+    edition = poll_edition(nil, nil, true, true)
+end
+'''
 
 # function create_card() (Doorhanger)
 [[patches]]
@@ -1063,38 +1067,39 @@ end
 
 '''
 
-# function Card:draw (Vandalism 1/3)
-[[patches]]
-[patches.pattern]
-target = 'card.lua'
-pattern = '''self.children.center.states.hover = self.states.hover'''
-position = 'before'
-match_indent = true
-payload = '''
+# # function Card:draw (Vandalism 1/3)
+# [[patches]]
+# [patches.pattern]
+# target = 'card.lua'
+# pattern = '''self.children.center.states.hover = self.states.hover'''
+# position = 'before'
+# match_indent = true
+# payload = '''
 
-if _center.name == 'Vandalism' and (_center.discovered or self.bypass_discovery_center) then
-    self.children.center = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, G.ASSET_ATLAS[(G.GAME.viewed_back or G.GAME.selected_back) and ((G.GAME.viewed_back or G.GAME.selected_back)[G.SETTINGS.colourblind_option and 'hc_atlas' or 'lc_atlas'] or (G.GAME.viewed_back or G.GAME.selected_back).atlas) or 'centers'], self.params.bypass_back or (self.playing_card and G.GAME[self.back].pos or G.P_CENTERS['b_red'].pos))
-end
+# if _center.name == 'Vandalism' and (_center.discovered or self.bypass_discovery_center) then
+#     self.children.center = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, G.ASSET_ATLAS[(G.GAME.viewed_back or G.GAME.selected_back) and ((G.GAME.viewed_back or G.GAME.selected_back)[G.SETTINGS.colourblind_option and 'hc_atlas' or 'lc_atlas'] or (G.GAME.viewed_back or G.GAME.selected_back).atlas) or 'centers'], self.params.bypass_back or (self.playing_card and G.GAME[self.back].pos or G.P_CENTERS['b_red'].pos))
+# end
 
-'''
+# '''
 
-# function Blind:stay_flipped (Vandalism 2/3)
-[[patches]]
-[patches.pattern]
-target = 'blind.lua'
-pattern = '''if self.name == 'The Wheel' and pseudorandom(pseudoseed('wheel')) < G.GAME.probabilities.normal/7 then'''
-position = 'before'
-match_indent = true
-payload = '''
+# I dont think this is needed?
+# # function Blind:stay_flipped (Vandalism 2/3)
+# [[patches]]
+# [patches.pattern]
+# target = 'blind.lua'
+# pattern = '''if self.name == 'The Wheel' and SMODS.pseudorandom_probability(self, pseudoseed('wheel'), 1, 7, 'wheel') then'''
+# position = 'before'
+# match_indent = true
+# payload = '''
 
-if G.jokers ~= nil and next(SMODS.find_card('j_bunc_vandalism')) then
-    local ret = SMODS.calculate_context({stay_flipped = true})
-    if ret.stay_flipped then
-        return true
-    end
-end
+# if G.jokers ~= nil and next(SMODS.find_card('j_bunc_vandalism')) then
+#     local ret = SMODS.calculate_context({stay_flipped = true})
+#     if ret.stay_flipped then
+#         return true
+#     end
+# end
 
-'''
+# '''
 
 # G.FUNCS.play_cards_from_highlighted (Vandalism 3/3)
 [[patches]]
