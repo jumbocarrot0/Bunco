@@ -3208,3 +3208,22 @@ payload = '''
         }}
     end
 '''
+
+# Lets Hindered sticker trigger even if debuffed
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+pattern = """if card.ability.rental then
+            local ret = {}
+            ret[SMODS.Stickers.rental] = card:calculate_sticker(context, 'rental')
+            return ret, {}
+        end"""
+position = "before"
+match_indent = true
+payload = '''
+if card.ability.bunc_hindered then
+    local ret = {}
+    ret[SMODS.Stickers.bunc_hindered] = card:calculate_sticker(context, 'bunc_hindered')
+    return ret, {}
+end
+'''
