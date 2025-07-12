@@ -570,14 +570,14 @@ return {
             j_bunc_cassette_a = {
                 ['name'] = 'Cassette (A Side)',
                 ['text'] = {
-                    [1] = 'Cards with {C:attention}light suit',
+                    [1] = 'Cards with a {C:attention}light suit',
                     [2] = 'give {C:chips}+#1#{} Chips when scored'
                 }
             },
             j_bunc_cassette_b = {
                 ['name'] = 'Cassette (B Side)',
                 ['text'] = {
-                    [1] = 'Cards with {C:attention}dark suit',
+                    [1] = 'Cards with a {C:attention}dark suit',
                     [2] = 'give {C:mult}+#2#{} Mult when scored'
                 }
             },
