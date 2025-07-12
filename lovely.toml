@@ -3190,7 +3190,10 @@ match_indent = true
 payload = '''
 G.GAME.current_round.bunc_actual_discards_left = G.GAME.current_round.discards_left
 '''
+# End of Gameplay Fixes
 
+
+# Adds joker-specific settings
 [[patches]]
 [patches.pattern]
 target = 'functions/UI_definitions.lua'
