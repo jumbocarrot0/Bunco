@@ -1470,7 +1470,7 @@ position = 'after'
 match_indent = true
 payload = '''
 
-    G.GAME.booster_packs_opened = G.GAME.booster_packs_opened + 1
+    G.GAME.booster_packs_opened = (G.GAME.booster_packs_opened or 0) + 1
 
 '''
 
