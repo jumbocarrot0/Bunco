@@ -2694,71 +2694,71 @@ end
 
 '''
 
-# Blind Cards 2/3
-[[patches]]
-[patches.pattern]
-target = 'functions/button_callbacks.lua'
-pattern = '''G.FUNCS.sell_card = function(e)'''
-position = 'before'
-match_indent = true
-payload = '''
+# # Blind Cards 2/3
+# [[patches]]
+# [patches.pattern]
+# target = 'functions/button_callbacks.lua'
+# pattern = '''G.FUNCS.sell_card = function(e)'''
+# position = 'before'
+# match_indent = true
+# payload = '''
 
-G.FUNCS.can_use_blind_card = function(e)
-    e.config.colour = G.C.GREEN
-    e.config.button = 'use_blind_card'
-end
+# G.FUNCS.can_use_blind_card = function(e)
+#     e.config.colour = G.C.GREEN
+#     e.config.button = 'use_blind_card'
+# end
 
-G.FUNCS.use_blind_card = function(e)
-    local card = e.config.ref_table
+# G.FUNCS.use_blind_card = function(e)
+#     local card = e.config.ref_table
 
-    local boss = card.ability.blind_card.blind.key
+#     local boss = card.ability.blind_card.blind.key
 
-    play_sound('other1')
+#     play_sound('other1')
 
-    e.config.button = nil
+#     e.config.button = nil
 
-    local par = G.blind_select_opts.boss.parent
-    G.GAME.round_resets.blind_choices.Boss = boss
+#     local par = G.blind_select_opts.boss.parent
+#     G.GAME.round_resets.blind_choices.Boss = boss
 
-    if G.blind_select_opts.boss and par and par.config.object then
-        G.blind_select_opts.boss:remove()
-        G.blind_select_opts.boss = UIBox{
-            T = {par.T.x, 0, 0, 0},
-            definition = {
-                n = G.UIT.ROOT,
-                config = {
-                    align = "cm",
-                    colour = G.C.CLEAR
-                },
-                nodes = {UIBox_dyn_container({create_UIBox_blind_choice('Boss')}, false,
-                    get_blind_main_colour('Boss'), mix_colours(G.C.BLACK, get_blind_main_colour('Boss'), 0.8))}
-            },
-            config = {
-                align = "bmi",
-                offset = {
-                    x = 0,
-                    y = G.ROOM.T.y + 9
-                },
-                major = par,
-                xy_bond = 'Weak'
-            }
-        }
-        par.config.object = G.blind_select_opts.boss
-        par.config.object:recalculate()
-        G.blind_select_opts.boss.parent = par
-        G.blind_select_opts.boss.alignment.offset.y = 0
-    end
+#     if G.blind_select_opts.boss and par and par.config.object then
+#         G.blind_select_opts.boss:remove()
+#         G.blind_select_opts.boss = UIBox{
+#             T = {par.T.x, 0, 0, 0},
+#             definition = {
+#                 n = G.UIT.ROOT,
+#                 config = {
+#                     align = "cm",
+#                     colour = G.C.CLEAR
+#                 },
+#                 nodes = {UIBox_dyn_container({create_UIBox_blind_choice('Boss')}, false,
+#                     get_blind_main_colour('Boss'), mix_colours(G.C.BLACK, get_blind_main_colour('Boss'), 0.8))}
+            #             },
+#             config = {
+#                 align = "bmi",
+#                 offset = {
+#                     x = 0,
+#                     y = G.ROOM.T.y + 9
+#                 },
+#                 major = par,
+#                 xy_bond = 'Weak'
+#             }
+#         }
+#         par.config.object = G.blind_select_opts.boss
+#         par.config.object:recalculate()
+#         G.blind_select_opts.boss.parent = par
+#         G.blind_select_opts.boss.alignment.offset.y = 0
+#     end
 
-    G.PROFILES[G.SETTINGS.profile].blind_cards_used = (G.PROFILES[G.SETTINGS.profile].blind_cards_used or 0) + 1
-    if G.PROFILES[G.SETTINGS.profile].blind_cards_used then
-        check_for_unlock({type = 'use_blind_card', blinds_total = G.PROFILES[G.SETTINGS.profile].blind_cards_used})
-    end
+#     G.PROFILES[G.SETTINGS.profile].blind_cards_used = (G.PROFILES[G.SETTINGS.profile].blind_cards_used or 0) + 1
+#     if G.PROFILES[G.SETTINGS.profile].blind_cards_used then
+#         check_for_unlock({type = 'use_blind_card', blinds_total = G.PROFILES[G.SETTINGS.profile].blind_cards_used})
+#     end
 
-    G.FUNCS.end_consumeable(nil, 0.2)
-end
+#     G.FUNCS.end_consumeable(nil, 0.2)
+# end
 
 
-'''
+# '''
 
 # Blind Cards 3/3 (Blind Animation)
 [[patches]]

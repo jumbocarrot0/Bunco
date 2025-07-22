@@ -6401,6 +6401,39 @@ SMODS.PokerHand{ -- Deal
 
 SMODS.Atlas({key = 'bunco_blinds', path = 'Blinds/Blinds.png', px = 34, py = 34, frames = 21, atlas_table = 'ANIMATION_ATLAS'})
 SMODS.Atlas({key = 'bunco_blinds_finisher', path = 'Blinds/BlindsFinisher.png', px = 34, py = 34, frames = 21, atlas_table = 'ANIMATION_ATLAS'})
+local bunc_refresh_boss_blind = function ()
+    if G.GAME.blind.boss or not G.blind_select_opts then return end
+
+    local par = G.blind_select_opts.boss.parent
+    if par and par.config.object then
+        -- G.blind_select_opts.boss:remove()
+        G.blind_select_opts.boss = UIBox{
+            T = {par.T.x, 0, 0, 0},
+            definition = {
+                n = G.UIT.ROOT,
+                config = {
+                    align = "cm",
+                    colour = G.C.CLEAR
+                },
+                nodes = {UIBox_dyn_container({create_UIBox_blind_choice('Boss')}, false,
+                    get_blind_main_colour('Boss'), mix_colours(G.C.BLACK, get_blind_main_colour('Boss'), 0.8))}
+            },
+            config = {
+                align = "bmi",
+                offset = {
+                    x = 0,
+                    y = G.blind_select_opts.boss.alignment.offset.y
+                },
+                major = par,
+                xy_bond = 'Weak'
+            }
+        }
+        par.config.object = G.blind_select_opts.boss
+        par.config.object:recalculate()
+        G.blind_select_opts.boss.parent = par
+        -- G.blind_select_opts.boss.alignment.offset.y = -0.2
+    end
+end
 
 SMODS.Blind{ -- The Paling
     key = 'paling',
@@ -8125,6 +8158,65 @@ end
 
 SMODS.Atlas({key = 'bunco_booster_packs_blind', path = 'Boosters/BoostersBlind.png', px = 71, py = 95})
 SMODS.Atlas({key = 'bunco_booster_packs_virtual', path = 'Boosters/BoostersVirtual.png', px = 71, py = 95})
+
+-- Blind pack functionality
+
+G.FUNCS.can_use_blind_card = function(e)
+    e.config.colour = G.C.GREEN
+    e.config.button = 'use_blind_card'
+end
+
+G.FUNCS.use_blind_card = function(e)
+    local card = e.config.ref_table
+
+    local boss = card.ability.blind_card.blind.key
+    G.GAME.round_resets.blind_choices.Boss = boss
+
+    play_sound('other1')
+
+    e.config.button = nil
+
+    if G.blind_select_opts.boss then
+        bunc_refresh_boss_blind()
+    end
+
+    -- local par = G.blind_select_opts.boss.parent
+    -- if G.blind_select_opts.boss and par and par.config.object then
+    --     G.blind_select_opts.boss:remove()
+    --     G.blind_select_opts.boss = UIBox{
+    --         T = {par.T.x, 0, 0, 0},
+    --         definition = {
+    --             n = G.UIT.ROOT,
+    --             config = {
+    --                 align = "cm",
+    --                 colour = G.C.CLEAR
+    --             },
+    --             nodes = {UIBox_dyn_container({create_UIBox_blind_choice('Boss')}, false,
+    --                 get_blind_main_colour('Boss'), mix_colours(G.C.BLACK, get_blind_main_colour('Boss'), 0.8))}
+    --         },
+    --         config = {
+    --             align = "bmi",
+    --             offset = {
+    --                 x = 0,
+    --                 y = G.ROOM.T.y + 9
+    --             },
+    --             major = par,
+    --             xy_bond = 'Weak'
+    --         }
+    --     }
+    --     par.config.object = G.blind_select_opts.boss
+    --     par.config.object:recalculate()
+    --     G.blind_select_opts.boss.parent = par
+    --     G.blind_select_opts.boss.alignment.offset.y = 0
+    -- end
+
+    G.PROFILES[G.SETTINGS.profile].blind_cards_used = (G.PROFILES[G.SETTINGS.profile].blind_cards_used or 0) + 1
+    if G.PROFILES[G.SETTINGS.profile].blind_cards_used then
+        check_for_unlock({type = 'use_blind_card', blinds_total = G.PROFILES[G.SETTINGS.profile].blind_cards_used})
+    end
+
+    G.FUNCS.end_consumeable(nil, 0.2)
+end
 
 for i = 1, 4 do -- Blind
     SMODS.Booster{
