@@ -790,6 +790,17 @@ if config.gameplay_reworks then
                         add_tag(Tag('tag_bunc_breaking'))
                         play_sound('generic1', 0.9 + math.random() * 0.1, 0.8)
                         play_sound('holo1', 1.2 + math.random() * 0.1, 0.4)
+
+                        -- Trigger immediate tags
+                        G.E_MANAGER:add_event(Event({
+                            trigger = 'immediate',
+                            func = function()
+                                for i = 1, #G.GAME.tags do
+                                    G.GAME.tags[i]:apply_to_run({ type = 'immediate' })
+                                end
+                                return true
+                            end
+                        }))
                         return true
                     end)
                 }))
@@ -7207,13 +7218,16 @@ SMODS.Tag{ -- Breaking
     config = {type = 'round_start_bonus'},
 
     apply = function(self, tag, context)
-        if context.type == self.config.type then
+        if context.type == self.config.type or context.type == "immediate" then
             if G.GAME.blind and G.GAME.blind.boss and not G.GAME.blind.disabled then
                 tag:yep('+', G.C.BLUE, function()
                     return true
                 end)
 
+event({ func = function()
                 G.GAME.blind:disable()
+return true 
+                end })
 
                 tag.triggered = true
                 return true
