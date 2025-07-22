@@ -1124,10 +1124,9 @@ function BUNCOMOD.content.set_debuff(card)
     return false
 end
 
-local original_start_run = Game.start_run
-
+local bunc_original_start_run = Game.start_run
 function Game:start_run(args)
-    original_start_run(self, args)
+bunc_original_start_run(self, args)
 
     local sledgehammers = SMODS.find_card('j_bunc_sledgehammer')
     for _, card in ipairs(sledgehammers) do
