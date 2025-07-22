@@ -26,7 +26,7 @@ local function get_coordinates(position, width)
     return {x = (position) % width, y = math.floor((position) / width)}
 end
 
-local function coordinate(position)
+local function coordinate_from_atlas_index(position)
     return get_coordinates(position - 1)
 end
 
@@ -533,144 +533,144 @@ if config.fixed_sprites then
         -- Jokers
 
         SMODS.Joker:take_ownership('juggler', {
-            pos = coordinate(1),
+            pos = coordinate_from_atlas_index(1),
             atlas = 'bunco_resprites_jokers'
         }, true)
 
         SMODS.Joker:take_ownership('drunkard', {
-            pos = coordinate(2),
+            pos = coordinate_from_atlas_index(2),
             atlas = 'bunco_resprites_jokers'
         }, true)
 
         SMODS.Joker:take_ownership('acrobat', {
-            pos = coordinate(3),
+            pos = coordinate_from_atlas_index(3),
             atlas = 'bunco_resprites_jokers'
         }, true)
 
         SMODS.Joker:take_ownership('credit_card', {
-            pos = coordinate(4),
+            pos = coordinate_from_atlas_index(4),
             atlas = 'bunco_resprites_jokers'
         }, true)
 
         SMODS.Joker:take_ownership('troubadour', {
-            pos = coordinate(5),
+            pos = coordinate_from_atlas_index(5),
             atlas = 'bunco_resprites_jokers'
         }, true)
 
         SMODS.Joker:take_ownership('even_steven', {
-            pos = coordinate(6),
+            pos = coordinate_from_atlas_index(6),
             atlas = 'bunco_resprites_jokers'
         }, true)
 
         SMODS.Joker:take_ownership('odd_todd', {
-            pos = coordinate(7),
+            pos = coordinate_from_atlas_index(7),
             atlas = 'bunco_resprites_jokers'
         }, true)
 
         SMODS.Joker:take_ownership('fibonacci', {
-            pos = coordinate(8),
+            pos = coordinate_from_atlas_index(8),
             atlas = 'bunco_resprites_jokers'
         }, true)
 
         SMODS.Joker:take_ownership('drivers_license', {
-            pos = coordinate(9),
+            pos = coordinate_from_atlas_index(9),
             atlas = 'bunco_resprites_jokers'
         }, true)
 
         SMODS.Joker:take_ownership('gift', {
-            pos = coordinate(10),
+            pos = coordinate_from_atlas_index(10),
             atlas = 'bunco_resprites_jokers'
         }, true)
 
         SMODS.Joker:take_ownership('flash', {
-            pos = coordinate(11),
+            pos = coordinate_from_atlas_index(11),
             atlas = 'bunco_resprites_jokers'
         }, true)
 
         SMODS.Joker:take_ownership('ramen', {
-            pos = coordinate(12),
+            pos = coordinate_from_atlas_index(12),
             atlas = 'bunco_resprites_jokers'
         }, true)
 
         SMODS.Joker:take_ownership('selzer', {
-            pos = coordinate(13),
+            pos = coordinate_from_atlas_index(13),
             atlas = 'bunco_resprites_jokers'
         }, true)
 
         SMODS.Joker:take_ownership('scholar', {
-            pos = coordinate(14),
+            pos = coordinate_from_atlas_index(14),
             atlas = 'bunco_resprites_jokers'
         }, true)
 
         -- Consumables
 
         SMODS.Consumable:take_ownership('fool', {
-            pos = coordinate(1),
+            pos = coordinate_from_atlas_index(1),
             atlas = 'bunco_resprites_tarots'
         }, true)
 
         SMODS.Consumable:take_ownership('lovers', {
-            pos = coordinate(2),
+            pos = coordinate_from_atlas_index(2),
             atlas = 'bunco_resprites_tarots'
         }, true)
 
         SMODS.Consumable:take_ownership('chariot', {
-            pos = coordinate(3),
+            pos = coordinate_from_atlas_index(3),
             atlas = 'bunco_resprites_tarots'
         }, true)
 
         SMODS.Consumable:take_ownership('wheel_of_fortune', {
-            pos = coordinate(4),
+            pos = coordinate_from_atlas_index(4),
             atlas = 'bunco_resprites_tarots'
         }, true)
 
         SMODS.Consumable:take_ownership('tower', {
-            pos = coordinate(5),
+            pos = coordinate_from_atlas_index(5),
             atlas = 'bunco_resprites_tarots'
         }, true)
 
         SMODS.Consumable:take_ownership('moon', {
-            pos = coordinate(6),
+            pos = coordinate_from_atlas_index(6),
             atlas = 'bunco_resprites_tarots'
         }, true)
 
         SMODS.Consumable:take_ownership('world', {
-            pos = coordinate(7),
+            pos = coordinate_from_atlas_index(7),
             atlas = 'bunco_resprites_tarots'
         }, true)
 
         SMODS.Consumable:take_ownership('soul', {
-            pos = coordinate(1),
+            pos = coordinate_from_atlas_index(1),
             atlas = 'bunco_resprites_spectrals'
         }, true)
 
         SMODS.Consumable:take_ownership('ceres', {
-            pos = coordinate(1),
+            pos = coordinate_from_atlas_index(1),
             atlas = 'bunco_resprites_planets'
         }, true)
 
         SMODS.Consumable:take_ownership('mercury', {
-            pos = coordinate(2),
+            pos = coordinate_from_atlas_index(2),
             atlas = 'bunco_resprites_planets'
         }, true)
 
         SMODS.Consumable:take_ownership('uranus', {
-            pos = coordinate(3),
+            pos = coordinate_from_atlas_index(3),
             atlas = 'bunco_resprites_planets'
         }, true)
 
         SMODS.Consumable:take_ownership('pluto', {
-            pos = coordinate(4),
+            pos = coordinate_from_atlas_index(4),
             atlas = 'bunco_resprites_planets'
         }, true)
 
         SMODS.Consumable:take_ownership('incantation', {
-            pos = coordinate(2),
+            pos = coordinate_from_atlas_index(2),
             atlas = 'bunco_resprites_spectrals'
         }, true)
 
         SMODS.Consumable:take_ownership('black_hole', {
-            pos = coordinate(3),
+            pos = coordinate_from_atlas_index(3),
             atlas = 'bunco_resprites_spectrals'
         })
 
@@ -881,7 +881,7 @@ if config.gameplay_reworks then
             end
             return {key = 'c_bunc_wheel_of_fortune', vars = vars}
         end,
-        pos = use_fixed_sprite_atlas() and coordinate(4) or nil,
+        pos = use_fixed_sprite_atlas() and coordinate_from_atlas_index(4) or nil,
         atlas = use_fixed_sprite_atlas() and 'bunco_resprites_tarots' or nil
     })
 
@@ -1171,7 +1171,7 @@ SMODS.Sound({key = 'minty_3', path = 'meow3.wav'})
 
 SMODS.Shader({key = 'headache', path = 'headache.fs'})
 
-local function create_joker(joker)
+local function bunc_define_joker(joker)
 
     -- Sprite position
 
@@ -1300,7 +1300,18 @@ end
 
 -- Jokers
 
-create_joker({ -- Cassette
+local bunc_cassette_sprite_change = function(card)
+    local coord = 1
+
+    if card.ability and card.ability.extra and card.ability.extra.side then
+        if card.ability.extra.side == 'B' then
+            coord = coord + 1
+        end
+    end
+
+    card.children.center:set_sprite_pos(coordinate_from_atlas_index(coord))
+end
+bunc_define_joker({ -- Cassette
     name = 'Cassette', position = 1,
     vars = {{chips = 45}, {mult = 6}, {side = 'A'}},
     custom_vars = function(self, info_queue, card)
@@ -1413,27 +1424,17 @@ create_joker({ -- Cassette
     end,
     update = function(self, card)
         if card.VT.w <= 0 then
-            if card.ability.extra.side == 'A' then
-                card.children.center:set_sprite_pos(coordinate(1))
-            else
-                card.children.center:set_sprite_pos(coordinate(2))
-            end
+            bunc_cassette_sprite_change(card)
         end
     end,
     set_sprites = function(self, card, front)
         if self.discovered or card.bypass_discovery_center then
-            if card.ability and card.ability.extra and card.ability.extra.side then
-                if card.ability.extra.side == 'A' then
-                    card.children.center:set_sprite_pos(coordinate(1))
-                else
-                    card.children.center:set_sprite_pos(coordinate(2))
-                end
-            end
+            bunc_cassette_sprite_change(card)
         end
     end
 })
 
-create_joker({ -- Mosaic
+bunc_define_joker({ -- Mosaic
     name = 'Mosaic', position = 3,
     vars = {{mult = 6}},
     rarity = 'Uncommon', cost = 4,
@@ -1473,7 +1474,7 @@ create_joker({ -- Mosaic
     end
 })
 
-create_joker({ -- Voxel
+bunc_define_joker({ -- Voxel
     name = 'Voxel', position = 4,
     vars = {{base = 3}, {bonus = 0.1}, {xmult = 3}, {tally = 0}, {unlock = 10}},
     locked_vars = function(self, info_queue, card)
@@ -1525,7 +1526,7 @@ create_joker({ -- Voxel
     end
 })
 
-create_joker({ -- Crop Circles
+bunc_define_joker({ -- Crop Circles
     name = 'Crop Circles', position = 5,
     rarity = 'Common', cost = 4,
     custom_vars = function(self, info_queue, card)
@@ -1573,7 +1574,7 @@ create_joker({ -- Crop Circles
     end
 })
 
-create_joker({ -- Xray
+bunc_define_joker({ -- Xray
     name = 'Xray', position = 6,
     vars = {{bonus = 0.2}, {xmult = 1}},
     rarity = 'Common', cost = 4,
@@ -1610,7 +1611,7 @@ create_joker({ -- Xray
     end
 })
 
-create_joker({ -- Dread
+bunc_define_joker({ -- Dread
     name = 'Dread', position = 7,
     vars = {{levels = 2}, {trash_list = {}}, {level_up_list = {}}, {unlock = 10}},
     locked_vars = function(self, info_queue, card)
@@ -1691,7 +1692,7 @@ create_joker({ -- Dread
     end
 })
 
-create_joker({ -- Prehistoric
+bunc_define_joker({ -- Prehistoric
     name = 'Prehistoric', position = 8,
     vars = {{mult = 16}, {card_list = { }}},
     rarity = 'Uncommon', cost = 5,
@@ -1736,7 +1737,7 @@ create_joker({ -- Prehistoric
     end
 })
 
-create_joker({ -- Linocut
+bunc_define_joker({ -- Linocut
     name = 'Linocut', position = 9,
     rarity = 'Uncommon', cost = 4,
     blueprint = false, eternal = true,
@@ -1753,7 +1754,7 @@ create_joker({ -- Linocut
     end
 })
 
-create_joker({ -- Ghost Print
+bunc_define_joker({ -- Ghost Print
     name = 'Ghost Print', position = 10,
     vars = {{last_hand = 'Nothing'}},
     custom_vars = function(self, info_queue, card)
@@ -1785,7 +1786,7 @@ create_joker({ -- Ghost Print
     end
 })
 
-create_joker({ -- Loan Shark
+bunc_define_joker({ -- Loan Shark
     name = 'Loan Shark', position = 11,
     vars = {{dollars = 50}, {cost = -100}},
     custom_vars = function(self, info_queue, card)
@@ -1812,7 +1813,7 @@ create_joker({ -- Loan Shark
     end
 })
 
-create_joker({ -- Basement
+bunc_define_joker({ -- Basement
     name = 'Basement', position = 12,
     rarity = 'Rare', cost = 8,
     blueprint = true, eternal = true,
@@ -1835,7 +1836,7 @@ create_joker({ -- Basement
     end
 })
 
-create_joker({ -- Shepherd
+bunc_define_joker({ -- Shepherd
     name = 'Shepherd', position = 13,
     vars = {{bonus = 6}, {chips = 0}},
     rarity = 'Common', cost = 5,
@@ -1864,7 +1865,7 @@ create_joker({ -- Shepherd
     end
 })
 
-create_joker({ -- Joker Knight
+bunc_define_joker({ -- Joker Knight
     name = 'Knight', position = 14,
     vars = {{bonus = 6}, {mult = 0}},
     rarity = 'Uncommon', cost = 6,
@@ -1933,7 +1934,7 @@ create_joker({ -- Joker Knight
     end
 })
 
-create_joker({ -- JMJB
+bunc_define_joker({ -- JMJB
     name = 'JMJB', position = 15,
     vars = {{unlock = 50}},
     locked_vars = function(self, info_queue, card)
@@ -1975,7 +1976,7 @@ create_joker({ -- JMJB
     end
 })
 
-create_joker({ -- Dogs Playing Poker
+bunc_define_joker({ -- Dogs Playing Poker
     name = 'Dogs Playing Poker', position = 16,
     vars = {{xmult = 2.5}},
     rarity = 'Uncommon', cost = 5,
@@ -2014,7 +2015,7 @@ create_joker({ -- Dogs Playing Poker
     end
 })
 
-create_joker({ -- Righthook
+bunc_define_joker({ -- Righthook
     name = 'Righthook', position = 17,
     vars = {{unlock = 5}},
     locked_vars = function(self, info_queue, card)
@@ -2042,7 +2043,7 @@ create_joker({ -- Righthook
     end
 })
 
-create_joker({ -- Fiendish
+bunc_define_joker({ -- Fiendish
     name = 'Fiendish', position = 18,
     vars = {{odds = 3}},
     custom_vars = function(self, info_queue, card)
@@ -2065,7 +2066,7 @@ create_joker({ -- Fiendish
     end
 })
 
-create_joker({ -- Carnival
+bunc_define_joker({ -- Carnival
     name = 'Carnival', position = 19,
     vars = {{ante = -huge_number}},
     custom_vars = function (self, info_queue, card)
@@ -2110,7 +2111,7 @@ create_joker({ -- Carnival
     end
 })
 
-create_joker({ -- Sledgehammer
+bunc_define_joker({ -- Sledgehammer
     name = 'Sledgehammer', position = 20,
     vars = {{plus_xmult = 1}, {div_chance_denom = 4}},
     rarity = 'Uncommon', cost = 5,
@@ -2176,7 +2177,7 @@ create_joker({ -- Sledgehammer
     end
 })
 
-create_joker({ -- Doorhanger
+bunc_define_joker({ -- Doorhanger
     name = 'Doorhanger', position = 21,
     rarity = 'Rare', cost = 10,
     blueprint = false, eternal = true,
@@ -2201,7 +2202,7 @@ create_joker({ -- Doorhanger
     end
 })
 
-create_joker({ -- Fingerprints
+bunc_define_joker({ -- Fingerprints
     name = 'Fingerprints', position = 22,
     vars = {{bonus = 50}, {scoring_card_set = {}}},
     rarity = 'Uncommon', cost = 8,
@@ -2230,7 +2231,7 @@ create_joker({ -- Fingerprints
     end
 })
 
-create_joker({ -- Zero Shapiro
+bunc_define_joker({ -- Zero Shapiro
     name = 'Zero Shapiro', position = 23,
     vars = {{odds = 8}},
     custom_vars = function(self, info_queue, card)
@@ -2268,7 +2269,7 @@ create_joker({ -- Zero Shapiro
     end
 })
 
-create_joker({ -- Nil Bill
+bunc_define_joker({ -- Nil Bill
     name = 'Nil Bill', position = 24,
     vars = {{bonus = 2}},
     rarity = 'Uncommon', cost = 4,
@@ -2282,7 +2283,7 @@ create_joker({ -- Nil Bill
     end
 })
 
-create_joker({ -- Bierdeckel
+bunc_define_joker({ -- Bierdeckel
     name = 'Bierdeckel', position = 25,
     vars = {{bonus = 10}},
     rarity = 'Uncommon', cost = 4,
@@ -2340,7 +2341,7 @@ local bunc_registration_plate_refresh = function (card)
         table.insert(card.ability.extra.ranks, card_list[i]:get_id())
     end
 end
-create_joker({ -- Registration Plate
+bunc_define_joker({ -- Registration Plate
     name = 'Registration Plate', position = 26,
     vars = {{combination = {"2", "3", "4", "5", "6"}}, {ranks = {}}},
     rarity = 'Rare', cost = 8,
@@ -2374,7 +2375,7 @@ create_joker({ -- Registration Plate
     end
 })
 
-create_joker({ -- Slothful
+bunc_define_joker({ -- Slothful
     name = 'Slothful', position = 27,
     vars = {{mult = 9}},
     rarity = 'Uncommon', cost = 5,
@@ -2394,13 +2395,14 @@ create_joker({ -- Slothful
         end
     end,
     custom_in_pool = function()
-        local condition = false
-        if G.playing_cards then
+                if G.playing_cards then
             for k, v in pairs(G.playing_cards) do
-                if v.config.center == G.P_CENTERS.m_wild then condition = true break end
+                if v.config.center == G.P_CENTERS.m_wild then 
+                    return true
             end
         end
-        return condition
+end
+        return false
     end,
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
@@ -2414,7 +2416,7 @@ create_joker({ -- Slothful
     end
 })
 
-create_joker({ -- Neon
+bunc_define_joker({ -- Neon
     name = 'Neon', position = 28,
     custom_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.e_bunc_fluorescent
@@ -2448,7 +2450,7 @@ create_joker({ -- Neon
 
 })
 
-create_joker({ -- Gameplan
+bunc_define_joker({ -- Gameplan
     name = 'Gameplan', position = 29,
     vars = {{mult = 20}},
     rarity = 'Uncommon', cost = 5,
@@ -2499,7 +2501,7 @@ create_joker({ -- Gameplan
     end
 })
 
-create_joker({ -- Conquest
+bunc_define_joker({ -- Conquest
     name = 'Conquest', position = 30,
     vars = {{chips = 200}, {joker = 0}},
     rarity = 'Uncommon', cost = 5,
@@ -2558,7 +2560,7 @@ create_joker({ -- Conquest
     end
 })
 
-create_joker({ -- Hierarchy of Needs
+bunc_define_joker({ -- Hierarchy of Needs
     name = 'Hierarchy of Needs', position = 31,
     vars = {{bonus = 5}, {mult = 20}},
     rarity = 'Common', cost = 5,
@@ -2626,7 +2628,7 @@ create_joker({ -- Hierarchy of Needs
     end
 })
 
-create_joker({ -- Dwarven
+bunc_define_joker({ -- Dwarven
     name = 'Dwarven', position = 32,
     custom_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.m_stone
@@ -2687,7 +2689,7 @@ create_joker({ -- Dwarven
     end
 })
 
-create_joker({ -- Aristocrat
+bunc_define_joker({ -- Aristocrat
     name = 'Aristocrat', position = 33,
     rarity = 'Uncommon', cost = 6,
     blueprint = true, eternal = true,
@@ -2718,7 +2720,7 @@ create_joker({ -- Aristocrat
     end
 })
 
-create_joker({ -- Metallurgist
+bunc_define_joker({ -- Metallurgist
     name = 'Metallurgist', position = 34,
     vars = {{mult = 10}},
     custom_vars = function(self, info_queue, card)
@@ -2755,7 +2757,7 @@ create_joker({ -- Metallurgist
     end
 })
 
-create_joker({ -- Juggalo
+bunc_define_joker({ -- Juggalo
     name = 'Juggalo', position = 35,
     vars = {{unlock = 10}},
     custom_vars = function(self, info_queue, card)
@@ -2800,7 +2802,7 @@ create_joker({ -- Juggalo
     end
 })
 
-create_joker({ -- Head in the Clouds
+bunc_define_joker({ -- Head in the Clouds
     name = 'Head in the Clouds', position = 36,
     vars = {{odds = 3}},
     custom_vars = function(self, info_queue, card)
@@ -2852,7 +2854,7 @@ create_joker({ -- Head in the Clouds
     end
 })
 
-create_joker({ -- Headshot
+bunc_define_joker({ -- Headshot
     name = 'Headshot', position = 37,
     vars = {{xmult = 3}},
     rarity = 'Uncommon', cost = 8,
@@ -2898,7 +2900,7 @@ G.FUNCS.j_bunc_trigger_finger_settings = function(e)
         config = {offset = {x=0,y=10}}
 	}
 end
-create_joker({ -- Trigger Finger
+bunc_define_joker({ -- Trigger Finger
     name = 'Trigger Finger', position = 38,
     vars = {{xmult = 4}, {odds = 10}},
     custom_vars = function(self, info_queue, card)
@@ -2964,7 +2966,7 @@ create_joker({ -- Trigger Finger
     end
 })
 
-create_joker({ -- Hopscotch
+bunc_define_joker({ -- Hopscotch
     name = 'Hopscotch', position = 39,
     vars = {{discard = 1}},
     rarity = 'Common', cost = 4,
@@ -2978,7 +2980,7 @@ create_joker({ -- Hopscotch
     end
 })
 
-create_joker({ -- Pawn
+bunc_define_joker({ -- Pawn
     name = 'Pawn', position = 40,
     custom_vars = function(self, info_queue, card)
         if G.playing_cards and #G.playing_cards > 0 then
@@ -3042,7 +3044,7 @@ create_joker({ -- Pawn
     end
 })
 
-create_joker({ -- Puzzle Board
+bunc_define_joker({ -- Puzzle Board
     name = 'Puzzle Board', position = 41,
     vars = {{odds = 4}},
     custom_vars = function(self, info_queue, card)
@@ -3089,8 +3091,8 @@ create_joker({ -- Puzzle Board
     end
 })
 
-create_joker({ -- Vandalism
-    name = 'Vandalism', position = 42, soul = coordinate(42),
+bunc_define_joker({ -- Vandalism
+    name = 'Vandalism', position = 42, soul = coordinate_from_atlas_index(42),
     vars = {{odds = 4}, {xmult = 2}, {card_list = {}}},
     custom_vars = function(self, info_queue, card)
         local vars
@@ -3158,7 +3160,7 @@ create_joker({ -- Vandalism
             card.children.center.states.collide.can = false
             card.children.center:set_role({major = card, role_type = 'Glued', draw_major = card})
 
-            card.children.back = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS['bunc_bunco_jokers_winking'], coordinate(1))
+            card.children.back = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS['bunc_bunco_jokers_winking'], coordinate_from_atlas_index(1))
             card.children.back.states.hover = card.states.hover
             card.children.back.states.click = card.states.click
             card.children.back.states.drag = card.states.drag
@@ -3186,7 +3188,7 @@ create_joker({ -- Vandalism
     }
 })
 
-create_joker({ -- Protester
+bunc_define_joker({ -- Protester
     name = 'Protester', position = 43,
     vars = {{chip_mult = 8}, {chips = 0}, {rank = -huge_number}},
     rarity = 'Common', cost = 4,
@@ -3231,7 +3233,7 @@ create_joker({ -- Protester
     end
 })
 
-create_joker({ -- Doodle
+bunc_define_joker({ -- Doodle
     name = 'Doodle', position = 44,
     vars = {{active = true}, {unlock = 10}},
     locked_vars = function(self, info_queue, card)
@@ -3275,7 +3277,7 @@ create_joker({ -- Doodle
     end
 })
 
-create_joker({ -- Disproportionality
+bunc_define_joker({ -- Disproportionality
     name = 'Disproportionality', position = 45,
     vars = {{min = 0}, {max = 200}},
     custom_vars = function(self, info_queue, card)
@@ -3325,7 +3327,7 @@ create_joker({ -- Disproportionality
     end
 })
 
-create_joker({ -- Running Joke
+bunc_define_joker({ -- Running Joke
     name = 'Running Joke', position = 46,
     custom_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.e_negative
@@ -3350,7 +3352,7 @@ create_joker({ -- Running Joke
     end
 })
 
-create_joker({ -- On Broadway
+bunc_define_joker({ -- On Broadway
     name = 'On Broadway', position = 47,
     vars = {{chips = 120}, {mult = 20}},
     rarity = 'Uncommon', cost = 6,
@@ -3382,7 +3384,7 @@ create_joker({ -- On Broadway
     end
 })
 
-create_joker({ -- Rasta
+bunc_define_joker({ -- Rasta
     name = 'Rasta', position = 48,
     vars = {{mult = 12}},
     rarity = 'Common', cost = 5,
@@ -3425,7 +3427,7 @@ create_joker({ -- Rasta
     end
 })
 
-create_joker({ -- Critic
+bunc_define_joker({ -- Critic
     name = 'Critic', position = 49,
     vars = {{xmult = 2}, {fraction = 3}},
     rarity = 'Common', cost = 6,
@@ -3447,7 +3449,7 @@ create_joker({ -- Critic
     end
 })
 
-create_joker({ -- Cellphone
+bunc_define_joker({ -- Cellphone
     name = 'Cellphone', position = 50,
     vars = {{active = true}, {cards_to_hand = {}}},
     rarity = 'Uncommon', cost = 8,
@@ -3493,7 +3495,7 @@ create_joker({ -- Cellphone
     end
 })
 
-create_joker({ -- Wino
+bunc_define_joker({ -- Wino
     name = 'Wino', position = 51,
     vars = {{chips = 12}},
     rarity = 'Common', cost = 5,
@@ -3514,7 +3516,7 @@ create_joker({ -- Wino
     end
 })
 
-create_joker({ -- Bounty Hunter
+bunc_define_joker({ -- Bounty Hunter
     name = 'Bounty Hunter', position = 52,
     vars = {{bonus = 1}, {mult = 0}, {unlock = -20}},
     locked_vars = function(self, info_queue, card)
@@ -3564,7 +3566,7 @@ G.FUNCS.j_bunc_mousetrap_settings = function(e)
         config = {offset = {x=0,y=10}}
 	}
 end
-create_joker({ -- Mousetrap
+bunc_define_joker({ -- Mousetrap
     name = 'Mousetrap', position = 53,
     vars = {{chips = 300}, {odds = 3}},
     custom_vars = function(self, info_queue, card)
@@ -3625,7 +3627,7 @@ create_joker({ -- Mousetrap
     end
 })
 
-create_joker({ -- The Joker
+bunc_define_joker({ -- The Joker
     name = 'The Joker', custom_atlas = 'bunco_jokers_the_joker', position = 1,
     vars = {{trash_list = {}}, {odds = 3}},
     custom_vars = function(self, info_queue, card)
@@ -3720,7 +3722,7 @@ create_joker({ -- The Joker
     end
 })
 
-create_joker({ -- Tangram
+bunc_define_joker({ -- Tangram
     name = 'Tangram', position = 54,
     vars = {{mult = 7}},
     rarity = 'Rare', cost = 7,
@@ -3747,7 +3749,7 @@ create_joker({ -- Tangram
     end
 })
 
-create_joker({ -- Domino
+bunc_define_joker({ -- Domino
     name = 'Domino', position = 55,
     rarity = 'Rare', cost = 12,
     blueprint = false, eternal = true,
@@ -3833,7 +3835,7 @@ create_joker({ -- Domino
     end
 })
 
-create_joker({ -- Glue Gun
+bunc_define_joker({ -- Glue Gun
     name = 'Glue Gun', position = 56,
     vars = {{amount = 4}},
     custom_vars = function (self, info_queue, card)
@@ -3872,7 +3874,7 @@ create_joker({ -- Glue Gun
     end
 })
 
-create_joker({ -- Taped
+bunc_define_joker({ -- Taped
     name = 'Taped', custom_atlas = 'bunco_jokers_taped', position = 1,
     custom_vars = function (self, info_queue, card)
         info_queue[#info_queue+1] = {set = 'Other', key = 'bunc_linked_group'}
@@ -3926,7 +3928,7 @@ create_joker({ -- Taped
     end
 })
 
-create_joker({ -- Rubber Band Ball
+bunc_define_joker({ -- Rubber Band Ball
     name = 'Rubber Band Ball', position = 57,
     vars = {{bonus = 1}, {xmult = 1}},
     custom_vars = function (self, info_queue, card)
@@ -3959,7 +3961,7 @@ create_joker({ -- Rubber Band Ball
     end,
 })
 
-create_joker({ -- Headache
+bunc_define_joker({ -- Headache
     name = 'Headache', custom_atlas = 'bunco_jokers_headache', position = 1,
     vars = {{amount = 4}, {destroyed = 0}},
     custom_vars = function (self, info_queue, card)
@@ -3982,7 +3984,7 @@ create_joker({ -- Headache
     end,
     set_sprites = function(self, card, front)
         if card.config.center.discovered or card.bypass_discovery_center then
-            card.children.floating_sprite = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS['bunc_bunco_jokers_border'], coordinate(1))
+            card.children.floating_sprite = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS['bunc_bunco_jokers_border'], coordinate_from_atlas_index(1))
             card.children.floating_sprite.states.hover = card.states.hover
             card.children.floating_sprite.states.click = card.states.click
             card.children.floating_sprite.states.drag = card.states.drag
@@ -4025,7 +4027,7 @@ create_joker({ -- Headache
     }
 })
 
-create_joker({ -- Games Collector
+bunc_define_joker({ -- Games Collector
     name = 'Games Collector', position = 58,
     vars = {{bonus = 10}, {chips = 0}, {drawn_this_round = {}}},
     custom_vars = function (self, info_queue, card)
@@ -4038,7 +4040,7 @@ create_joker({ -- Games Collector
     calculate = function(self, card, context)
 
         -- Note:
-        -- Due the way this is coded, it will only trigger
+        -- Due to the way this is coded, it will only trigger
         -- upon the group breaking the hand limit.
         -- That means that if you managed to draw a group
         -- "naturally" (so it didn't request other cards)
@@ -4083,7 +4085,7 @@ create_joker({ -- Games Collector
     end
 })
 
-create_joker({ -- Jumper
+bunc_define_joker({ -- Jumper
     name = 'Jumper', position = 59,
     vars = {{bonus = 8}, {chips = 0}},
     rarity = 'Common', cost = 5,
@@ -4132,7 +4134,7 @@ G.FUNCS.j_bunc_stylophone_settings = function(e)
         config = {offset = {x=0,y=10}}
 	}
 end
-create_joker({ -- Stylophone
+bunc_define_joker({ -- Stylophone
     name = 'Stylophone', position = 60,
     vars = {{x = 0.3}},
     rarity = 'Uncommon', cost = 5,
@@ -4197,7 +4199,7 @@ create_joker({ -- Stylophone
     end
 })
 
-create_joker({ -- Kite Experiment
+bunc_define_joker({ -- Kite Experiment
     name = 'Kite Experiment', position = 61,
     vars = {{odds = 2}, {cards_rescored = {}}},
     custom_vars = function(self, info_queue, card)
@@ -4247,7 +4249,7 @@ create_joker({ -- Kite Experiment
     end
 })
 
-create_joker({ -- Robot
+bunc_define_joker({ -- Robot
     name = 'Robot', position = 62,
     vars = {{bonus = 3}, {mult = 0}},
     custom_vars = function(self, info_queue, card)
@@ -4292,7 +4294,7 @@ create_joker({ -- Robot
     end
 })
 
-create_joker({ -- Hardtack
+bunc_define_joker({ -- Hardtack
     name = 'Hardtack', position = 63,
     custom_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.m_bunc_cracker
@@ -4311,7 +4313,7 @@ create_joker({ -- Hardtack
     end
 })
 
-create_joker({ -- Pica
+bunc_define_joker({ -- Pica
     name = 'Pica', position = 64,
     custom_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.m_bunc_cracker
@@ -4332,7 +4334,7 @@ create_joker({ -- Pica
 
 -- Exotic Jokers
 
-create_joker({ -- Zealous
+bunc_define_joker({ -- Zealous
     type = 'Exotic',
     name = 'Zealous', position = 1,
     custom_vars = function(self, info_queue, card) return {vars = {card.ability.t_mult}} end,
@@ -4342,7 +4344,7 @@ create_joker({ -- Zealous
     unlocked = true
 })
 
-create_joker({ -- Lurid
+bunc_define_joker({ -- Lurid
     type = 'Exotic',
     name = 'Lurid', position = 2,
     custom_vars = function(self, info_queue, card) return {vars = {card.ability.t_chips}} end,
@@ -4352,7 +4354,7 @@ create_joker({ -- Lurid
     unlocked = true
 })
 
-create_joker({ -- Envious
+bunc_define_joker({ -- Envious
     type = 'Exotic',
     name = 'Envious', position = 3,
     vars = {{s_mult = 6}, {suit = 'bunc_Fleurons'}},
@@ -4362,7 +4364,7 @@ create_joker({ -- Envious
     effect = 'Suit Mult'
 })
 
-create_joker({ -- Proud
+bunc_define_joker({ -- Proud
     type = 'Exotic',
     name = 'Proud', position = 4,
     vars = {{s_mult = 6}, {suit = 'bunc_Halberds'}},
@@ -4372,7 +4374,7 @@ create_joker({ -- Proud
     effect = 'Suit Mult'
 })
 
-create_joker({ -- Wishalloy
+bunc_define_joker({ -- Wishalloy
     type = 'Exotic',
     name = 'Wishalloy', position = 5,
     vars = {{odds = 7}},
@@ -4399,7 +4401,7 @@ create_joker({ -- Wishalloy
     end
 })
 
-create_joker({ -- Unobtanium
+bunc_define_joker({ -- Unobtanium
     type = 'Exotic',
     name = 'Unobtanium', position = 6,
     vars = {{chips = 30}, {mult = 6}},
@@ -4422,7 +4424,7 @@ create_joker({ -- Unobtanium
     end
 })
 
-create_joker({ -- Dynasty
+bunc_define_joker({ -- Dynasty
     type = 'Exotic',
     name = 'Dynasty', position = 7,
     custom_vars = function(self, info_queue, card) return {vars = {card.ability.x_mult}} end,
@@ -4432,7 +4434,7 @@ create_joker({ -- Dynasty
     unlocked = true
 })
 
-create_joker({ -- Magic Wand
+bunc_define_joker({ -- Magic Wand
     type = 'Exotic',
     name = 'Magic Wand', position = 8,
     vars = {{bonus = 3}, {mult = 0}},
@@ -4461,7 +4463,7 @@ create_joker({ -- Magic Wand
     end
 })
 
-create_joker({ -- Starfruit
+bunc_define_joker({ -- Starfruit
     type = 'Exotic',
     name = 'Starfruit', position = 9,
     vars = {{odds = 4}},
@@ -4502,7 +4504,7 @@ pools = {
     end
 })
 
-create_joker({ -- Fondue
+bunc_define_joker({ -- Fondue
     type = 'Exotic',
     name = 'Fondue', position = 10,
     rarity = 'Rare', cost = 8,
@@ -4544,7 +4546,7 @@ BUNCOMOD.funcs.myopia_check = function (card, suit)
     end
     return false
 end
-create_joker({ -- Myopia
+bunc_define_joker({ -- Myopia
     type = 'Exotic',
     name = 'Myopia', position = 11,
     rarity = 'Uncommon', cost = 8,
@@ -4564,7 +4566,7 @@ BUNCOMOD.funcs.astigmatism_check = function (card, suit)
     end
     return false
 end
-create_joker({ -- Astigmatism
+bunc_define_joker({ -- Astigmatism
     type = 'Exotic',
     name = 'Astigmatism', position = 12,
     rarity = 'Uncommon', cost = 8,
@@ -4572,7 +4574,7 @@ create_joker({ -- Astigmatism
     unlocked = true
 })
 
-create_joker({ -- ROYGBIV
+bunc_define_joker({ -- ROYGBIV
     type = 'Exotic',
     name = 'ROYGBIV', position = 13,
     vars = {{odds = 7}},
@@ -4619,7 +4621,7 @@ create_joker({ -- ROYGBIV
 
 -- Legendary Jokers
 
-create_joker({ -- Rigoletto
+bunc_define_joker({ -- Rigoletto
     type = 'Exotic',
     name = 'Rigoletto', position = 1,
     vars = {{bonus = 0.2}, {xmult = 1}, {tally = 0}},
@@ -4670,7 +4672,7 @@ SMODS.Consumable{ -- Adjustment
 
     effect = 'Enhance',
     config = {mod_conv = 'm_bunc_cracker', max_highlighted = 2},
-    pos = coordinate(1),
+    pos = coordinate_from_atlas_index(1),
 
     set_card_type_badge = function(self, card, badges)
         badges[1] = create_badge(G.localization.misc.dictionary.bunc_thoth_tarot, get_type_colour(self or card.config, card), nil, 1.2)
@@ -4688,7 +4690,7 @@ SMODS.Consumable{ -- The Art
 
     effect = 'Enhance',
     config = {mod_conv = 'm_bunc_copper', max_highlighted = 2},
-    pos = coordinate(2),
+    pos = coordinate_from_atlas_index(2),
 
     set_card_type_badge = function(self, card, badges)
         badges[1] = create_badge(G.localization.misc.dictionary.bunc_thoth_tarot, get_type_colour(self or card.config, card), nil, 1.2)
@@ -4705,7 +4707,7 @@ SMODS.Consumable{ -- The Universe
     key = 'universe',
 
     config = {max_highlighted = 3},
-    pos = coordinate(3),
+    pos = coordinate_from_atlas_index(3),
 
     set_card_type_badge = function(self, card, badges)
         badges[1] = create_badge(G.localization.misc.dictionary.bunc_thoth_tarot, get_type_colour(self or card.config, card), nil, 1.2)
@@ -4763,7 +4765,7 @@ SMODS.Consumable{ -- Lust
     key = 'lust',
 
     config = {bonus = 1, limit = 52},
-    pos = coordinate(4),
+    pos = coordinate_from_atlas_index(4),
 
     set_card_type_badge = function(self, card, badges)
         badges[1] = create_badge(G.localization.misc.dictionary.bunc_thoth_tarot, get_type_colour(self or card.config, card), nil, 1.2)
@@ -4797,7 +4799,7 @@ SMODS.Consumable{ -- The Sky
     end,
 
     config = {max_highlighted = 3, suit_conv = 'bunc_Fleurons'},
-    pos = coordinate(1),
+    pos = coordinate_from_atlas_index(1),
 
     loc_vars = function(self) return {vars = {self.config.max_highlighted}} end,
 
@@ -4839,7 +4841,7 @@ SMODS.Consumable{ -- The Abyss
     end,
 
     config = {max_highlighted = 3, suit_conv = 'bunc_Halberds'},
-    pos = coordinate(2),
+    pos = coordinate_from_atlas_index(2),
 
     loc_vars = function(self) return {vars = {self.config.max_highlighted}} end,
 
@@ -4885,7 +4887,7 @@ SMODS.Consumable{ -- Quaoar
     end,
 
     config = {hand_type = 'bunc_Spectrum', softlock = true},
-    pos = coordinate(1),
+    pos = coordinate_from_atlas_index(1),
 
     generate_ui = 0,
     process_loc_text = function(self)
@@ -4904,7 +4906,7 @@ SMODS.Consumable{ -- Haumea
     end,
 
     config = {hand_type = 'bunc_Straight Spectrum', softlock = true},
-    pos = coordinate(2),
+    pos = coordinate_from_atlas_index(2),
 
     generate_ui = 0,
     process_loc_text = function(self)
@@ -4923,7 +4925,7 @@ SMODS.Consumable{ -- Sedna
     end,
 
     config = {hand_type = 'bunc_Spectrum House', softlock = true},
-    pos = coordinate(3),
+    pos = coordinate_from_atlas_index(3),
 
     generate_ui = 0,
     process_loc_text = function(self)
@@ -4942,7 +4944,7 @@ SMODS.Consumable{ -- Makemake
     end,
 
     config = {hand_type = 'bunc_Spectrum Five', softlock = true},
-    pos = coordinate(4),
+    pos = coordinate_from_atlas_index(4),
 
     generate_ui = 0,
     process_loc_text = function(self)
@@ -4962,7 +4964,7 @@ SMODS.Consumable{ -- Cleanse
     key = 'cleanse',
 
     config = {max_highlighted = 3},
-    pos = coordinate(1),
+    pos = coordinate_from_atlas_index(1),
 
     loc_vars = function(self, info_queue)
         info_queue[#info_queue+1] = G.P_CENTERS.e_bunc_fluorescent
@@ -5093,7 +5095,7 @@ function CardArea:emplace(card, location, stay_flipped)
     return ret
 end
 
-local original_add_to_highlighted = CardArea.add_to_highlighted
+local bunc_original_add_to_highlighted = CardArea.add_to_highlighted
 function CardArea:add_to_highlighted(card, silent)
     if G.STATE ~= G.STATES.DRAW_TO_HAND and not G.DRAWING_CARDS then
         if card.ability.group and self then
@@ -5118,16 +5120,16 @@ function CardArea:add_to_highlighted(card, silent)
                     end
 
                 else
-                    original_add_to_highlighted(self, group[i], (silent == nil) and false or silent)
+bunc_                    original_add_to_highlighted(self, group[i], (silent == nil) and false or silent)
                 end
             end
         else
-            original_add_to_highlighted(self, card, silent)
+bunc_            original_add_to_highlighted(self, card, silent)
         end
     end
 end
 
-local original_remove_from_highlighted = CardArea.remove_from_highlighted
+local bunc_original_remove_from_highlighted = CardArea.remove_from_highlighted
 function CardArea:remove_from_highlighted(card, force)
     if card.ability.group and self and not force then
         local group = {}
@@ -5146,11 +5148,11 @@ function CardArea:remove_from_highlighted(card, force)
             end
             group[i].highlighted = false
             if i == #group then
-                original_remove_from_highlighted(self, group[i], force)
+bunc_                original_remove_from_highlighted(self, group[i], force)
             end
         end
     else
-        original_remove_from_highlighted(self, card, force)
+bunc_        original_remove_from_highlighted(self, card, force)
     end
 end
 
@@ -5169,7 +5171,7 @@ SMODS.ConsumableType{
 SMODS.UndiscoveredSprite{
     key = 'Polymino',
     atlas = 'bunco_polyminoes_undiscovered',
-    pos = coordinate(1)
+    pos = coordinate_from_atlas_index(1)
 }
 
 SMODS.Consumable{ -- The I
@@ -5233,7 +5235,7 @@ SMODS.Consumable{ -- The I
         card:juice_up(0.3, 0.5)
     end,
 
-    pos = coordinate(1),
+    pos = coordinate_from_atlas_index(1),
 }
 
 SMODS.Consumable{ -- The O
@@ -5313,7 +5315,7 @@ SMODS.Consumable{ -- The O
         card:juice_up(0.3, 0.5)
     end,
 
-    pos = coordinate(2),
+    pos = coordinate_from_atlas_index(2),
 }
 
 SMODS.Consumable{ -- The T
@@ -5403,7 +5405,7 @@ SMODS.Consumable{ -- The T
         card:juice_up(0.3, 0.5)
     end,
 
-    pos = coordinate(3),
+    pos = coordinate_from_atlas_index(3),
 }
 
 SMODS.Consumable{ -- The S
@@ -5495,7 +5497,7 @@ SMODS.Consumable{ -- The S
         card:juice_up(0.3, 0.5)
     end,
 
-    pos = coordinate(4),
+    pos = coordinate_from_atlas_index(4),
 }
 
 SMODS.Consumable{ -- The Z
@@ -5584,7 +5586,7 @@ SMODS.Consumable{ -- The Z
         card:juice_up(0.3, 0.5)
     end,
 
-    pos = coordinate(5),
+    pos = coordinate_from_atlas_index(5),
 }
 
 SMODS.Consumable{ -- The J
@@ -5686,7 +5688,7 @@ SMODS.Consumable{ -- The J
         card:juice_up(0.3, 0.5)
     end,
 
-    pos = coordinate(6),
+    pos = coordinate_from_atlas_index(6),
 }
 
 SMODS.Consumable{ -- The L
@@ -5784,7 +5786,7 @@ SMODS.Consumable{ -- The L
         card:juice_up(0.3, 0.5)
     end,
 
-    pos = coordinate(7),
+    pos = coordinate_from_atlas_index(7),
 }
 
 SMODS.Consumable{ -- The /
@@ -5877,7 +5879,7 @@ SMODS.Consumable{ -- The /
         card:juice_up(0.3, 0.5)
     end,
 
-    pos = coordinate(8),
+    pos = coordinate_from_atlas_index(8),
 
     in_pool = function(self)
         return BUNCOMOD.funcs.exotic_in_pool()
@@ -5922,7 +5924,7 @@ SMODS.Consumable{ -- The 8
         card:juice_up(0.3, 0.5)
     end,
 
-    pos = coordinate(9),
+    pos = coordinate_from_atlas_index(9),
 }
 
 -- Exotic suits
@@ -7168,7 +7170,7 @@ SMODS.Back{ -- Fairy
         end
     end,
 
-    pos = coordinate(1),
+    pos = coordinate_from_atlas_index(1),
     atlas = 'bunco_decks'
 }
 
@@ -7187,7 +7189,7 @@ SMODS.Back{ -- Digital
         G.GAME.polymino_rate = self.config.polymino_rate
     end,
 
-    pos = coordinate(2),
+    pos = coordinate_from_atlas_index(2),
     atlas = 'bunco_decks'
 }
 
@@ -7219,7 +7221,7 @@ SMODS.Tag{ -- Breaking
         end
     end,
 
-    pos = coordinate(1),
+    pos = coordinate_from_atlas_index(1),
     atlas = 'bunco_tags',
 
     in_pool = function()
@@ -7259,7 +7261,7 @@ SMODS.Tag{ -- Arcade
         end
     end,
 
-    pos = coordinate(2),
+    pos = coordinate_from_atlas_index(2),
     atlas = 'bunco_tags',
 
     in_pool = function()
@@ -7294,7 +7296,7 @@ SMODS.Tag{ -- Triple
         end
     end,
 
-    pos = coordinate(3),
+    pos = coordinate_from_atlas_index(3),
     atlas = 'bunco_tags',
 
     in_pool = function() return G.GAME.used_vouchers['v_bunc_pin_collector'] end
@@ -7333,7 +7335,7 @@ SMODS.Tag{ -- Glitter
         end
     end,
 
-    pos = coordinate(1),
+    pos = coordinate_from_atlas_index(1),
     atlas = 'bunco_tags_edition',
 }
 
@@ -7370,7 +7372,7 @@ SMODS.Tag{ -- Fluorescent
         end
     end,
 
-    pos = coordinate(2),
+    pos = coordinate_from_atlas_index(2),
     atlas = 'bunco_tags_edition',
 
     in_pool = function()
@@ -7405,7 +7407,7 @@ SMODS.Tag{ -- Chips
         end
     end,
 
-    pos = coordinate(1),
+    pos = coordinate_from_atlas_index(1),
     atlas = 'bunco_tags_hand',
 
     in_pool = function() return false end
@@ -7434,7 +7436,7 @@ SMODS.Tag{ -- Mult
         end
     end,
 
-    pos = coordinate(2),
+    pos = coordinate_from_atlas_index(2),
     atlas = 'bunco_tags_hand',
 
     in_pool = function() return false end
@@ -7463,7 +7465,7 @@ SMODS.Tag{ -- Xmult
         end
     end,
 
-    pos = coordinate(3),
+    pos = coordinate_from_atlas_index(3),
     atlas = 'bunco_tags_hand',
 
     in_pool = function() return false end
@@ -7492,7 +7494,7 @@ SMODS.Tag{ -- Xchip
         end
     end,
 
-    pos = coordinate(4),
+    pos = coordinate_from_atlas_index(4),
     atlas = 'bunco_tags_hand',
 
     in_pool = function() return false end
@@ -7538,7 +7540,7 @@ SMODS.Tag{ -- Filigree
         end
     end,
 
-    pos = coordinate(1),
+    pos = coordinate_from_atlas_index(1),
     atlas = 'bunco_tags_exotic',
 
     in_pool = BUNCOMOD.funcs.exotic_in_pool
@@ -7577,7 +7579,7 @@ SMODS.Tag{ -- Eternal
         end
     end,
 
-    pos = coordinate(1),
+    pos = coordinate_from_atlas_index(1),
     atlas = 'bunco_tags_sticker',
 
     in_pool = function() return false end
@@ -7616,7 +7618,7 @@ SMODS.Tag{ -- Perishable
         end
     end,
 
-    pos = coordinate(2),
+    pos = coordinate_from_atlas_index(2),
     atlas = 'bunco_tags_sticker',
 
     in_pool = function() return false end
@@ -7655,7 +7657,7 @@ SMODS.Tag{ -- Scattering
         end
     end,
 
-    pos = coordinate(3),
+    pos = coordinate_from_atlas_index(3),
     atlas = 'bunco_tags_sticker',
 
     in_pool = function() return false end
@@ -7694,7 +7696,7 @@ SMODS.Tag{ -- Hindered
         end
     end,
 
-    pos = coordinate(4),
+    pos = coordinate_from_atlas_index(4),
     atlas = 'bunco_tags_sticker',
 
     in_pool = function() return false end
@@ -7732,7 +7734,7 @@ SMODS.Tag{ -- Reactive
         end
     end,
 
-    pos = coordinate(5),
+    pos = coordinate_from_atlas_index(5),
     atlas = 'bunco_tags_sticker',
 
     in_pool = function() return false end
@@ -7766,7 +7768,7 @@ SMODS.Tag{ -- Rental
         end
     end,
 
-    pos = coordinate(6),
+    pos = coordinate_from_atlas_index(6),
     atlas = 'bunco_tags_sticker',
 
     in_pool = function() return false end
@@ -7836,7 +7838,7 @@ SMODS.Voucher{ -- Lamination
 
     unlocked = true,
 
-    pos = coordinate(1),
+    pos = coordinate_from_atlas_index(1),
     atlas = 'bunco_vouchers'
 }
 
@@ -7858,7 +7860,7 @@ SMODS.Voucher{ -- Supercoating
         end
     end,
 
-    pos = coordinate(2),
+    pos = coordinate_from_atlas_index(2),
     atlas = 'bunco_vouchers'
 }
 
@@ -7872,7 +7874,7 @@ SMODS.Voucher{ -- Hedge Trimmer
 
     unlocked = true,
 
-    pos = coordinate(3),
+    pos = coordinate_from_atlas_index(3),
     atlas = 'bunco_vouchers'
 }
 
@@ -7901,7 +7903,7 @@ SMODS.Voucher{ -- Chainsaw
         end
     end,
 
-    pos = coordinate(4),
+    pos = coordinate_from_atlas_index(4),
     atlas = 'bunco_vouchers'
 }
 
@@ -7915,7 +7917,7 @@ SMODS.Voucher{ -- Cups 'n' Balls
 
     unlocked = true,
 
-    pos = coordinate(5),
+    pos = coordinate_from_atlas_index(5),
     atlas = 'bunco_vouchers'
 }
 
@@ -7937,7 +7939,7 @@ SMODS.Voucher{ -- Shell Game
         end
     end,
 
-    pos = coordinate(6),
+    pos = coordinate_from_atlas_index(6),
     atlas = 'bunco_vouchers'
 }
 
@@ -7946,7 +7948,7 @@ SMODS.Voucher{ -- Disguise
 
     unlocked = true,
 
-    pos = coordinate(7),
+    pos = coordinate_from_atlas_index(7),
     atlas = 'bunco_vouchers'
 }
 
@@ -7978,7 +7980,7 @@ SMODS.Voucher{ -- Masquerade
         end
     end,
 
-    pos = coordinate(8),
+    pos = coordinate_from_atlas_index(8),
     atlas = 'bunco_vouchers'
 }
 
@@ -8001,7 +8003,7 @@ SMODS.Voucher{ -- Fanny Pack
 
     unlocked = true,
 
-    pos = coordinate(9),
+    pos = coordinate_from_atlas_index(9),
     atlas = 'bunco_vouchers'
 }
 
@@ -8027,7 +8029,7 @@ SMODS.Voucher{ -- Pin Collector
         end
     end,
 
-    pos = coordinate(10),
+    pos = coordinate_from_atlas_index(10),
     atlas = 'bunco_vouchers'
 }
 
@@ -8036,7 +8038,7 @@ SMODS.Voucher{ -- Arcade Machine
 
     unlocked = true,
 
-    pos = coordinate(11),
+    pos = coordinate_from_atlas_index(11),
     atlas = 'bunco_vouchers'
 }
 
@@ -8058,7 +8060,7 @@ SMODS.Voucher{ -- Polybius
         end
     end,
 
-    pos = coordinate(12),
+    pos = coordinate_from_atlas_index(12),
     atlas = 'bunco_vouchers'
 }
 
@@ -8195,7 +8197,7 @@ for i = 1, 4 do -- Blind
             return t
         end,
 
-        pos = coordinate(i),
+        pos = coordinate_from_atlas_index(i),
         atlas = 'bunco_booster_packs_blind',
 
         in_pool = function() return G.GAME.used_vouchers['v_bunc_disguise'] end
@@ -8283,7 +8285,7 @@ for i = 1, 4 do -- Virtual
             ease_background_colour{new_colour = HEX('50506a'), special_colour = HEX('7e9999'), contrast = 2}
         end,
 
-        pos = coordinate(i),
+        pos = coordinate_from_atlas_index(i),
         atlas = 'bunco_booster_packs_virtual',
     }
 end
@@ -8307,7 +8309,7 @@ SMODS.Sound({key = 'cracker', path = 'cracker.ogg'})
 
 SMODS.Enhancement({ -- Cracker
     key = 'cracker',
-    atlas = 'bunco_enhancements', pos = coordinate(1)
+    atlas = 'bunco_enhancements', pos = coordinate_from_atlas_index(1)
 })
 
 function calculate_cracker_cards(context)
@@ -8365,7 +8367,7 @@ end
 SMODS.Enhancement({ -- Copper
     key = 'copper',
     post_effect = true,
-    rescore_amount = 1, pos = coordinate(2),
+    rescore_amount = 1, pos = coordinate_from_atlas_index(2),
     atlas = 'bunco_enhancements',
     calculate = function(self, card, context, effect)
         if context.post_effect
@@ -8487,7 +8489,7 @@ SMODS.Sticker{ -- Scattering
 
     order = 5,
 
-    pos = coordinate(1),
+    pos = coordinate_from_atlas_index(1),
     atlas = 'bunco_stickers'
 }
 
@@ -8509,7 +8511,7 @@ SMODS.Sticker{ -- Hindered
 
     order = 6,
 
-    pos = coordinate(2),
+    pos = coordinate_from_atlas_index(2),
     atlas = 'bunco_stickers'
 }
 
@@ -8531,7 +8533,7 @@ SMODS.Sticker{ -- Reactive
 
     order = 7,
 
-    pos = coordinate(3),
+    pos = coordinate_from_atlas_index(3),
     atlas = 'bunco_stickers'
 }
 
@@ -8554,8 +8556,8 @@ SMODS.Stake{ -- Cyan
 
     colour = HEX('3cd0c8'),
 
-    pos = coordinate(1),
-    sticker_pos = coordinate(1),
+    pos = coordinate_from_atlas_index(1),
+    sticker_pos = coordinate_from_atlas_index(1),
     atlas = 'bunco_stakes',
     sticker_atlas = 'bunco_stake_stickers'
 }
@@ -8573,8 +8575,8 @@ SMODS.Stake{ -- Pink
 
     colour = HEX('ff8ea4'),
 
-    pos = coordinate(2),
-    sticker_pos = coordinate(2),
+    pos = coordinate_from_atlas_index(2),
+    sticker_pos = coordinate_from_atlas_index(2),
     atlas = 'bunco_stakes',
     sticker_atlas = 'bunco_stake_stickers'
 }
@@ -8592,8 +8594,8 @@ SMODS.Stake{ -- Magenta
 
     colour = HEX('cd47ea'),
 
-    pos = coordinate(3),
-    sticker_pos = coordinate(3),
+    pos = coordinate_from_atlas_index(3),
+    sticker_pos = coordinate_from_atlas_index(3),
     atlas = 'bunco_stakes',
     sticker_atlas = 'bunco_stake_stickers'
 }
