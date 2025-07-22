@@ -1029,8 +1029,7 @@ BUNCOMOD.funcs.ease_dollars = function(mod)
     return(mod)
 end
 
-local original_game_update = Game.update
-
+local bunc_original_game_update = Game.update
 function Game:update(dt)
 
     -- The 8
@@ -1059,7 +1058,7 @@ function Game:update(dt)
         end
     end
 
-    original_game_update(self, dt)
+bunc_original_game_update(self, dt)
 end
 
 function BUNCOMOD.content.set_debuff(card)
