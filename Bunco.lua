@@ -965,9 +965,9 @@ end
 
 -- Repetitions unlocking
 
-local original_calculate_repetitions = SMODS.calculate_repetitions
+local bunc_original_calculate_repetitions = SMODS.calculate_repetitions
 SMODS.calculate_repetitions = function(card, context, reps)
-    original_calculate_repetitions(card, context, reps)
+bunc_original_calculate_repetitions(card, context, reps)
 
     check_for_unlock({type = 'repetition', repetition_amount = #reps - 1})
 end
