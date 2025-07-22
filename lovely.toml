@@ -1600,6 +1600,10 @@ end
 
 '''
 
+#############################
+   # REGULAR BOSS BLINDS #
+#############################
+
 # G.FUNCS.discard_cards_from_highlighted() (The Paling 1/2)
 [[patches]]
 [patches.pattern]
@@ -1953,6 +1957,9 @@ end
 
 '''
 
+##############################
+   # FINISHER BOSS BLINDS #
+##############################
 # function get_new_boss() (Vermilion Trident 2/2)
 [[patches]]
 [patches.pattern]
@@ -2399,6 +2406,17 @@ end
 
 '''
 
+
+
+
+
+
+
+
+##############################
+       # NEW VOUCHERS #
+##############################
+
 # function Blind:press_play() (Hedge Trimmer)
 [[patches]]
 [patches.pattern]
@@ -2655,6 +2673,7 @@ position = 'at'
 match_indent = true
 payload = '''if self.name == 'Double Tag' and _context.tag.key ~= 'tag_double' and _context.tag.key ~= 'tag_bunc_triple' then'''
 
+
 # Blind Cards 1/3
 [[patches]]
 [patches.pattern]
@@ -2759,6 +2778,16 @@ end
 
 '''
 
+
+
+
+
+
+
+
+
+
+
 # Virtual color, part 1/2
 [[patches]]
 [patches.pattern]
@@ -2779,6 +2808,17 @@ position = 'after'
 match_indent = true
 payload = '''bunco_virtual = G.C.BUNCO_VIRTUAL,
 bunco_virtual_dark = G.C.BUNCO_VIRTUAL_DARK,'''
+
+
+
+
+
+
+
+
+##############################
+    # NEW JOKER STICKERS #
+##############################
 
 # Scattering Sticker 1/2
 [[patches]]
@@ -2826,7 +2866,7 @@ end
 
 '''
 
-# Hindered Sticker 1/3
+# Stop selling animation when selling hindered joker and mark it as hindered (Hindered Sticker 1/4)
 [[patches]]
 [patches.pattern]
 target = 'card.lua'
@@ -2845,7 +2885,7 @@ end
 
 '''
 
-# Hindered Sticker 2/3
+# Prevent hindered jokers from being sold twice (Hindered Sticker 2/4)
 [[patches]]
 [patches.pattern]
 target = 'card.lua'
@@ -2854,7 +2894,7 @@ position = 'after'
 match_indent = true
 payload = '''not self.ability.bunc_hindered_sold and'''
 
-# Hindered Sticker 3/3
+# Prevent hindered cards from being used (Hindered Sticker 3/4)
 [[patches]]
 [patches.pattern]
 target = 'card.lua'
@@ -2863,6 +2903,24 @@ position = 'before'
 match_indent = true
 payload = '''if self.ability.bunc_hindered_sold and self.children.use_button then self.children.use_button:remove(); self.children.use_button = nil end'''
 
+# Lets Hindered sticker trigger even if debuffed (Hindered Sticker 4/4)
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+pattern = """if card.ability.rental then
+            local ret = {}
+            ret[SMODS.Stickers.rental] = card:calculate_sticker(context, 'rental')
+            return ret, {}
+        end"""
+position = "before"
+match_indent = true
+payload = '''
+if card.ability.bunc_hindered then
+    local ret = {}
+    ret[SMODS.Stickers.bunc_hindered] = card:calculate_sticker(context, 'bunc_hindered')
+    return ret, {}
+end
+'''
 
 # Eternal Sticker compat
 [[patches]]
@@ -2923,6 +2981,16 @@ if G.GAME.modifiers.enable_reactive_in_shop and pseudorandom(('reactive')..G.GAM
 end
 
 '''
+
+
+
+
+
+
+
+##############################
+     # NEW ENHANCEMENTS #
+##############################
 
 # Cracker Cards 1/3
 [[patches]]
@@ -3121,6 +3189,11 @@ match_indent = true
 payload = '''if not from_debuff then
 '''
 
+
+
+
+
+
 # Drawstep bypassing
 [[patches]]
 [patches.pattern]
@@ -3129,6 +3202,11 @@ pattern = '''if SMODS.DrawSteps[k]:check_conditions(self, layer) then SMODS.Draw
 position = 'at'
 match_indent = true
 payload = '''if SMODS.DrawSteps[k]:check_conditions(self, layer) and not (self.draw_bypass and self.draw_bypass[k]) then SMODS.DrawSteps[k].func(self, layer) end'''
+
+
+
+
+
 
 # Fix Gameplan messing with hand size too much
 # Increasing hand size now only draws to hand if there is hand size to draw to
@@ -3195,23 +3273,4 @@ payload = '''
             }}
         }}
     end
-'''
-
-# Lets Hindered sticker trigger even if debuffed
-[[patches]]
-[patches.pattern]
-target = 'functions/common_events.lua'
-pattern = """if card.ability.rental then
-            local ret = {}
-            ret[SMODS.Stickers.rental] = card:calculate_sticker(context, 'rental')
-            return ret, {}
-        end"""
-position = "before"
-match_indent = true
-payload = '''
-if card.ability.bunc_hindered then
-    local ret = {}
-    ret[SMODS.Stickers.bunc_hindered] = card:calculate_sticker(context, 'bunc_hindered')
-    return ret, {}
-end
 '''
