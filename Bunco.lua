@@ -884,12 +884,7 @@ if config.gameplay_reworks then
             info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
             info_queue[#info_queue+1] = G.P_CENTERS.e_bunc_glitter
 
-            local vars
-            if G.GAME and G.GAME.probabilities.normal then
-                vars = {G.GAME.probabilities.normal, self.config.extra}
-            else
-                vars = {1, self.config.extra}
-            end
+            local vars = {SMODS.get_probability_vars(card, 1, self.config.extra, 'wheel_of_fortune')}
             return {key = 'c_bunc_wheel_of_fortune', vars = vars}
         end,
         pos = use_fixed_sprite_atlas() and coordinate_from_atlas_index(4) or nil,
@@ -911,14 +906,14 @@ end
 
 -- Temporary extra chips
 
-local original_end_round = end_round
+local bunc_original_end_round = end_round
 function end_round()
     for _, v in ipairs(G.playing_cards) do
         if v.ability and type(v.ability) == 'table' and v.ability.temporary_extra_chips then
             v.ability.temporary_extra_chips = nil
         end
     end
-    original_end_round()
+bunc_original_end_round()
 end
 
 local Card_get_chip_bonus = Card.get_chip_bonus
@@ -946,9 +941,9 @@ function post_eval_card(card, context)
     return ret
 end
 
-local original_calculate_main_scoring = SMODS.calculate_main_scoring
+local bunc_original_calculate_main_scoring = SMODS.calculate_main_scoring
 function SMODS.calculate_main_scoring(context, scoring_hand)
-    original_calculate_main_scoring(context, scoring_hand)
+bunc_original_calculate_main_scoring(context, scoring_hand)
 
     -- Post-scoring
 
