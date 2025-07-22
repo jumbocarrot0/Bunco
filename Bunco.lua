@@ -1311,6 +1311,10 @@ end
 local bunc_cassette_sprite_change = function(card)
     local coord = 1
 
+    if BUNCOMOD.funcs.exotic_in_pool() then
+        coord = coord + 70
+    end
+
     if card.ability and card.ability.extra and card.ability.extra.side then
         if card.ability.extra.side == 'B' then
             coord = coord + 1
@@ -1573,11 +1577,26 @@ bunc_define_joker({ -- Crop Circles
             end
 
             if (suit_mult + rank_mult) > 0 then
+if not context.blueprint and BUNCOMOD.funcs.exotic_in_pool() then
+                    event({
+                        blocking = false,
+                        func = function()
+                            card.children.center:set_sprite_pos(coordinate_from_atlas_index(73))
+                            return true
+                        end
+                    })
+                end
                 return {
                     mult = suit_mult + rank_mult,
                     card = card
                 }
             end
+        end
+end,
+    set_sprites = function(self, card, front)
+        -- Alt textures for slothful to include exotic and paperback suits if they have been unlocked
+        if (self.discovered or card.bypass_discovery_center) and BUNCOMOD.funcs.exotic_in_pool() then
+            card.children.center:set_sprite_pos(coordinate_from_atlas_index(73))
         end
     end
 })
@@ -2391,6 +2410,19 @@ bunc_define_joker({ -- Registration Plate
     end
 })
 
+local bunc_slothful_sprite_change = function(card)
+    if BUNCOMOD.funcs.exotic_in_pool() then
+        if next(SMODS.find_mod("paperback")) and (SMODS.Suits.paperback_Crowns:in_pool() or SMODS.Suits.paperback_Stars:in_pool()) then
+            card.children.center:set_sprite_pos(coordinate_from_atlas_index(76))
+        else
+            card.children.center:set_sprite_pos(coordinate_from_atlas_index(74))
+        end
+    else
+        if next(SMODS.find_mod("paperback")) and (SMODS.Suits.paperback_Crowns:in_pool() or SMODS.Suits.paperback_Stars:in_pool()) then
+            card.children.center:set_sprite_pos(coordinate_from_atlas_index(75))
+        end
+    end
+end
 bunc_define_joker({ -- Slothful
     name = 'Slothful', position = 27,
     vars = {{mult = 9}},
@@ -2423,11 +2455,26 @@ end
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
             if context.other_card.config.center == G.P_CENTERS.m_wild then
+if not context.blueprint then
+                    event({
+                        blocking = false,
+                        func = function()
+                            bunc_slothful_sprite_change(card)
+                            return true
+                        end
+                    })
+                end
                 return {
                     mult = card.ability.extra.mult,
                     card = card
                 }
             end
+        end
+end,
+    set_sprites = function(self, card, front)
+        -- Alt textures for slothful to include exotic and paperback suits if they have been unlocked
+        if self.discovered or card.bypass_discovery_center then
+            bunc_slothful_sprite_change(card)
         end
     end
 })
@@ -8019,12 +8066,7 @@ SMODS.Voucher{ -- Fanny Pack
 
         info_queue[#info_queue+1] = {set = 'Tag', key = 'tag_double'}
 
-        local vars
-        if G.GAME and G.GAME.probabilities.normal then
-            vars = {G.GAME.probabilities.normal, card.ability.extra.odds}
-        else
-            vars = {1, card.ability.extra.odds}
-        end
+        local vars = {SMODS.get_probability_vars(card, 1, card.ability.extra.odds)}
         return {vars = vars}
     end,
 
