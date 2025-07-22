@@ -1169,7 +1169,7 @@ SMODS.calculate_context({ bunc_press_play = true })
 
 '''
 
-# G.FUNCS.play_cards_from_highlighted() (Domino 1/5)
+# G.FUNCS.buy_from_shop() (Domino 1/5)
 [[patches]]
 [patches.pattern]
 target = 'functions/button_callbacks.lua'
@@ -1196,7 +1196,7 @@ if pre_cardarea and pre_cardarea.cards[pre_card_pos + 1] then pre_card_right = p
 
 '''
 
-# G.FUNCS.play_cards_from_highlighted() (Domino 2/5)
+# G.FUNCS.buy_from_shop() (Domino 2/5)
 [[patches]]
 [patches.pattern]
 target = 'functions/button_callbacks.lua'
@@ -1221,7 +1221,7 @@ end
 
 '''
 
-# G.FUNCS.play_cards_from_highlighted() (Domino 3/5)
+# G.FUNCS.use_card() (Domino 3/5)
 [[patches]]
 [patches.pattern]
 target = 'functions/button_callbacks.lua'
@@ -1267,7 +1267,7 @@ end
 
 '''
 
-# G.FUNCS.play_cards_from_highlighted() (Domino 4/5)
+# G.FUNCS.use_card() (Domino 4/5)
 [[patches]]
 [patches.pattern]
 target = 'functions/button_callbacks.lua'
@@ -1280,7 +1280,7 @@ call_getting_booster_card()
 
 '''
 
-# G.FUNCS.play_cards_from_highlighted() (Domino 5/5)
+# G.FUNCS.use_card() (Domino 5/5)
 [[patches]]
 [patches.pattern]
 target = 'functions/button_callbacks.lua'
@@ -3106,18 +3106,34 @@ calculate_cracker_cards({full_hand = G.play.cards, scoring_hand = scoring_hand, 
 
 '''
 
-# Money gain effects
+
+
+
+
+
+
+
+# # Money gain effects
+# [[patches]]
+# [patches.pattern]
+# target = 'functions/common_events.lua'
+# pattern = 'function ease_dollars(mod, instant)'
+# position = 'after'
+# match_indent = true
+# payload = '''
+
+#     mod = BUNCOMOD.funcs.ease_dollars(mod)
+#     if to_big(mod) == to_big(0) then return end
+
+# '''
 [[patches]]
 [patches.pattern]
-target = 'functions/common_events.lua'
-pattern = 'function ease_dollars(mod, instant)'
-position = 'after'
+target = '=[SMODS _ "src/utils.lua"]'
+pattern = 'if flags.numerator then context.numerator = flags.numerator end'
+position = 'before'
 match_indent = true
 payload = '''
-
-    mod = BUNCOMOD.funcs.ease_dollars(mod)
-    if to_big(mod) == to_big(0) then return end
-
+if flags.bunc_new_dollars_mod then context.mod = flags.bunc_new_dollars_mod end
 '''
 
 # Glitter edition in poll_edition

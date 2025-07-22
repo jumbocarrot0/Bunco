@@ -974,60 +974,64 @@ end
 
 -- Various on-money-gain functions
 
-BUNCOMOD.funcs.ease_dollars = function(mod)
-    if G.GAME.Trident and (to_big(mod) <= to_big(0)) then -- Vermilion Trident 1/2
-        G.GAME.ante_purchases = (G.GAME.ante_purchases or 0) + 1
+table.insert(SMODS.calculation_keys, "bunc_new_dollars_mod")
+local bunc_original_smods_calculate_individal_effect = SMODS.calculate_individual_effect
+SMODS.calculate_individual_effect = function(effect, scored_card, key, amount, from_edition)
+    
+    if key == "bunc_new_dollars_mod" then
+        return { [key] = amount }
     end
 
+    return bunc_original_smods_calculate_individal_effect(effect, scored_card, key, amount, from_edition)
+end
+
+
+BUNCOMOD.funcs.ease_dollars = function(mod)
+-- if G.GAME.Trident and (to_big(mod) <= to_big(0)) then -- Vermilion Trident 1/2
+--     G.GAME.ante_purchases = (G.GAME.ante_purchases or 0) + 1
+    -- end
+
+end
+
+local bunc_original_ease_dollars = ease_dollars
+function ease_dollars(mod, instant)
     G.GAME.bunc_money_spend_this_round = G.GAME.bunc_money_spend_this_round or 0 -- Money spent in one shop unlock 1/2
     if to_big(mod) < to_big(0) then
         G.GAME.bunc_money_spend_this_round = G.GAME.bunc_money_spend_this_round - mod
-
         check_for_unlock({type = 'round_spend_money', round_spend_money = G.GAME.bunc_money_spend_this_round})
     end
 
-    if G.jokers ~= nil then --Jokers that affect money income
-        for _, v in ipairs(SMODS.find_card('j_bunc_fiendish')) do
-            if not v.debuff and to_big(mod) > to_big(0) then
-                if pseudorandom('fiendish'..G.SEED) < G.GAME.probabilities.normal / v.ability.extra.odds then
-                    mod = to_big(1)
-                    local message = to_number(mod)
-                    G.E_MANAGER:add_event(Event{func = function()
-                        card_eval_status_text(
-                        v,
-                        'extra',
-                        nil, nil, nil,
-                        {message = '$'..(message or '1'), colour = G.C.RED, instant = true})
-                    return true end})
-                else
-                    mod = to_big(mod) * to_big(2)
-                    local message = to_number(mod)
-                    G.E_MANAGER:add_event(Event{func = function()
-                        card_eval_status_text(
-                        v,
-                        'extra',
-                        nil, nil, nil,
-                        {message = '$'..message, colour = G.C.ORANGE, instant = true})
-                    return true end})
-                end
-            end
-        end
-        for _, v in ipairs(SMODS.find_card('j_bunc_bounty_hunter')) do
-            if not v.debuff and to_big(mod) > to_big(0) then
-                v:calculate_joker({get_money = true})
-                mod = to_big(mod) - to_big(1)
-                G.E_MANAGER:add_event(Event{func = function()
-                    card_eval_status_text(
-                    v,
-                    'extra',
-                    nil, nil, nil,
-                    {message = G.localization.misc.dictionary.bunc_robbed, colour = G.C.ORANGE, instant = true})
-                return true end})
-            end
-        end
-    end
-    return(mod)
+    local ret = SMODS.calculate_context({
+        bunc_pre_money_change = true,
+        mod = mod,
+        sign = (to_big(mod) < to_big(0) and -1 or to_big(mod) > to_big(0) and 1 or 0)
+    })
+    mod = to_big(ret.bunc_new_dollars_mod) or mod
+
+    if to_big(mod) == to_big(0) then return end
+
+    bunc_original_ease_dollars(mod, instant)
+
+    if instant then
+        SMODS.calculate_context({
+            bunc_money_change = true,
+            mod = mod, 
+            sign = (to_big(mod) < to_big(0) and -1 or to_big(mod) > to_big(0) and 1 or 0)
+        })
+    else
+                G.E_MANAGER:add_event(Event({
+        trigger = 'immediate',
+        func = function()
+            SMODS.calculate_context({
+                bunc_money_change = true, 
+                mod = mod, 
+                sign = (to_big(mod) < to_big(0) and -1 or to_big(mod) > to_big(0) and 1 or 0)
+            })
+                return true
 end
+        }))
+            end
+        end
 
 local bunc_original_game_update = Game.update
 function Game:update(dt)
@@ -2056,12 +2060,7 @@ bunc_define_joker({ -- Fiendish
     name = 'Fiendish', position = 18,
     vars = {{odds = 3}},
     custom_vars = function(self, info_queue, card)
-        local vars
-        if G.GAME and G.GAME.probabilities.normal then
-            vars = {G.GAME.probabilities.normal, card.ability.extra.odds}
-        else
-            vars = {1, card.ability.extra.odds}
-        end
+                    vars = {SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "bunc_fiendish")}
         return {vars = vars}
     end,
     rarity = 'Uncommon', cost = 5,
@@ -2071,6 +2070,25 @@ bunc_define_joker({ -- Fiendish
         if args.type == 'win_challenge' and G.GAME.challenge == 'c_double_nothing_1' then
             self.challenge_bypass = true
             unlock_card(self)
+        end
+end,
+    calculate = function(self, card, context)
+        if context.bunc_pre_money_change and context.sign == 1 then
+            if SMODS.pseudorandom_probability(card, 'fiendish'..G.SEED, 1, card.ability.extra.odds, 'bunc_fiendish') then
+                local new_mod = to_big(1)
+                return {
+                    bunc_new_dollars_mod = new_mod,
+                    message = "$" .. to_number(new_mod),
+                    colour = G.C.RED
+                }
+            else
+                local new_mod = to_big(context.mod) * to_big(2)
+                return {
+                    bunc_new_dollars_mod = new_mod,
+                    message = "$" .. to_number(new_mod),
+                    colour = G.C.ORANGE
+                }
+            end
         end
     end
 })
@@ -2244,15 +2262,9 @@ bunc_define_joker({ -- Zero Shapiro
     name = 'Zero Shapiro', position = 23,
     vars = {{odds = 8}},
     custom_vars = function(self, info_queue, card)
-        local vars
+                info_queue[#info_queue+1] = {set = 'Tag', key = 'tag_d_six'}
 
-        info_queue[#info_queue+1] = {set = 'Tag', key = 'tag_d_six'}
-
-        if G.GAME and G.GAME.probabilities.normal then
-            vars = {G.GAME.probabilities.normal, card.ability.extra.odds}
-        else
-            vars = {1, card.ability.extra.odds}
-        end
+        local vars = {SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "bunc_zero_shapiro")}
         return {vars = vars}
     end,
     rarity = 'Uncommon', cost = 4,
@@ -2261,7 +2273,7 @@ bunc_define_joker({ -- Zero Shapiro
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
             if context.other_card:get_id() == 11 or context.other_card:get_id() == 12 or context.other_card:get_id() == 13 or SMODS.has_no_rank(context.other_card) then
-                if pseudorandom('zero_shapiro'..G.SEED) < G.GAME.probabilities.normal / card.ability.extra.odds then
+                if SMODS.pseudorandom_probability(card, pseudorandom('zero_shapiro'..G.SEED), 1, card.ability.extra.odds, 'bunc_zero_shapiro') then
                     return {
                         extra = {message = '+'..localize{type = 'name_text', key = 'tag_d_six', set = 'Tag'}, colour = G.C.GREEN},
                         card = card,
@@ -2815,12 +2827,7 @@ bunc_define_joker({ -- Head in the Clouds
     name = 'Head in the Clouds', position = 36,
     vars = {{odds = 3}},
     custom_vars = function(self, info_queue, card)
-        local vars
-        if G.GAME and G.GAME.probabilities.normal then
-            vars = {G.GAME.probabilities.normal, card.ability.extra.odds}
-        else
-            vars = {1, card.ability.extra.odds}
-        end
+                    vars = {SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "bunc_head_in_the_clouds")}
         return {vars = vars}
     end,
     rarity = 'Uncommon', cost = 6,
@@ -2849,7 +2856,7 @@ bunc_define_joker({ -- Head in the Clouds
     end,
     calculate = function(self, card, context)
         if context.level_up_hand and context.level_up_hand ~= self.name then
-            if pseudorandom('head_in_the_clouds'..G.SEED) < G.GAME.probabilities.normal / card.ability.extra.odds then
+            if SMODS.pseudorandom_probability(card, 'head_in_the_clouds'..G.SEED, 1, card.ability.extra.odds, 'bunc_head_in_the_clouds') then
                 event({func = function()
                     local hand = 'High Card'
                     card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_upgrade_ex')})
@@ -2913,12 +2920,7 @@ bunc_define_joker({ -- Trigger Finger
     name = 'Trigger Finger', position = 38,
     vars = {{xmult = 4}, {odds = 10}},
     custom_vars = function(self, info_queue, card)
-        local vars
-        if G.GAME and G.GAME.probabilities.normal then
-            vars = {card.ability.extra.xmult, G.GAME.probabilities.normal, card.ability.extra.odds}
-        else
-            vars = {card.ability.extra.xmult, 1, card.ability.extra.odds}
-        end
+        local vars = {card.ability.extra.xmult, SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'bunc_trigger_finger')}
         return {vars = vars}
     end,
     rarity = 'Rare', cost = 8,
@@ -2935,7 +2937,7 @@ bunc_define_joker({ -- Trigger Finger
             for i = 1, #G.hand.highlighted do
                 table.insert(cards, G.hand.highlighted[i])
             end
-            if #cards > 0 and pseudorandom('trigger_finger'..G.SEED) < G.GAME.probabilities.normal / card.ability.extra.odds then
+            if #cards > 0 and SMODS.pseudorandom_probability(card, 'trigger_finger'..G.SEED, 1, card.ability.extra.odds, 'bunc_trigger_finger') then
                 for i = 1, #cards do
                     if not cards[i].highlighted then
                         cards[i]:highlight()
@@ -3063,12 +3065,7 @@ bunc_define_joker({ -- Puzzle Board
         info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
         info_queue[#info_queue+1] = G.P_CENTERS.e_bunc_glitter
 
-        local vars
-        if G.GAME and G.GAME.probabilities.normal then
-            vars = {G.GAME.probabilities.normal, card.ability.extra.odds}
-        else
-            vars = {1, card.ability.extra.odds}
-        end
+                    vars = {SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "bunc_puzzle_board")}
         return {vars = vars}
     end,
     rarity = 'Uncommon', cost = 6,
@@ -3076,7 +3073,7 @@ bunc_define_joker({ -- Puzzle Board
     unlocked = true,
     calculate = function(self, card, context)
         if context.using_consumeable and context.consumeable.ability.set == 'Tarot' then
-            if pseudorandom('puzzle_board'..G.SEED) < G.GAME.probabilities.normal / card.ability.extra.odds then
+            if SMODS.pseudorandom_probability(card, 'puzzle_board'..G.SEED, 1, card.ability.extra.odds, 'bunc_puzzle_board') then
                 local cards = {}
                 local edition = poll_edition('wheel_of_fortune', nil, true, true)
 
@@ -3104,12 +3101,8 @@ bunc_define_joker({ -- Vandalism
     name = 'Vandalism', position = 42, soul = coordinate_from_atlas_index(42),
     vars = {{odds = 4}, {xmult = 2}, {card_list = {}}},
     custom_vars = function(self, info_queue, card)
-        local vars
-        if G.GAME and G.GAME.probabilities.normal then
-            vars = {G.GAME.probabilities.normal, card.ability.extra.odds, card.ability.extra.xmult}
-        else
-            vars = {1, card.ability.extra.odds, card.ability.extra.xmult}
-        end
+        local vars = {SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'bunc_vandalism')}
+        table.insert(vars, card.ability.extra.xmult)
         return {vars = vars}
     end,
     rarity = 'Rare', cost = 6,
@@ -3124,7 +3117,7 @@ bunc_define_joker({ -- Vandalism
         if context.stay_flipped and context.to_area == G.hand then
             -- Does not juice while in booster packs
             if G.STATE == G.STATES.SELECTING_HAND or G.STATE == G.STATES.DRAW_TO_HAND then
-                if (pseudorandom('vandalism'..G.SEED) < G.GAME.probabilities.normal / card.ability.extra.odds) then
+                if (SMODS.pseudorandom_probability(card, 'vandalism'..G.SEED, 1, card.ability.extra.odds, 'bunc_vandalism')) then
                     big_juice(context.blueprint_card or card)
                     return {
                         stay_flipped = true
@@ -3542,9 +3535,33 @@ bunc_define_joker({ -- Bounty Hunter
         end
     end,
     calculate = function(self, card, context)
-        if context.get_money and not context.blueprint then
+        if context.bunc_pre_money_change and context.sign == 1 and not context.blueprint then
             card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.bonus
+        local new_mod = to_big(context.mod) - to_big(card.ability.extra.bonus)
+            if card.dissolve ~= nil then
+                return {
+                    bunc_new_dollars_mod = new_mod,
+                    message = localize("bunc_robbed"),
+                    colour = G.C.ORANGE,
+                }
+            else
+                return {
+                    bunc_new_dollars_mod = new_mod,
+                    message = localize("bunc_robbed"),
+                    colour = G.C.ORANGE,
+                    extra = {
+                        message = localize {
+                            type = 'variable',
+                            key = 'a_mult',
+                            vars = {card.ability.extra.mult}
+                        }
+                    }
+                }
+            end
         end
+        -- if context.get_money and not context.blueprint then
+        --     card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.bonus
+        -- end
         if context.joker_main and card.ability.extra.mult ~= 0 then
             return {
                 message = localize {
@@ -3579,12 +3596,7 @@ bunc_define_joker({ -- Mousetrap
     name = 'Mousetrap', position = 53,
     vars = {{chips = 300}, {odds = 3}},
     custom_vars = function(self, info_queue, card)
-        local vars
-        if G.GAME and G.GAME.probabilities.normal then
-            vars = {card.ability.extra.chips, G.GAME.probabilities.normal, card.ability.extra.odds}
-        else
-            vars = {card.ability.extra.chips, 1, card.ability.extra.odds}
-        end
+        local vars = {card.ability.extra.chips, SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'bunc_mousetrap')}
         return {vars = vars}
     end,
     rarity = 'Uncommon', cost = 6,
@@ -3603,7 +3615,7 @@ bunc_define_joker({ -- Mousetrap
             }))
         end
         if context.joker_main then
-            if pseudorandom('mousetrap'..G.SEED) < G.GAME.probabilities.normal / card.ability.extra.odds then
+            if SMODS.pseudorandom_probability(card, 'mousetrap'..G.SEED, 1, card.ability.extra.odds, 'bunc_mousetrap') then
                 if G.GAME.current_round.hands_left ~= 0 then ease_hands_played(-1) end
                 G.E_MANAGER:add_event(Event({
                     trigger = 'immediate',
@@ -3640,12 +3652,7 @@ bunc_define_joker({ -- The Joker
     name = 'The Joker', custom_atlas = 'bunco_jokers_the_joker', position = 1,
     vars = {{trash_list = {}}, {odds = 3}},
     custom_vars = function(self, info_queue, card)
-        local vars
-        if G.GAME and G.GAME.probabilities.normal then
-            vars = {G.GAME.probabilities.normal, card.ability.extra.odds}
-        else
-            vars = {1, card.ability.extra.odds}
-        end
+        local vars = {SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "bunc_the_joker")}
         return {vars = vars}
     end,
     rarity = 'Rare', cost = 10,
@@ -3664,7 +3671,7 @@ bunc_define_joker({ -- The Joker
                 card.ability.extra.trash_list = {}
                 for k, v in ipairs(context.scoring_hand) do
                     if v.config.center == G.P_CENTERS.c_base then
-                        if pseudorandom('the_joker'..G.SEED) < G.GAME.probabilities.normal / card.ability.extra.odds then
+                        if SMODS.pseudorandom_probability(card, 'the_joker'..G.SEED, 1, card.ability.extra.odds, 'bunc_the_joker') then
                             table.insert(card.ability.extra.trash_list, v)
                         end
                     end
@@ -4212,13 +4219,8 @@ bunc_define_joker({ -- Kite Experiment
     name = 'Kite Experiment', position = 61,
     vars = {{odds = 2}, {cards_rescored = {}}},
     custom_vars = function(self, info_queue, card)
-        local vars
-        info_queue[#info_queue+1] = G.P_CENTERS.m_bunc_copper
-        if G.GAME and G.GAME.probabilities.normal then
-            vars = {G.GAME.probabilities.normal, card.ability.extra.odds}
-        else
-            vars = {1, card.ability.extra.odds}
-        end
+                info_queue[#info_queue+1] = G.P_CENTERS.m_bunc_copper
+        local vars = {SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "bunc_kite_experiment")}
         return {vars = vars}
     end,
     rarity = 'Uncommon', cost = 6,
@@ -4243,7 +4245,7 @@ bunc_define_joker({ -- Kite Experiment
                 end
             end
 
-            if condition and pseudorandom('kite_experiment'..G.SEED) < G.GAME.probabilities.normal / card.ability.extra.odds then
+            if condition and SMODS.pseudorandom_probability(card, 'kite_experiment'..G.SEED, 1, card.ability.extra.odds, 'bunc_kite_experiment') then
                 context.rescore_cards[1].config.copper_rescored_times = context.rescore_cards[1].config.copper_rescored_times - 1
                 table.insert(card.ability.extra.cards_rescored, context.rescore_cards[1])
                 return {
@@ -4388,12 +4390,7 @@ bunc_define_joker({ -- Wishalloy
     name = 'Wishalloy', position = 5,
     vars = {{odds = 7}},
     custom_vars = function(self, info_queue, card)
-        local vars
-        if G.GAME and G.GAME.probabilities.normal then
-            vars = {G.GAME.probabilities.normal, card.ability.extra.odds}
-        else
-            vars = {1, card.ability.extra.odds}
-        end
+        local vars = {SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "bunc_wishalloy")}
         return {vars = vars}
     end,
     rarity = 'Uncommon', cost = 7,
@@ -4401,7 +4398,7 @@ bunc_define_joker({ -- Wishalloy
     unlocked = true,
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play and context.other_card:is_suit('bunc_Fleurons') then
-            if pseudorandom('wishalloy'..G.SEED) < G.GAME.probabilities.normal / card.ability.extra.odds then
+            if SMODS.pseudorandom_probability(card, 'wishalloy'..G.SEED, 1, card.ability.extra.odds, 'bunc_wishalloy') then
                 local value = context.other_card:get_chip_bonus()
                 ease_dollars(value)
                 forced_message('$'..value, context.other_card, G.C.MONEY, true, card)
@@ -4477,12 +4474,7 @@ bunc_define_joker({ -- Starfruit
     name = 'Starfruit', position = 9,
     vars = {{odds = 4}},
     custom_vars = function(self, info_queue, card)
-        local vars
-        if G.GAME and G.GAME.probabilities.normal then
-            vars = {G.GAME.probabilities.normal, card.ability.extra.odds}
-        else
-            vars = {1, card.ability.extra.odds}
-        end
+        local vars = {SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "bunc_starfruit")}
         return {vars = vars}
     end,
     rarity = 'Uncommon', cost = 5,
@@ -4498,7 +4490,7 @@ pools = {
         end
 
         if context.end_of_round and not context.other_card and not context.blueprint then
-            if pseudorandom('starfruit'..G.SEED) < G.GAME.probabilities.normal / card.ability.extra.odds then
+            if SMODS.pseudorandom_probability(card, 'starfruit'..G.SEED, 1, card.ability.extra.odds, 'bunc_starfruit') then
 
                 forced_message(localize('k_eaten_ex'), card, G.C.FILTER, true)
                 card:start_dissolve()
@@ -4591,12 +4583,7 @@ bunc_define_joker({ -- ROYGBIV
 
         info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
 
-        local vars
-        if G.GAME and G.GAME.probabilities.normal then
-            vars = {G.GAME.probabilities.normal, card.ability.extra.odds}
-        else
-            vars = {1, card.ability.extra.odds}
-        end
+        local vars = {SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "bunc_roygbiv")}
         return {vars = vars}
     end,
     rarity = 'Uncommon', cost = 8,
@@ -4604,7 +4591,7 @@ bunc_define_joker({ -- ROYGBIV
     unlocked = true,
     calculate = function(self, card, context)
         if context.before and context.poker_hands ~= nil and next(context.poker_hands['bunc_Spectrum']) and context.scoring_hand and not context.blueprint then
-            if pseudorandom('roygbiv'..G.SEED) < G.GAME.probabilities.normal / card.ability.extra.odds then
+            if SMODS.pseudorandom_probability(card, 'roygbiv'..G.SEED, 1, card.ability.extra.odds, 'bunc_roygbiv') then
                 if context.scoring_hand then
 
                     local cards = {}

@@ -310,15 +310,15 @@ jd_def["j_bunc_fiendish"] = { -- Fiendish Joker
     extra = {
         {
             { text = "(" },
-            { ref_table = "card.joker_display_values", ref_value = "odds" },
+            { ref_table = "card.joker_display_values", ref_value = "numerator" },
             { text = " in " },
-            { ref_table = "card.ability.extra",        ref_value = "odds" },
+            { ref_table = "card.joker_display_values", ref_value = "denominator" },
             { text = ")" },
         }
     },
     extra_config = { colour = G.C.GREEN, scale = 0.3 },
     calc_function = function(card)
-        card.joker_display_values.odds = G.GAME and G.GAME.probabilities.normal or 1
+        card.joker_display_values.numerator, card.joker_display_values.denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "bunc_fiendish")
     end
 }
 jd_def["j_bunc_carnival"] = { -- Carnival
@@ -382,9 +382,9 @@ jd_def["j_bunc_zero_shapiro"] = { -- Zero Shapiro
     extra = {
         {
             { text = "(" },
-            { ref_table = "card.joker_display_values", ref_value = "odds" },
+            { ref_table = "card.joker_display_values", ref_value = "numerator" },
             { text = " in " },
-            { ref_table = "card.ability.extra",        ref_value = "odds" },
+            { ref_table = "card.joker_display_values", ref_value = "denominator" },
             { text = ")" },
         }
     },
@@ -400,7 +400,7 @@ jd_def["j_bunc_zero_shapiro"] = { -- Zero Shapiro
             end
         end
         card.joker_display_values.count = count
-        card.joker_display_values.odds = G.GAME and G.GAME.probabilities.normal or 1
+        card.joker_display_values.numerator, card.joker_display_values.denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "bunc_zero_shapiro")
     end
 }
 jd_def["j_bunc_nil_bill"] = { -- Nil Bill
@@ -532,15 +532,15 @@ jd_def["j_bunc_head_in_the_clouds"] = { -- Head in the Clouds
     extra = {
         {
             { text = "(" },
-            { ref_table = "card.joker_display_values", ref_value = "odds" },
+            { ref_table = "card.joker_display_values", ref_value = "numerator" },
             { text = " in " },
-            { ref_table = "card.ability.extra",        ref_value = "odds" },
+            { ref_table = "card.joker_display_values", ref_value = "denominator" },
             { text = ")" },
         }
     },
     extra_config = { colour = G.C.GREEN, scale = 0.3 },
     calc_function = function(card)
-        card.joker_display_values.odds = G.GAME and G.GAME.probabilities.normal or 1
+        card.joker_display_values.numerator, card.joker_display_values.denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "bunc_head_in_the_clouds")
     end
 }
 jd_def["j_bunc_headshot"] = { -- Headshot
@@ -578,15 +578,15 @@ jd_def["j_bunc_trigger_finger"] = { -- Trigger Finger
     extra = {
         {
             { text = "(" },
-            { ref_table = "card.joker_display_values", ref_value = "odds" },
+            { ref_table = "card.joker_display_values", ref_value = "numerator" },
             { text = " in " },
-            { ref_table = "card.ability.extra",        ref_value = "odds" },
+            { ref_table = "card.joker_display_values", ref_value = "denominator" },
             { text = ")" },
         }
     },
     extra_config = { colour = G.C.GREEN, scale = 0.3 },
     calc_function = function(card)
-        card.joker_display_values.odds = G.GAME and G.GAME.probabilities.normal or 1
+        card.joker_display_values.numerator, card.joker_display_values.denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "bunc_trigger_finger")
     end
 }
 jd_def["j_bunc_hopscotch"] = { -- Hopscotch
@@ -618,15 +618,15 @@ jd_def["j_bunc_puzzle_board"] = { -- Puzzle Board
     extra = {
         {
             { text = "(" },
-            { ref_table = "card.joker_display_values", ref_value = "odds" },
+            { ref_table = "card.joker_display_values", ref_value = "numerator" },
             { text = " in " },
-            { ref_table = "card.ability.extra",        ref_value = "odds" },
+            { ref_table = "card.joker_display_values", ref_value = "denominator" },
             { text = ")" },
         }
     },
     extra_config = { colour = G.C.GREEN, scale = 0.3 },
     calc_function = function(card)
-        card.joker_display_values.odds = G.GAME and G.GAME.probabilities.normal or 1
+        card.joker_display_values.numerator, card.joker_display_values.denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "bunc_puzzle_board")
     end
 }
 jd_def["j_bunc_vandalism"] = { -- Vandalism
@@ -634,15 +634,15 @@ jd_def["j_bunc_vandalism"] = { -- Vandalism
     extra = {
         {
             { text = "(" },
-            { ref_table = "card.joker_display_values", ref_value = "odds" },
+            { ref_table = "card.joker_display_values", ref_value = "numerator" },
             { text = " in " },
-            { ref_table = "card.ability.extra",        ref_value = "odds" },
+            { ref_table = "card.joker_display_values", ref_value = "denominator" },
             { text = ")" },
         }
     },
     extra_config = { colour = G.C.GREEN, scale = 0.3 },
     calc_function = function(card)
-        card.joker_display_values.odds = G.GAME and G.GAME.probabilities.normal or 1
+        card.joker_display_values.numerator, card.joker_display_values.denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "bunc_vandalism")
     end
 }
 jd_def["j_bunc_protester"] = { -- Protester
@@ -810,30 +810,30 @@ jd_def["j_bunc_mousetrap"] = { -- Mousetrap
     extra = {
         {
             { text = "(" },
-            { ref_table = "card.joker_display_values", ref_value = "odds" },
+            { ref_table = "card.joker_display_values", ref_value = "numerator" },
             { text = " in " },
-            { ref_table = "card.ability.extra",        ref_value = "odds" },
+            { ref_table = "card.joker_display_values", ref_value = "denominator" },
             { text = ")" },
         }
     },
     extra_config = { colour = G.C.GREEN, scale = 0.3 },
     calc_function = function(card)
-        card.joker_display_values.odds = G.GAME and G.GAME.probabilities.normal or 1
+        card.joker_display_values.numerator, card.joker_display_values.denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "bunc_mousetrap")
     end
 }
-jd_def["j_bunc_the_joker"] = { -- Vandalism
+jd_def["j_bunc_the_joker"] = { -- The Joker
     extra = {
         {
             { text = "(" },
-            { ref_table = "card.joker_display_values", ref_value = "odds" },
+            { ref_table = "card.joker_display_values", ref_value = "numerator" },
             { text = " in " },
-            { ref_table = "card.ability.extra",        ref_value = "odds" },
+            { ref_table = "card.joker_display_values", ref_value = "denominator" },
             { text = ")" },
         }
     },
     extra_config = { colour = G.C.GREEN, scale = 0.3 },
     calc_function = function(card)
-        card.joker_display_values.odds = G.GAME and G.GAME.probabilities.normal or 1
+        card.joker_display_values.numerator, card.joker_display_values.denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "bunc_the_joker")
     end
 }
 jd_def["j_bunc_tangram"] = { -- Tangram
@@ -963,15 +963,15 @@ jd_def["j_bunc_kite_experiment"] = { -- Kite Experiment
     extra = {
         {
             { text = "(" },
-            { ref_table = "card.joker_display_values", ref_value = "odds" },
+            { ref_table = "card.joker_display_values", ref_value = "numerator" },
             { text = " in " },
-            { ref_table = "card.ability.extra",        ref_value = "odds" },
+            { ref_table = "card.joker_display_values", ref_value = "denominator" },
             { text = ")" },
         }
     },
     extra_config = { colour = G.C.GREEN, scale = 0.3 },
     calc_function = function(card)
-        card.joker_display_values.odds = G.GAME and G.GAME.probabilities.normal or 1
+        card.joker_display_values.numerator, card.joker_display_values.denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "bunc_kite_experiment")
     end
 }
 jd_def["j_bunc_robot"] = { -- Robot
@@ -1123,9 +1123,9 @@ jd_def["j_bunc_wishalloy"] = { -- Wishalloy
     extra = {
         {
             { text = "(" },
-            { ref_table = "card.joker_display_values", ref_value = "odds" },
+            { ref_table = "card.joker_display_values", ref_value = "numerator" },
             { text = " in " },
-            { ref_table = "card.ability.extra",        ref_value = "odds" },
+            { ref_table = "card.joker_display_values", ref_value = "denominator" },
             { text = ")" },
         }
     },
@@ -1143,7 +1143,7 @@ jd_def["j_bunc_wishalloy"] = { -- Wishalloy
         end
         card.joker_display_values.count = count
         card.joker_display_values.localized_text = localize("bunc_Fleurons", 'suits_plural')
-        card.joker_display_values.odds = G.GAME and G.GAME.probabilities.normal or 1
+        card.joker_display_values.numerator, card.joker_display_values.denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "bunc_wishalloy")
     end,
     style_function = function(card, text, reminder_text, extra)
         if reminder_text and reminder_text.children[2] then
@@ -1233,9 +1233,9 @@ jd_def["j_bunc_starfruit"] = { -- Starfruit
     extra = {
         {
             { text = "(" },
-            { ref_table = "card.joker_display_values", ref_value = "odds" },
+            { ref_table = "card.joker_display_values", ref_value = "numerator" },
             { text = " in " },
-            { ref_table = "card.ability.extra",        ref_value = "odds" },
+            { ref_table = "card.joker_display_values", ref_value = "denominator" },
             { text = ")" },
         }
     },
@@ -1246,7 +1246,7 @@ jd_def["j_bunc_starfruit"] = { -- Starfruit
         card.joker_display_values.active = poker_hands['h_bunc_Spectrum'] and next(poker_hands['h_bunc_Spectrum']) and
         localize("k_active_ex") or "Inactive"
         card.joker_display_values.localized_text = localize("h_bunc_Spectrum", 'poker_hands')
-        card.joker_display_values.odds = G.GAME and G.GAME.probabilities.normal or 1
+        card.joker_display_values.numerator, card.joker_display_values.denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "bunc_starfruit")
     end,
 }
 jd_def["j_bunc_fondue"] = { -- Fondue
@@ -1277,9 +1277,9 @@ jd_def["j_bunc_roygbiv"] = { -- Roy G. Biv
     extra = {
         {
             { text = "(" },
-            { ref_table = "card.joker_display_values", ref_value = "odds" },
+            { ref_table = "card.joker_display_values", ref_value = "numerator" },
             { text = " in " },
-            { ref_table = "card.ability.extra",        ref_value = "odds" },
+            { ref_table = "card.joker_display_values", ref_value = "denominator" },
             { text = ")" },
         }
     },
@@ -1290,7 +1290,7 @@ jd_def["j_bunc_roygbiv"] = { -- Roy G. Biv
         card.joker_display_values.active = poker_hands['h_bunc_Spectrum'] and next(poker_hands['h_bunc_Spectrum']) and
         localize("k_active_ex") or "Inactive"
         card.joker_display_values.localized_text = localize("h_bunc_Spectrum", 'poker_hands')
-        card.joker_display_values.odds = G.GAME and G.GAME.probabilities.normal or 1
+        card.joker_display_values.numerator, card.joker_display_values.denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "bunc_roygbiv")
     end,
 }
 
