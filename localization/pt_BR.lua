@@ -982,7 +982,7 @@ return {
             --     ['name'] = 'Caçador de Recompensa',
             --     ['text'] = {
             --         [1] = '{C:mult}+#1#{} Multi por',
-            --         [2] = 'cada {C:money}$1{} abaixo de {C:money}$0',
+            --         [2] = 'cada {C:money}$#1#{} abaixo de {C:money}$0',
             --         [3] = '{C:inactive}(No momento, {C:mult}+#2#{C:inactive} Multi)'
             --     },
             --     ['unlock'] = {
@@ -1726,21 +1726,21 @@ return {
                 ['name'] = 'Aposta Ciana',
                 ['text'] = {
                     [1] = 'A loja pode ter Curingas {C:attention}Dispersivos{}',
-                    [2] = '{C:inactive,s:0.8}(Destrói um Curinga aleatório quando removido)'
+                    [2] = '{C:inactive,s:0.8}(#1#)',
                 }
             },
             stake_bunc_pink = {
                 ['name'] = 'Aposta Rosa',
                 ['text'] = {
                     [1] = 'A loja pode ter Curingas {C:attention}Travados{}',
-                    [2] = '{C:inactive,s:0.8}(Fica travado no lugar até o fim da rodada após ser vendido)'
+                    [2] = '{C:inactive,s:0.8}(#1#)',
                 }
             },
             stake_bunc_magenta = {
                 ['name'] = 'Aposta Magenta',
                 ['text'] = {
                     [1] = 'A loja pode ter Curingas {C:attention}Reativos{}',
-                    [2] = '{C:inactive,s:0.8}(Recebe desvantagem se nenhum Blind for pulado nesta Aposta)'
+                    [2] = '{C:inactive,s:0.8}(#1#)',
                 }
             }
         }

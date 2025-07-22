@@ -8682,6 +8682,17 @@ SMODS.Stake{ -- Cyan
         G.GAME.modifiers.enable_scattering_in_shop = true
     end,
 
+    loc_vars = function(self)
+        local sticker_desc = localize{type="raw_descriptions", key="bunc_scattering", set="Other", vars={}}
+        local sticker_desc_string = ""
+        for i, v in ipairs(sticker_desc) do
+            sticker_desc_string = sticker_desc_string .. v .. " "
+        end
+        sticker_desc_string = string.sub(sticker_desc_string, 1, -2)
+
+        return {vars = { sticker_desc_string } }
+    end,
+
     colour = HEX('3cd0c8'),
 
     pos = coordinate_from_atlas_index(1),
@@ -8701,6 +8712,17 @@ SMODS.Stake{ -- Pink
         G.GAME.modifiers.enable_hindered_in_shop = true
     end,
 
+    loc_vars = function(self)
+        local sticker_desc = localize{type="raw_descriptions", key="bunc_hindered", set="Other", vars={}}
+        local sticker_desc_string = ""
+        for i, v in ipairs(sticker_desc) do
+            sticker_desc_string = sticker_desc_string .. v .. " "
+        end
+        sticker_desc_string = string.sub(sticker_desc_string, 1, -2)
+
+        return {vars = { sticker_desc_string } }
+    end,
+
     colour = HEX('ff8ea4'),
 
     pos = coordinate_from_atlas_index(2),
@@ -8718,6 +8740,17 @@ SMODS.Stake{ -- Magenta
 
     modifiers = function()
         G.GAME.modifiers.enable_reactive_in_shop = true
+    end,
+
+    loc_vars = function(self)
+        local sticker_desc = localize{type="raw_descriptions", key="bunc_reactive", set="Other", vars={}}
+        local sticker_desc_string = ""
+        for i, v in ipairs(sticker_desc) do
+            sticker_desc_string = sticker_desc_string .. v .. " "
+        end
+        sticker_desc_string = string.sub(sticker_desc_string, 1, -2)
+
+        return {vars = { sticker_desc_string } }
     end,
 
     colour = HEX('cd47ea'),

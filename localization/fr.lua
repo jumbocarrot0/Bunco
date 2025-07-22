@@ -1105,7 +1105,7 @@ return {
                 ['name'] = 'Chasseur de prime',
                 ['text'] = {
                     [1] = "Toutes les sources d'argent",
-                    [2] = "donnent {C:money}1${} de moins et ce Joker",
+                    [2] = "donnent {C:money}#1#${} de moins et ce Joker",
                     [3] = "gagne {C:mult}+#1#{} Multi. à chaque fois",
                     [4] = "que vous gagnez de l'argent",
                     [5] = "{C:inactive}(Actuellement {C:mult}+#2#{C:inactive} Multi.)"
@@ -1881,7 +1881,7 @@ return {
                 ['name'] = 'Mise cyan',
                 ['text'] = {
                     [1] = 'Les magasins peuvent posséder des Jokers {C:attention}diffus{}',
-                    [2] = '{C:inactive,s:0.8}(Détruit un Joker adjacent quand retiré)',
+                    [2] = '{C:inactive,s:0.8}(#1#)',
                     [3] = '{s:0.8}Applique toutes les mises précédentes'
                 }
             },
@@ -1889,7 +1889,7 @@ return {
                 ['name'] = 'Mise rose',
                 ['text'] = {
                     [1] = 'Les magasins peuvent posséder des Jokers {C:attention}entravé{}',
-                    [2] = "{C:inactive,s:0.8}(Reste dans son emplacement jusqu'à la fin du tour où il a été vendu)",
+                    [2] = '{C:inactive,s:0.8}(#1#)',
                     [3] = '{s:0.8}Applique toutes les mises précédentes'
                 }
             },
@@ -1897,7 +1897,7 @@ return {
                 ['name'] = 'Mise magenta',
                 ['text'] = {
                     [1] = 'Les magasins peuvent posséder des Jokers {C:attention}réactif{}',
-                    [2] = "{C:inactive,s:0.8}(Affaibli si aucune blinde n'est passée durant cette Mise initiale)",
+                    [2] = '{C:inactive,s:0.8}(#1#)',
                     [3] = '{s:0.8}Applique toutes les mises précédentes'
                 }
             }

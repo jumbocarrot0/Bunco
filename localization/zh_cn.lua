@@ -1075,7 +1075,7 @@ return { -- Translation by VisJoker
             j_bunc_bounty_hunter = {
                 ['name'] = '赏金猎人',
                 ['text'] = {
-                    [1] = '所有金钱来源减少{C:money}1${}，并且此小丑牌',
+                    [1] = '所有金钱来源减少{C:money}#1#${}，并且此小丑牌',
                     [2] = '每次你获得金钱时获得{C:mult}+#1#{}倍数',
                     [3] = '{C:inactive}(当前{C:mult}+#2#{C:inactive}倍数)'
                 },
@@ -1827,7 +1827,7 @@ return { -- Translation by VisJoker
                 ['name'] = '青色赌注',
                 ['text'] = {
                     [1] = '商店中可能出现{C:attention}散射{}小丑牌',
-                    [2] = '{C:inactive,s:0.8}(移除时销毁随机相邻小丑牌)',
+                    [2] = '{C:inactive,s:0.8}(#1#)',
                     [3] = '{s:0.8}应用所有之前的赌注'
                 }
             },
@@ -1835,7 +1835,7 @@ return { -- Translation by VisJoker
                 ['name'] = '粉色赌注',
                 ['text'] = {
                     [1] = '商店中可能出现{C:attention}受阻{}小丑牌',
-                    [2] = '{C:inactive,s:0.8}(出售后停留原位直至回合结束)',
+                    [2] = '{C:inactive,s:0.8}(#1#)',
                     [3] = '{s:0.8}应用所有之前的赌注'
                 }
             },
@@ -1843,7 +1843,7 @@ return { -- Translation by VisJoker
                 ['name'] = '品红色赌注',
                 ['text'] = {
                     [1] = '商店中可能出现{C:attention}反应性{}小丑牌',
-                    [2] = '{C:inactive,s:0.8}(若此底注未跳过任何盲注，则减益)',
+                    [2] = '{C:inactive,s:0.8}(#1#)',
                     [3] = '{s:0.8}应用所有之前的赌注'
                 }
             }

@@ -1104,7 +1104,7 @@ return { -- Translation by Shinosan
                 ['name'] = 'Thợ Săn Tiền Thưởng',
                 ['text'] = {
                     [1] = 'Mọi nguồn tiền',
-                    [2] = 'cho ít {C:money}1${} và Joker này',
+                    [2] = 'cho ít {C:money}#1#${} và Joker này',
                     [3] = 'tăng thêm {C:mult}+#1#{} Nhân mỗi lần',
                     [4] = 'bạn kiếm được tiền',
                     [5] = '{C:inactive}(Hiện tại {C:mult}+#2#{C:inactive} Nhân)'
@@ -1889,7 +1889,7 @@ return { -- Translation by Shinosan
                 ['name'] = 'Cược lục lam',
                 ['text'] = {
                     [1] = 'Shop có thể có Joker {C:attention}Tán Xạ{}',
-                    [2] = '{C:inactive,s:0.8}(Tiêu diệt Joker liền kề ngẫu nhiên khi bị loại bỏ)',
+                    [2] = '{C:inactive,s:0.8}(#1#)',
                     [3] = '{s:0.8}Áp dụng toàn bộ Cược trước'
                 }
             },
@@ -1897,7 +1897,7 @@ return { -- Translation by Shinosan
                 ['name'] = 'Cược Hồng',
                 ['text'] = {
                     [1] = 'Shop có thể có Joker {C:attention}Cản Trở{}',
-                    [2] = '{C:inactive,s:0.8}(Giữ nguyên vị trí cho đến hết vòng sau khi được bán)',
+                    [2] = '{C:inactive,s:0.8}(#1#)',
                     [3] = '{s:0.8}Áp dụng toàn bộ Cược trước'
                 }
             },
@@ -1905,7 +1905,7 @@ return { -- Translation by Shinosan
                 ['name'] = 'Cược Đỏ Tươi',
                 ['text'] = {
                     [1] = 'Shop có thể có Joker {C:attention}Phản Ứng{}',
-                    [2] = '{C:inactive,s:0.8}(Bị suy yếu nếu không có một Blind nào được loại bỏ trong ante)',
+                    [2] = '{C:inactive,s:0.8}(#1#)',
                     [3] = '{s:0.8}Áp dụng toàn bộ Cược trước'
                 }
             }

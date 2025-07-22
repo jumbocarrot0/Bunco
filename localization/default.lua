@@ -1151,7 +1151,7 @@ return {
                 ['name'] = 'Bounty Hunter',
                 ['text'] = {
                     [1] = 'All sources of money',
-                    [2] = 'give {C:money}1${} less and this Joker',
+                    [2] = 'give {C:money}#1#${} less and this Joker',
                     [3] = 'gains {C:mult}+#1#{} Mult each time',
                     [4] = 'you earn money',
                     [5] = '{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)'
@@ -1193,8 +1193,8 @@ return {
                 ['name'] = 'Domino',
                 ['text'] = {
                     [1] = 'When you {C:attention}acquire{} or {C:attention}use{}',
-                    [2] = 'a card from shop or',
-                    [3] = 'Booster Pack, acquire {C:attention}2',
+                    [2] = 'a card from {C:attention}the shop{} or',
+                    [3] = 'a {C:attention}Booster Pack{}, acquire {C:attention}2',
                     [4] = 'adjacent cards if possible'
                 }
             },
@@ -1930,7 +1930,7 @@ return {
                 ['name'] = 'Cyan Stake',
                 ['text'] = {
                     [1] = 'Shop can have {C:attention}Scattering{} Jokers',
-                    [2] = '{C:inactive,s:0.8}(Destroys random adjacent Joker when removed)',
+                    [2] = '{C:inactive,s:0.8}(#1#)',
                     [3] = '{s:0.8}Applies all previous Stakes'
                 }
             },
@@ -1938,7 +1938,7 @@ return {
                 ['name'] = 'Pink Stake',
                 ['text'] = {
                     [1] = 'Shop can have {C:attention}Hindered{} Jokers',
-                    [2] = '{C:inactive,s:0.8}(Stays in place until the end of the round after being sold)',
+                    [2] = '{C:inactive,s:0.8}(#1#)',
                     [3] = '{s:0.8}Applies all previous Stakes'
                 }
             },
@@ -1946,7 +1946,7 @@ return {
                 ['name'] = 'Magenta Stake',
                 ['text'] = {
                     [1] = 'Shop can have {C:attention}Reactive{} Jokers',
-                    [2] = '{C:inactive,s:0.8}(Debuffed if no blinds are skipped this Ante)',
+                    [2] = '{C:inactive,s:0.8}(#1#)',
                     [3] = '{s:0.8}Applies all previous Stakes'
                 }
             }

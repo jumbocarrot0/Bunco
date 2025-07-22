@@ -1052,7 +1052,7 @@ return {
                 ['name'] = 'Cazarrecompensas',
                 ['text'] = {
                     [1] = 'Todas las fuentes de',
-                    [2] = 'dinero otorgan {C:money}1${} menos y este',
+                    [2] = 'dinero otorgan {C:money}#1#${} menos y este',
                     [3] = 'comodín gana {C:mult}+#1#{} Mult por cada',
                     [4] = 'fuente de dinero',
                     [5] = '{C:inactive}(Actualmente {C:mult}+#2#{C:inactive} Mult)'
@@ -1832,21 +1832,21 @@ return {
                 ['name'] = 'Pozo cian',
                 ['text'] = {
                     [1] = 'La tienda puede tener comodines {C:attention}dispersantes{}',
-                    [2] = '{C:inactive,s:0.8}(Destruye un comodín al azar al venderse o destruirse)'
+                    [2] = '{C:inactive,s:0.8}(#1#)',
                 }
             },
             stake_bunc_pink = {
                 ['name'] = 'Pozo rosa',
                 ['text'] = {
                     [1] = 'La tienda puede tener comodines {C:attention}estorbantes{}',
-                    [2] = '{C:inactive,s:0.8}(Se queda en su lugar hasta el fin de la ronda despues de ser vendido)'
+                    [2] = '{C:inactive,s:0.8}(#1#)',
                 }
             },
             stake_bunc_magenta = {
                 ['name'] = 'Pozo magenta',
                 ['text'] = {
                     [1] = 'La tienda puede tener comodines {C:attention}reactivos{}',
-                    [2] = '{C:inactive,s:0.8}(Se debilita si no se omite ninguna ciega esta apuesta inicial)'
+                    [2] = '{C:inactive,s:0.8}(#1#)',
                 }
             }
         }
