@@ -1391,7 +1391,7 @@ bunc_define_joker({ -- Cassette
         end
     end,
     rarity = 'Uncommon', cost = 5,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if context.pre_discard and not context.blueprint then
@@ -1447,7 +1447,7 @@ bunc_define_joker({ -- Mosaic
     name = 'Mosaic', position = 3,
     vars = {{mult = 6}},
     rarity = 'Uncommon', cost = 4,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = false,
     check_for_unlock = function(self, args)
         if args.type == 'hand_contents' then
@@ -1490,7 +1490,7 @@ bunc_define_joker({ -- Voxel
         return {vars = {self.config.extra.unlock}}
     end,
     rarity = 'Uncommon', cost = 5,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = false,
     check_for_unlock = function(self, args)
         if args.type == 'modify_deck' then
@@ -1547,7 +1547,7 @@ bunc_define_joker({ -- Crop Circles
             end
         end
     end,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
@@ -1627,7 +1627,7 @@ bunc_define_joker({ -- Dread
         return {vars = {self.config.extra.unlock}}
     end,
     rarity = 'Rare', cost = 8,
-    blueprint = false, eternal = true,
+    blueprint = false, eternal = true, perishable = true,
     unlocked = false,
     check_for_unlock = function(self, args)
         if args.type == 'round_deck_size' and args.round_deck_size_diff <= -self.config.extra.unlock then
@@ -1705,7 +1705,7 @@ bunc_define_joker({ -- Prehistoric
     name = 'Prehistoric', position = 8,
     vars = {{mult = 16}, {card_list = { }}},
     rarity = 'Uncommon', cost = 5,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = false,
     check_for_unlock = function(self, args)
         if args.type == 'hand_contents' then
@@ -1749,7 +1749,7 @@ bunc_define_joker({ -- Prehistoric
 bunc_define_joker({ -- Linocut
     name = 'Linocut', position = 9,
     rarity = 'Uncommon', cost = 4,
-    blueprint = false, eternal = true,
+    blueprint = false, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if context.after and context.scoring_hand and #context.scoring_hand == 2 and not context.blueprint then
@@ -1776,7 +1776,7 @@ bunc_define_joker({ -- Ghost Print
         return {vars = vars}
     end,
     rarity = 'Uncommon', cost = 6,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if context.joker_main then
@@ -1807,7 +1807,7 @@ bunc_define_joker({ -- Loan Shark
         end
     end,
     rarity = 'Uncommon', cost = 3,
-    blueprint = false, eternal = true,
+    blueprint = false, eternal = true, perishable = true,
     unlocked = false,
     check_for_unlock = function(self, args)
         if args.type == 'round_spend_money' and to_number(args.round_spend_money) >= 100 then
@@ -1825,7 +1825,7 @@ bunc_define_joker({ -- Loan Shark
 bunc_define_joker({ -- Basement
     name = 'Basement', position = 12,
     rarity = 'Rare', cost = 8,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if context.end_of_round and G.GAME.blind.boss and not context.other_card then
@@ -1950,7 +1950,7 @@ bunc_define_joker({ -- JMJB
         return {vars = {self.config.extra.unlock, G.PROFILES[G.SETTINGS.profile].booster_packs_opened or 0}}
     end,
     rarity = 'Rare', cost = 5,
-    blueprint = false, eternal = true,
+    blueprint = false, eternal = true, perishable = true,
     unlocked = false,
     check_for_unlock = function(self, args)
         if args.type == 'open_pack' and args.packs_total >= self.config.extra.unlock then
@@ -1989,7 +1989,7 @@ bunc_define_joker({ -- Dogs Playing Poker
     name = 'Dogs Playing Poker', position = 16,
     vars = {{xmult = 2.5}},
     rarity = 'Uncommon', cost = 5,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if context.joker_main then
@@ -2031,7 +2031,7 @@ bunc_define_joker({ -- Righthook
         return {vars = {self.config.extra.unlock}}
     end,
     rarity = 'Rare', cost = 8,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = false,
     check_for_unlock = function(self, args)
         if args.type == 'repetition' and args.repetition_amount >= self.config.extra.unlock then
@@ -2065,7 +2065,7 @@ bunc_define_joker({ -- Fiendish
         return {vars = vars}
     end,
     rarity = 'Uncommon', cost = 5,
-    blueprint = false, eternal = true,
+    blueprint = false, eternal = true, perishable = true,
     unlocked = false,
     check_for_unlock = function(self, args)
         if args.type == 'win_challenge' and G.GAME.challenge == 'c_double_nothing_1' then
@@ -2090,7 +2090,7 @@ bunc_define_joker({ -- Carnival
         return {main_end = main_end}
     end,
     rarity = 'Rare', cost = 10,
-    blueprint = false, eternal = true,
+    blueprint = false, eternal = true, perishable = true,
     unlocked = false,
     check_for_unlock = function(self, args)
         if args.type == 'ante_down' and args.ante == 0 then
@@ -2124,7 +2124,7 @@ bunc_define_joker({ -- Sledgehammer
     name = 'Sledgehammer', position = 20,
     vars = {{plus_xmult = 1}, {div_chance_denom = 4}},
     rarity = 'Uncommon', cost = 5,
-    blueprint = false, eternal = true,
+    blueprint = false, eternal = true, perishable = true,
     unlocked = false,
     check_for_unlock = function(self, args)
         if args.type == 'hand_contents' then
@@ -2189,7 +2189,7 @@ bunc_define_joker({ -- Sledgehammer
 bunc_define_joker({ -- Doorhanger
     name = 'Doorhanger', position = 21,
     rarity = 'Rare', cost = 10,
-    blueprint = false, eternal = true,
+    blueprint = false, eternal = true, perishable = true,
     unlocked = false,
     check_for_unlock = function(self, args)
         if args.type == 'win_custom' and G.GAME.max_common_jokers == 0 then
@@ -2215,7 +2215,7 @@ bunc_define_joker({ -- Fingerprints
     name = 'Fingerprints', position = 22,
     vars = {{bonus = 50}, {scoring_card_set = {}}},
     rarity = 'Uncommon', cost = 8,
-    blueprint = false, eternal = true,
+    blueprint = false, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if context.after and context.scoring_name ~= nil and context.scoring_hand and not context.blueprint then
@@ -2256,7 +2256,7 @@ bunc_define_joker({ -- Zero Shapiro
         return {vars = vars}
     end,
     rarity = 'Uncommon', cost = 4,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
@@ -2282,7 +2282,7 @@ bunc_define_joker({ -- Nil Bill
     name = 'Nil Bill', position = 24,
     vars = {{bonus = 2}},
     rarity = 'Uncommon', cost = 4,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if context.remove_playing_cards then
@@ -2296,7 +2296,7 @@ bunc_define_joker({ -- Bierdeckel
     name = 'Bierdeckel', position = 25,
     vars = {{bonus = 10}},
     rarity = 'Uncommon', cost = 4,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if (context.after or context.discard and context.other_card == context.full_hand[1]) then
@@ -2354,7 +2354,7 @@ bunc_define_joker({ -- Registration Plate
     name = 'Registration Plate', position = 26,
     vars = {{combination = {"2", "3", "4", "5", "6"}}, {ranks = {}}},
     rarity = 'Rare', cost = 8,
-    blueprint = false, eternal = true,
+    blueprint = false, eternal = true, perishable = true,
     unlocked = false,
     check_for_unlock = function(self, args)
         if args.type == 'win_challenge' and G.GAME.challenge == 'c_city_1' then
@@ -2388,7 +2388,7 @@ bunc_define_joker({ -- Slothful
     name = 'Slothful', position = 27,
     vars = {{mult = 9}},
     rarity = 'Uncommon', cost = 5,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = false,
     check_for_unlock = function(self, args)
         if args.type == 'hand_contents' then
@@ -2431,7 +2431,7 @@ bunc_define_joker({ -- Neon
         info_queue[#info_queue+1] = G.P_CENTERS.e_bunc_fluorescent
     end,
     rarity = 'Uncommon', cost = 5,
-    blueprint = false, eternal = true,
+    blueprint = false, eternal = true, perishable = true,
     unlocked = false,
     check_for_unlock = function(self, args)
         if args.type == 'hand_contents' then
@@ -2463,7 +2463,7 @@ bunc_define_joker({ -- Gameplan
     name = 'Gameplan', position = 29,
     vars = {{mult = 20}},
     rarity = 'Uncommon', cost = 5,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = false,
     check_for_unlock = function(self, args)
         if args.type == 'defeat_blind' and args.blind.name == 'Verdant Leaf' then
@@ -2514,7 +2514,7 @@ bunc_define_joker({ -- Conquest
     name = 'Conquest', position = 30,
     vars = {{chips = 200}, {joker = 0}},
     rarity = 'Uncommon', cost = 5,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = false,
     check_for_unlock = function(self, args)
         if args.type == 'defeat_blind' and args.blind.name == 'Crimson Heart' then
@@ -2573,7 +2573,7 @@ bunc_define_joker({ -- Hierarchy of Needs
     name = 'Hierarchy of Needs', position = 31,
     vars = {{bonus = 5}, {mult = 20}},
     rarity = 'Common', cost = 5,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true,
     update = function(self, card)
         if G.playing_cards then
@@ -2646,7 +2646,7 @@ bunc_define_joker({ -- Dwarven
         return {}
     end,
     rarity = 'Uncommon', cost = 8,
-    blueprint = false, eternal = true,
+    blueprint = false, eternal = true, perishable = true,
     unlocked = false,
     check_for_unlock = function(self, args)
         if args.type == 'hand_contents' then
@@ -2701,7 +2701,7 @@ bunc_define_joker({ -- Dwarven
 bunc_define_joker({ -- Aristocrat
     name = 'Aristocrat', position = 33,
     rarity = 'Uncommon', cost = 6,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = false,
     check_for_unlock = function(self, args)
         if args.type == 'win_custom' and G.GAME.booster_packs_opened == 0 then
@@ -2737,7 +2737,7 @@ bunc_define_joker({ -- Metallurgist
         return {vars = {card.ability.extra.mult}}
     end,
     rarity = 'Common', cost = 6,
-    blueprint = false, eternal = true,
+    blueprint = false, eternal = true, perishable = true,
     unlocked = true,
     custom_in_pool = function()
         local condition = false
@@ -2780,7 +2780,7 @@ bunc_define_joker({ -- Juggalo
         return {vars = {self.config.extra.unlock, G.PROFILES[G.SETTINGS.profile].consumables_with_edition_used or 0}}
     end,
     rarity = 'Rare', cost = 5,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = false,
     check_for_unlock = function(self, args)
         if args.type == 'use_consumable_with_edition' and args.used_total >= self.config.extra.unlock then
@@ -2824,7 +2824,7 @@ bunc_define_joker({ -- Head in the Clouds
         return {vars = vars}
     end,
     rarity = 'Uncommon', cost = 6,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = false,
     check_for_unlock = function(self, args)
         if args.type == 'win_custom' then
@@ -2867,7 +2867,7 @@ bunc_define_joker({ -- Headshot
     name = 'Headshot', position = 37,
     vars = {{xmult = 3}},
     rarity = 'Uncommon', cost = 8,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if context.joker_main and context.scoring_hand then
@@ -2922,7 +2922,7 @@ bunc_define_joker({ -- Trigger Finger
         return {vars = vars}
     end,
     rarity = 'Rare', cost = 8,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = false,
     check_for_unlock = function(self, args)
         if args.type == 'defeat_blind' and args.blind.name == 'Cerulean Bell' then
@@ -2979,7 +2979,7 @@ bunc_define_joker({ -- Hopscotch
     name = 'Hopscotch', position = 39,
     vars = {{discard = 1}},
     rarity = 'Common', cost = 4,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if context.before and context.poker_hands ~= nil and next(context.poker_hands['Straight']) then
@@ -3006,7 +3006,7 @@ bunc_define_joker({ -- Pawn
         return {vars = {localize('2', 'ranks')}}
     end,
     rarity = 'Common', cost = 5,
-    blueprint = false, eternal = true,
+    blueprint = false, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if context.after and context.scoring_hand and not context.blueprint then
@@ -3072,7 +3072,7 @@ bunc_define_joker({ -- Puzzle Board
         return {vars = vars}
     end,
     rarity = 'Uncommon', cost = 6,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if context.using_consumeable and context.consumeable.ability.set == 'Tarot' then
@@ -3113,7 +3113,7 @@ bunc_define_joker({ -- Vandalism
         return {vars = vars}
     end,
     rarity = 'Rare', cost = 6,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = false,
     check_for_unlock = function(self, args)
         if args.type == 'play_all_flipped' then
@@ -3201,7 +3201,7 @@ bunc_define_joker({ -- Protester
     name = 'Protester', position = 43,
     vars = {{chip_mult = 8}, {chips = 0}, {rank = -huge_number}},
     rarity = 'Common', cost = 4,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if context.pre_discard then
@@ -3249,7 +3249,7 @@ bunc_define_joker({ -- Doodle
         return {vars = {self.config.extra.unlock, G.PROFILES[G.SETTINGS.profile].career_stats.c_wins}}
     end,
     rarity = 'Rare', cost = 10,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = false,
     check_for_unlock = function(self, args)
         if args.type == 'win_custom' and (G.PROFILES[G.SETTINGS.profile].career_stats.c_wins + 1) >= self.config.extra.unlock then
@@ -3323,7 +3323,7 @@ bunc_define_joker({ -- Disproportionality
         }
     end,
     rarity = 'Common', cost = 4,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if context.joker_main then
@@ -3343,7 +3343,7 @@ bunc_define_joker({ -- Running Joke
         info_queue[#info_queue+1] = G.P_CENTERS.j_joker
     end,
     rarity = 'Rare', cost = 8,
-    blueprint = false, eternal = true,
+    blueprint = false, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if context.bunc_enter_shop then
@@ -3365,7 +3365,7 @@ bunc_define_joker({ -- On Broadway
     name = 'On Broadway', position = 47,
     vars = {{chips = 120}, {mult = 20}},
     rarity = 'Uncommon', cost = 6,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if context.joker_main and context.scoring_hand and context.poker_hands ~= nil and next(context.poker_hands['Straight']) then
@@ -3397,7 +3397,7 @@ bunc_define_joker({ -- Rasta
     name = 'Rasta', position = 48,
     vars = {{mult = 12}},
     rarity = 'Common', cost = 5,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = false,
     check_for_unlock = function(self, args)
         if args.type == 'win_custom' and not G.GAME.enhancements_used then
@@ -3440,7 +3440,7 @@ bunc_define_joker({ -- Critic
     name = 'Critic', position = 49,
     vars = {{xmult = 2}, {fraction = 3}},
     rarity = 'Common', cost = 6,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if context.joker_main then
@@ -3462,7 +3462,7 @@ bunc_define_joker({ -- Cellphone
     name = 'Cellphone', position = 50,
     vars = {{active = true}, {cards_to_hand = {}}},
     rarity = 'Uncommon', cost = 8,
-    blueprint = false, eternal = true,
+    blueprint = false, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if context.first_hand_drawn then
@@ -3508,7 +3508,7 @@ bunc_define_joker({ -- Wino
     name = 'Wino', position = 51,
     vars = {{chips = 12}},
     rarity = 'Common', cost = 5,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
@@ -3588,7 +3588,7 @@ bunc_define_joker({ -- Mousetrap
         return {vars = vars}
     end,
     rarity = 'Uncommon', cost = 6,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if (context.end_of_round or context.hand_drawn or context.after) and card.children.center.sprite_pos.y == 15 then
@@ -3649,7 +3649,7 @@ bunc_define_joker({ -- The Joker
         return {vars = vars}
     end,
     rarity = 'Rare', cost = 10,
-    blueprint = false, eternal = true,
+    blueprint = false, eternal = true, perishable = true,
     unlocked = false,
     check_for_unlock = function(self, args)
         if args.type == 'discover_amount' then
@@ -3735,7 +3735,7 @@ bunc_define_joker({ -- Tangram
     name = 'Tangram', position = 54,
     vars = {{mult = 7}},
     rarity = 'Rare', cost = 7,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
@@ -3761,7 +3761,7 @@ bunc_define_joker({ -- Tangram
 bunc_define_joker({ -- Domino
     name = 'Domino', position = 55,
     rarity = 'Rare', cost = 12,
-    blueprint = false, eternal = true,
+    blueprint = false, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if (context.buying_card or context.getting_booster_card) and context.pre_cardarea and not context.blueprint then
@@ -3862,7 +3862,7 @@ bunc_define_joker({ -- Glue Gun
         return {vars = {card.ability.extra.amount}, main_end = main_end}
     end,
     rarity = 'Uncommon', cost = 4,
-    blueprint = false, eternal = false,
+    blueprint = false, eternal = false, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if context.selling_self and not context.blueprint then
@@ -3889,7 +3889,7 @@ bunc_define_joker({ -- Taped
         info_queue[#info_queue+1] = {set = 'Other', key = 'bunc_linked_group'}
     end,
     rarity = 'Rare', cost = 6,
-    blueprint = false, eternal = true,
+    blueprint = false, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if context.before
@@ -3979,7 +3979,7 @@ bunc_define_joker({ -- Headache
         return {vars = {card.ability.extra.amount, card.ability.extra.destroyed}}
     end,
     rarity = 'Uncommon', cost = 4,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if context.remove_playing_cards then
@@ -4147,7 +4147,7 @@ bunc_define_joker({ -- Stylophone
     name = 'Stylophone', position = 60,
     vars = {{x = 0.3}},
     rarity = 'Uncommon', cost = 5,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
 
@@ -4222,7 +4222,7 @@ bunc_define_joker({ -- Kite Experiment
         return {vars = vars}
     end,
     rarity = 'Uncommon', cost = 6,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true,
     custom_in_pool = function()
         local condition = false
@@ -4349,7 +4349,7 @@ bunc_define_joker({ -- Zealous
     custom_vars = function(self, info_queue, card) return {vars = {card.ability.t_mult}} end,
     custom_config = {t_mult = 10, type = 'bunc_Spectrum'},
     rarity = 'Common', cost = 3,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true
 })
 
@@ -4359,7 +4359,7 @@ bunc_define_joker({ -- Lurid
     custom_vars = function(self, info_queue, card) return {vars = {card.ability.t_chips}} end,
     custom_config = {t_chips = 80, type = 'bunc_Spectrum'},
     rarity = 'Common', cost = 3,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true
 })
 
@@ -4368,7 +4368,7 @@ bunc_define_joker({ -- Envious
     name = 'Envious', position = 3,
     vars = {{s_mult = 6}, {suit = 'bunc_Fleurons'}},
     rarity = 'Common', cost = 5,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true,
     effect = 'Suit Mult'
 })
@@ -4378,7 +4378,7 @@ bunc_define_joker({ -- Proud
     name = 'Proud', position = 4,
     vars = {{s_mult = 6}, {suit = 'bunc_Halberds'}},
     rarity = 'Common', cost = 5,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true,
     effect = 'Suit Mult'
 })
@@ -4397,7 +4397,7 @@ bunc_define_joker({ -- Wishalloy
         return {vars = vars}
     end,
     rarity = 'Uncommon', cost = 7,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play and context.other_card:is_suit('bunc_Fleurons') then
@@ -4415,7 +4415,7 @@ bunc_define_joker({ -- Unobtanium
     name = 'Unobtanium', position = 6,
     vars = {{chips = 30}, {mult = 6}},
     rarity = 'Uncommon', cost = 7,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play and context.other_card:is_suit('bunc_Halberds') then
@@ -4439,7 +4439,7 @@ bunc_define_joker({ -- Dynasty
     custom_vars = function(self, info_queue, card) return {vars = {card.ability.x_mult}} end,
     custom_config = {Xmult = 5, type = 'bunc_Spectrum'},
     rarity = 'Rare', cost = 8,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true
 })
 
@@ -4486,7 +4486,7 @@ bunc_define_joker({ -- Starfruit
         return {vars = vars}
     end,
     rarity = 'Uncommon', cost = 5,
-    blueprint = false, eternal = false,
+    blueprint = false, eternal = false, perishable = true,
     unlocked = true,
 pools = {
         Food = true
@@ -4517,7 +4517,7 @@ bunc_define_joker({ -- Fondue
     type = 'Exotic',
     name = 'Fondue', position = 10,
     rarity = 'Rare', cost = 8,
-    blueprint = false, eternal = true,
+    blueprint = false, eternal = true, perishable = true,
     unlocked = true,
 pools = {
         Food = true
@@ -4559,7 +4559,7 @@ bunc_define_joker({ -- Myopia
     type = 'Exotic',
     name = 'Myopia', position = 11,
     rarity = 'Uncommon', cost = 8,
-    blueprint = false, eternal = true,
+    blueprint = false, eternal = true, perishable = true,
     unlocked = true
 })
 
@@ -4579,7 +4579,7 @@ bunc_define_joker({ -- Astigmatism
     type = 'Exotic',
     name = 'Astigmatism', position = 12,
     rarity = 'Uncommon', cost = 8,
-    blueprint = false, eternal = true,
+    blueprint = false, eternal = true, perishable = true,
     unlocked = true
 })
 
@@ -4600,7 +4600,7 @@ bunc_define_joker({ -- ROYGBIV
         return {vars = vars}
     end,
     rarity = 'Uncommon', cost = 8,
-    blueprint = true, eternal = true,
+    blueprint = true, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
         if context.before and context.poker_hands ~= nil and next(context.poker_hands['bunc_Spectrum']) and context.scoring_hand and not context.blueprint then
@@ -5129,11 +5129,11 @@ function CardArea:add_to_highlighted(card, silent)
                     end
 
                 else
-bunc_                    original_add_to_highlighted(self, group[i], (silent == nil) and false or silent)
+bunc_original_add_to_highlighted(self, group[i], (silent == nil) and false or silent)
                 end
             end
         else
-bunc_            original_add_to_highlighted(self, card, silent)
+bunc_original_add_to_highlighted(self, card, silent)
         end
     end
 end
@@ -5157,11 +5157,11 @@ function CardArea:remove_from_highlighted(card, force)
             end
             group[i].highlighted = false
             if i == #group then
-bunc_                original_remove_from_highlighted(self, group[i], force)
+bunc_original_remove_from_highlighted(self, group[i], force)
             end
         end
     else
-bunc_        original_remove_from_highlighted(self, card, force)
+bunc_original_remove_from_highlighted(self, card, force)
     end
 end
 
