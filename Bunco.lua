@@ -865,7 +865,7 @@ if config.gameplay_reworks then
                     return true
                 end)
 
-                G.GAME.current_round.free_rerolls = G.GAME.current_round.free_rerolls + 1
+                SMODS.change_free_rerolls(1)
                 calculate_reroll_cost(true)
 
                 tag.triggered = true
