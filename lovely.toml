@@ -476,14 +476,14 @@ end
 
 '''
 
-# Linked cards can discard
-[[patches]]
-[patches.pattern]
-target = "functions/button_callbacks.lua"
-pattern = "if G.GAME.current_round.discards_left <= 0 or #G.hand.highlighted <= 0 or #G.hand.highlighted > math.max(G.GAME.starting_params.discard_limit, 0) then"
-position = "at"
-match_indent = true
-payload = '''if G.GAME.current_round.discards_left <= 0 or #G.hand.highlighted <= 0 or #G.hand.highlighted > math.max(G.GAME.starting_params.discard_limit, 0) or (G.GAME.THE_8_BYPASS and (#G.hand.highlighted > G.GAME.starting_params.discard_limit)) then'''
+# # Linked cards can discard
+# [[patches]]
+# [patches.regex]
+# target = "functions/button_callbacks.lua"
+# pattern = "(?<indent>[\t ]*)if G.GAME.current_round.discards_left <= 0 or #G.hand.highlighted <= 0 or (?<condition>.*?) then"
+# position = "at"
+# line_prepend = "$indent"
+# payload = '''if G.GAME.current_round.discards_left <= 0 or #G.hand.highlighted <= 0 or $condition or (G.GAME.THE_8_BYPASS and (#G.hand.highlighted > G.GAME.starting_params.discard_limit)) then'''
 
 # Linked cards selection 1/2
 [[patches]]
@@ -546,14 +546,14 @@ end
 
 '''
 
-# Linked cards selection 2/2
-[[patches]]
-[patches.pattern]
-target = 'cardarea.lua'
-pattern = 'if #self.highlighted >= self.config.highlighted_limit then'
-position = 'at'
-match_indent = true
-payload = '''if (#self.highlighted >= self.config.highlighted_limit) and (not card.ability.group) and (G.GAME and not G.GAME.THE_8_BYPASS) then'''
+# # Linked cards selection 2/2
+# [[patches]]
+# [patches.pattern]
+# target = 'cardarea.lua'
+# pattern = 'if #self.highlighted >= self.config.highlighted_limit then'
+# position = 'at'
+# match_indent = true
+# payload = '''if (#self.highlighted >= self.config.highlighted_limit) and (not card.ability.group) and (G.GAME and not G.GAME.THE_8_BYPASS) then'''
 
 # Linked cards destruction 1/2
 [[patches]]
@@ -570,7 +570,6 @@ if self.ability.group and (not self.fake_card) and not (self.area and self.area.
 end
 
 '''
-
 # Linked cards destruction 2/2
 [[patches]]
 [patches.pattern]
@@ -698,28 +697,32 @@ end
 
 '''
 
-# Can play more than 5 cards with linked cards
-[[patches]]
-[patches.pattern]
-target = 'functions/button_callbacks.lua'
-pattern = 'if #G.hand.highlighted <= 0 or G.GAME.blind.block_play or #G.hand.highlighted > math.max(G.GAME.starting_params.play_limit, 1) then'
-position = 'at'
-match_indent = true
-payload = '''
+# # Can play more than 5 cards with linked cards
+# [[patches]]
+# [patches.pattern]
+# target = 'functions/button_callbacks.lua'
+# pattern = 'if #G.hand.highlighted <= 0 or G.GAME.blind.block_play or #G.hand.highlighted > math.max(G.GAME.starting_params.play_limit, 1) then'
+# position = 'before'
+# match_indent = true
+# payload = '''
 
-local group_size = 0
+# local group_size = 0
 
-if G.hand and G.hand.highlighted then
-    for i = 1, #G.hand.highlighted do
-        if G.hand.highlighted[i].ability.group then
-            group_size = group_size + 1
-        end
-    end
-end
-
-if #G.hand.highlighted <= (G.GAME.blind and G.GAME.blind.name == 'cry-Sapphire Stamp' and not G.GAME.blind.disabled and 1 or 0) or G.GAME.blind.block_play or (#G.hand.highlighted > G.GAME.starting_params.play_limit and group_size <= G.GAME.starting_params.play_limit) or (G.GAME.THE_8_BYPASS and (#G.hand.highlighted > G.GAME.starting_params.play_limit)) then
-
-'''
+# if G.hand and G.hand.highlighted then
+#     for i = 1, #G.hand.highlighted do
+#         if G.hand.highlighted[i].ability.group then
+#             group_size = group_size + 1
+        #         end
+#     end
+# end
+# '''
+# [[patches]]
+# [patches.pattern]
+# target = 'functions/button_callbacks.lua'
+# pattern = 'if #G.hand.highlighted <= 0 or G.GAME.blind.block_play or #G.hand.highlighted > math.max(G.GAME.starting_params.play_limit, 1) then'
+# position = 'at'
+# match_indent = true
+# payload = 'if #G.hand.highlighted <= 0 or G.GAME.blind.block_play or #G.hand.highlighted > math.max(G.GAME.starting_params.play_limit, 1, group_size) and not group_exceeds_hand_limit then'
 
 # Virtual pack deck alignment
 [[patches]]

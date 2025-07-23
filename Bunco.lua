@@ -5100,9 +5100,9 @@ SMODS.DrawStep({
     end
 })
 
-CardArea.original_cardarea_emplace = CardArea.emplace
+CardArea.bunc_original_cardarea_emplace = CardArea.emplace
 function CardArea:emplace(card, location, stay_flipped)
-    local ret = self:original_cardarea_emplace(card, location, stay_flipped)
+    local ret = self:bunc_original_cardarea_emplace(card, location, stay_flipped)
     if self == G.hand and card.ability.group and card.ability.group.id then
         event({trigger = 'immediate', func = function()
             local n = 0
@@ -5136,6 +5136,9 @@ end
 local bunc_original_add_to_highlighted = CardArea.add_to_highlighted
 function CardArea:add_to_highlighted(card, silent)
     if G.STATE ~= G.STATES.DRAW_TO_HAND and not G.DRAWING_CARDS then
+local original_highlited_limit = self.config.highlighted_limit
+        self.config.highlighted_limit = G.GAME.THE_8_BYPASS and self.config.type == "hand" and math.huge or self.config.highlighted_limit
+
         if card.ability.group and self then
             local group = {}
             for i = 1, #self.cards do
@@ -5164,6 +5167,8 @@ bunc_original_add_to_highlighted(self, group[i], (silent == nil) and false or si
         else
 bunc_original_add_to_highlighted(self, card, silent)
         end
+
+        self.config.highlighted_limit = original_highlited_limit
     end
 end
 
@@ -5192,6 +5197,52 @@ bunc_original_remove_from_highlighted(self, group[i], force)
     else
 bunc_original_remove_from_highlighted(self, card, force)
     end
+end
+
+-- Allows for a group of over 5 cards to be played/discarded
+local bunc_original_G_FUNCS_can_play = G.FUNCS.can_play
+G.FUNCS.can_play = function(e)
+    local group_size = 0
+
+    if G.hand and G.hand.highlighted then
+        for i = 1, #G.hand.highlighted do
+            if G.hand.highlighted[i].ability.group then
+                group_size = group_size + 1
+            end
+        end
+    end
+
+    local original_play_limit = G.GAME.starting_params.play_limit
+    
+    G.GAME.starting_params.play_limit = math.max(G.GAME.starting_params.play_limit, group_size)
+
+    local ret = bunc_original_G_FUNCS_can_play(e)
+
+    G.GAME.starting_params.play_limit = original_play_limit
+
+    return ret
+end
+local bunc_original_G_FUNCS_can_discard = G.FUNCS.can_discard
+G.FUNCS.can_discard = function(e)
+    local group_size = 0
+
+    if G.hand and G.hand.highlighted then
+        for i = 1, #G.hand.highlighted do
+            if G.hand.highlighted[i].ability.group then
+                group_size = group_size + 1
+            end
+        end
+    end
+
+    local original_discard_limit = G.GAME.starting_params.discard_limit
+    
+    G.GAME.starting_params.discard_limit = math.max(G.GAME.starting_params.discard_limit, group_size)
+
+    local ret = bunc_original_G_FUNCS_can_discard(e)
+
+    G.GAME.starting_params.discard_limit = original_discard_limit
+
+    return ret
 end
 
 -- Polyminoes
