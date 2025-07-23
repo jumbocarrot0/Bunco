@@ -5,8 +5,9 @@
 	"author": ["Firch", "RENREN", "Peas", "minichibis", "J.D.", "Guwahavel", "Ciirulean", "ejwu"],
 	"description": "A mod that aims to add more content in a way that'd seamlessly exist within the vanilla Balatro!",
 	"prefix": "bunc",
+    "priority": 0,
 	"main_file": "Bunco.lua",
-	"version": "5.4.3~JumboFork",
+	"version": "5.4.3a~JumboFork",
 	"dependencies": [
 		"Steamodded (>=1.0.0~BETA-0711a)",
 		"Lovely (>=0.7.1)"
