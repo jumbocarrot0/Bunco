@@ -1001,7 +1001,7 @@ function ease_dollars(mod, instant)
         mod = mod,
         sign = (to_big(mod) < to_big(0) and -1 or to_big(mod) > to_big(0) and 1 or 0)
     })
-    mod = to_big(ret.bunc_new_dollars_mod) or mod
+    mod = ret.calculated and to_big(ret.bunc_new_dollars_mod) or mod
 
     if to_big(mod) == to_big(0) then return end
 
