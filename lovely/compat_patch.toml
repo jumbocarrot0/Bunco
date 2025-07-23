@@ -1,22 +1,15 @@
 [manifest]
 version = "1.0.0"
-dump_lua = true
-priority = 10
+priority = 0
 
-# Compat patch for pre smods beta 0404a
+# dummy patch to prevent crash on blank toml file
+# yes this is jank but lovely cant handle a file with no patches
+# and deleting it outright is asking for people to
+# accidentally install it incorrectly
 [[patches]]
 [patches.pattern]
-target = 'card.lua'
-pattern = "if G.GAME.blind and G.GAME.blind.in_blind then G.E_MANAGER:add_event(Event({ func = function() G.GAME.blind:set_blind(nil, true, nil); return true end })) end"
-position = 'before'
+target = 'none'
+pattern = ''
+position = 'after'
 match_indent = true
-payload = '''end
-'''
-[[patches]]
-[patches.pattern]
-target = 'card.lua'
-pattern = "if G.GAME.blind and G.GAME.blind.in_blind and not self.from_quantum then G.E_MANAGER:add_event(Event({ func = function() G.GAME.blind:set_blind(nil, true, nil); return true end })) end"
-position = 'before'
-match_indent = true
-payload = '''end
-'''
+payload = ''
