@@ -980,16 +980,12 @@ SMODS.calculate_individual_effect = function(effect, scored_card, key, amount, f
     return bunc_original_smods_calculate_individal_effect(effect, scored_card, key, amount, from_edition)
 end
 
-
-BUNCOMOD.funcs.ease_dollars = function(mod)
--- if G.GAME.Trident and (to_big(mod) <= to_big(0)) then -- Vermilion Trident 1/2
---     G.GAME.ante_purchases = (G.GAME.ante_purchases or 0) + 1
-    -- end
-
-end
-
 local bunc_original_ease_dollars = ease_dollars
 function ease_dollars(mod, instant)
+if G.GAME.Trident and (to_big(mod) <= to_big(0)) then -- Vermilion Trident 1/2
+        G.GAME.ante_purchases = (G.GAME.ante_purchases or 0) + 1
+    end
+    
     G.GAME.bunc_money_spend_this_round = G.GAME.bunc_money_spend_this_round or 0 -- Money spent in one shop unlock 1/2
     if to_big(mod) < to_big(0) then
         G.GAME.bunc_money_spend_this_round = G.GAME.bunc_money_spend_this_round - mod
