@@ -875,8 +875,7 @@ match_indent = true
 payload = '''
 
 if G.jokers ~= nil and self:is(Card) and self.area == G.jokers then
-    for _, v in ipairs(G.jokers.cards) do
-        if v.config.center.key == 'j_bunc_knight' and not v.debuff then
+    if next(SMODS.find_card('j_bunc_knight')) then
             if break_table.before == nil then
 
                 break_table.before = {}
@@ -888,8 +887,7 @@ if G.jokers ~= nil and self:is(Card) and self.area == G.jokers then
                 break_table.after = break_table.before
                 break_table.node = self
 
-            end
-        end
+                    end
     end
 end
 
@@ -952,8 +950,7 @@ match_indent = true
 payload = '''
 
 if G.jokers ~= nil then
-    for _, v in ipairs(G.jokers.cards) do
-        if v.config.center.key == 'j_bunc_doorhanger' and not v.debuff then
+    if next(SMODS.find_card('j_bunc_doorhanger')) then
             if _rarity == nil
             or ((type(_rarity) == 'number') and (_rarity < 0.9))
             or ((type(_rarity) == 'string') and (_rarity == 'Common')) then
@@ -962,8 +959,7 @@ if G.jokers ~= nil then
 
                 if pseudorandom('doorhanger'..G.SEED) > 0.98 then
                     _rarity = 1
-                end
-            end
+                            end
         end
     end
 end
@@ -1209,8 +1205,7 @@ match_indent = true
 payload = '''
 
 if G.jokers ~= nil then
-    for _, v in ipairs(G.jokers.cards) do
-        if v.config.center.key == 'j_bunc_domino' and not v.debuff then
+    for _, v in ipairs(SMODS.find_card('j_bunc_domino')) do
             v:calculate_joker({buying_card = true,
             card = c1,
             pre_cardarea = pre_cardarea,
@@ -1218,8 +1213,7 @@ if G.jokers ~= nil then
             pre_card_left = pre_card_left,
             pre_card_right = pre_card_right})
             break
-        end
-    end
+            end
 end
 
 '''
@@ -1252,8 +1246,7 @@ if pre_cardarea and pre_cardarea.cards[pre_card_pos + 1] then pre_card_right = p
 local function call_getting_booster_card()
     G.E_MANAGER:add_event(Event{func = function()
         if G.jokers ~= nil then
-            for _, v in ipairs(G.jokers.cards) do
-                if v.config.center.key == 'j_bunc_domino' and not v.debuff then
+            for _, v in ipairs(SMODS.find_card('j_bunc_domino')) do
                     v:calculate_joker({getting_booster_card = true,
                     card = card,
                     pre_cardarea = pre_cardarea,
@@ -1261,8 +1254,7 @@ local function call_getting_booster_card()
                     pre_card_left = pre_card_left,
                     pre_card_right = pre_card_right})
                     break
-                end
-            end
+                            end
         end
         return true
     end})
