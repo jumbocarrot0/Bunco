@@ -1168,7 +1168,7 @@ SMODS.calculate_context({ bunc_press_play = true })
 
 '''
 
-# G.FUNCS.buy_from_shop() (Domino 1/5)
+# G.FUNCS.buy_from_shop() (Domino 1/4)
 [[patches]]
 [patches.pattern]
 target = 'functions/button_callbacks.lua'
@@ -1176,6 +1176,8 @@ pattern = "if c1 and c1:is(Card) then"
 position = 'after'
 match_indent = true
 payload = '''
+
+-- BUNCO DOMINO PATCH START
 
 local pre_cardarea = c1.area
 local pre_card_pos
@@ -1193,9 +1195,11 @@ end
 if pre_cardarea and pre_cardarea.cards[pre_card_pos - 1] then pre_card_left = pre_cardarea.cards[pre_card_pos - 1] end
 if pre_cardarea and pre_cardarea.cards[pre_card_pos + 1] then pre_card_right = pre_cardarea.cards[pre_card_pos + 1] end
 
+-- BUNCO DOMINO PATCH END
+
 '''
 
-# G.FUNCS.buy_from_shop() (Domino 2/5)
+# G.FUNCS.buy_from_shop() (Domino 2/4)
 [[patches]]
 [patches.pattern]
 target = 'functions/button_callbacks.lua'
@@ -1218,7 +1222,7 @@ end
 
 '''
 
-# G.FUNCS.use_card() (Domino 3/5)
+# G.FUNCS.use_card() (Domino 3/4)
 [[patches]]
 [patches.pattern]
 target = 'functions/button_callbacks.lua'
@@ -1226,6 +1230,8 @@ pattern = "if card:check_use() then"
 position = 'before'
 match_indent = true
 payload = '''
+
+-- BUNCO DOMINO PATCH START
 
 local pre_cardarea = card.area
 local pre_card_pos
@@ -1260,33 +1266,49 @@ local function call_getting_booster_card()
     end})
 end
 
+-- BUNCO DOMINO PATCH END
+
 '''
 
-# G.FUNCS.use_card() (Domino 4/5)
+# G.FUNCS.use_card() (Domino 4/4)
 [[patches]]
 [patches.pattern]
 target = 'functions/button_callbacks.lua'
-pattern = "card:add_to_deck()"
+pattern = "G.CONTROLLER.locks.use = true"
 position = 'after'
 match_indent = true
 payload = '''
-
+if card.ability.consumeable or card.ability.set == 'Enhanced' or card.ability.set == 'Default' or card.ability.set == 'Joker' then
 call_getting_booster_card()
+end
 
 '''
 
-# G.FUNCS.use_card() (Domino 5/5)
-[[patches]]
-[patches.pattern]
-target = 'functions/button_callbacks.lua'
-pattern = "e.config.ref_table:use_consumeable(area)"
-position = 'before'
-match_indent = true
-payload = '''
+# # G.FUNCS.use_card() (Domino old)
+# [[patches]]
+# [patches.pattern]
+# target = 'functions/button_callbacks.lua'
+# pattern = "card:add_to_deck()"
+# position = 'after'
+# match_indent = true
+# payload = '''
 
-call_getting_booster_card()
+# call_getting_booster_card()
 
-'''
+# '''
+
+# # G.FUNCS.use_card() (Domino old)
+# [[patches]]
+# [patches.pattern]
+# target = 'functions/button_callbacks.lua'
+# pattern = "e.config.ref_table:use_consumeable(area)"
+# position = 'before'
+# match_indent = true
+# payload = '''
+
+# call_getting_booster_card()
+
+# '''
 
 # function CardArea:align_cards() (Taped)
 [[patches]]
