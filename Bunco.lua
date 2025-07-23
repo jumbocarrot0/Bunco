@@ -3853,18 +3853,35 @@ bunc_define_joker({ -- Domino
 
             local card_pos = context.pre_card_pos
             if card_pos then
-                if context.pre_card_left and context.pre_card_left.area ~= G.consumeables then
-                    if G.FUNCS.check_for_buy_space(context.pre_card_left) then
-                        acquire(context.pre_card_left)
-                    end
+                -- Aquire left then right card
+
+                local left_card = context.pre_card_left
+                local right_card = context.pre_card_right
+                if left_card and left_card.area ~= G.consumeables then
+                    if G.FUNCS.check_for_buy_space(left_card) and 
+                        left_card.ability.consumeable or 
+                        left_card.ability.set == 'Enhanced' or 
+                        left_card.ability.set == 'Default' or 
+                        left_card.ability.set == 'Joker' 
+then
+                        acquire(left_card)
                     big_juice(card)
                 end
-                if context.pre_card_right and context.pre_card_right.area ~= G.consumeables then
-                    if G.FUNCS.check_for_buy_space(context.pre_card_right) then
-                        acquire(context.pre_card_right)
-                    end
+end
+                if right_card and right_card.area ~= G.consumeables then
+                    if G.FUNCS.check_for_buy_space(right_card) and 
+                        right_card.ability.consumeable or 
+                        right_card.ability.set == 'Enhanced' or 
+                        right_card.ability.set == 'Default' or 
+right_card.ability.set == 'Joker' 
+then
+                        acquire(right_card)
                     big_juice(card)
                 end
+end
+
+                -- If all cards from booster have been aquired then close booster
+                -- by setting choices to zero
                 if G.STATE == G.STATES.STANDARD_PACK
                 or G.STATE == G.STATES.BUFFOON_PACK
                 or G.STATE == G.STATES.TAROT_PACK
