@@ -3,19 +3,31 @@ version = "1.0.0"
 dump_lua = true
 priority = 10
 
-# Money gain (Talisman skipping is on)
+# dummy patch to prevent crash on blank toml file
+# yes this is jank but lovely cant handle a file with no patches
+# and removing it outright is asking for people to
+# accidentally install it incorrectly
 [[patches]]
 [patches.pattern]
-target = 'main.lua'
-pattern = 'mod = mod or 0'
+target = 'none'
+pattern = ''
 position = 'after'
 match_indent = true
-payload = '''
+payload = ''
 
-    mod = BUNCOMOD.funcs.ease_dollars(mod)
-    if to_big(mod) == to_big(0) then return end
+# # Money gain (Talisman skipping is on)
+# [[patches]]
+# [patches.pattern]
+# target = 'main.lua'
+# pattern = 'mod = mod or 0'
+# position = 'after'
+# match_indent = true
+# payload = '''
 
-'''
+#     mod = BUNCOMOD.funcs.ease_dollars(mod)
+#     if to_big(mod) == to_big(0) then return end
+
+# '''
 
 # # G.FUNCS.play_cards_from_highlighted (Magenta Dagger 4/5)
 # [[patches]]
