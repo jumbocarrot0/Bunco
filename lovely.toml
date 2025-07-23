@@ -976,7 +976,7 @@ position = 'after'
 match_indent = true
 payload = '''
 
-if center and (not initial) and (old_center ~= center) and center.set == 'Enhanced' then
+if G.hand and center and (not initial) and (old_center ~= center) and center.set == 'Enhanced' then
     SMODS.calculate_context({enhance_card = true, enhanced_card = self})
 end
 
