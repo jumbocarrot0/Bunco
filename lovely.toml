@@ -1361,22 +1361,7 @@ if BUNCOMOD.funcs.astigmatism_check(self, suit) then
 end
 '''
 
-# Challenge cards unlocking 1/2
-[[patches]]
-[patches.pattern]
-target = 'functions/common_events.lua'
-pattern = "unlock_achievement('rule_bender')"
-position = 'before'
-match_indent = true
-payload = '''
-
-for i = 1, #G.P_LOCKED do
-    check_for_unlock({type = 'win_challenge'})
-end
-
-'''
-
-# Challenge cards unlocking 2/2
+# Challenge cards unlocking (1/1
 [[patches]]
 [patches.pattern]
 target = 'functions/common_events.lua'
