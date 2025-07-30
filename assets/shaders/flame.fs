@@ -44,8 +44,8 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
 	}    
 
     //Make the smoke amount range from 0 - 2
-	float smoke_res = max(0.,((length((sv - flame_up_vec)/scale_fac*5.)+ 0.1*(length(uv_scaled_centered) - 0.5))*(2./(2.+ intensity*0.2)))) ;
-    smoke_res = intensity < 0.1 ? 1.: smoke_res + max(0., 2. - 0.3*intensity)*max(0., 2.*(uv_scaled_centered.y - 0.5)*(uv_scaled_centered.y - 0.5));
+    MY_HIGHP_OR_MEDIUMP float smoke_res = max(0.,((length((sv - flame_up_vec)/scale_fac*5.)+ 0.1*(length(uv_scaled_centered) - 0.5))*(2./(2.+ intensity*0.2)))) ;
+    MY_HIGHP_OR_MEDIUMP smoke_res = intensity < 0.1 ? 1.: smoke_res + max(0., 2. - 0.3*intensity)*max(0., 2.*(uv_scaled_centered.y - 0.5)*(uv_scaled_centered.y - 0.5));
 
     if(abs(uv.x) > 0.4){
         smoke_res = smoke_res + 10.*(abs(uv.x) - 0.4);
@@ -54,7 +54,7 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
         smoke_res = smoke_res + min(8.5,intensity*10.)*(length((uv - vec2(0., 0.1))*vec2(0.19, 1.))-0.1);
     }
 
-    vec4 ret_col = colour_1;
+    MY_HIGHP_OR_MEDIUMP vec4 ret_col = colour_1;
     if(smoke_res > 1.){
         ret_col.a = 0.;
     }else{
