@@ -3855,10 +3855,10 @@ bunc_define_joker({ -- Domino
                 local right_card = context.pre_card_right
                 if left_card and left_card.area ~= G.consumeables then
                     if G.FUNCS.check_for_buy_space(left_card) and 
-                        left_card.ability.consumeable or 
+(                        left_card.ability.consumeable or 
                         left_card.ability.set == 'Enhanced' or 
                         left_card.ability.set == 'Default' or 
-                        left_card.ability.set == 'Joker' 
+                        left_card.ability.set == 'Joker') 
 then
                         acquire(left_card)
                     big_juice(card)
@@ -3866,10 +3866,10 @@ then
 end
                 if right_card and right_card.area ~= G.consumeables then
                     if G.FUNCS.check_for_buy_space(right_card) and 
-                        right_card.ability.consumeable or 
+(                        right_card.ability.consumeable or 
                         right_card.ability.set == 'Enhanced' or 
                         right_card.ability.set == 'Default' or 
-right_card.ability.set == 'Joker' 
+right_card.ability.set == 'Joker') 
 then
                         acquire(right_card)
                     big_juice(card)
