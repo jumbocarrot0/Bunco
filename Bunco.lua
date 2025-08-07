@@ -6675,8 +6675,8 @@ SMODS.Blind{ -- The Flame
     boss = {min = 3},
 
     recalc_debuff = function(self, card, from_blind)
-        if not G.GAME.blind.disabled and card.area ~= G.jokers then
-            if card.config.center ~= G.P_CENTERS.c_base then
+        if not G.GAME.blind.disabled and card.area ~= G.jokers and card.area ~= G.consumeables then
+            if card.config.center.set == "Enhanced" then
                 card:set_debuff(true)
                 return true
             end
