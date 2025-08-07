@@ -3279,6 +3279,32 @@ match_indent = true
 payload = '''
 G.GAME.current_round.bunc_actual_discards_left = G.GAME.current_round.discards_left
 '''
+
+# Fix Gameplan messing with voucher and booser pack slots in shops
+# For cross-mod jokers
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/utils.lua"]'
+pattern = '''SMODS.add_voucher_to_shop()'''
+position = 'at'
+match_indent = true
+payload = '''
+if (G.GAME.starting_params.vouchers_in_shop + (G.GAME.modifiers.extra_vouchers or 0)) > #G.shop_vouchers.cards then
+    SMODS.add_voucher_to_shop()
+end
+'''
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/utils.lua"]'
+pattern = '''SMODS.add_booster_to_shop()'''
+position = 'at'
+match_indent = true
+payload = '''
+if (G.shop_booster.config.card_limit + (G.GAME.modifiers.extra_boosters or 0)) > #G.shop_booster.cards then
+    SMODS.add_booster_to_shop()
+end
+'''
+
 # End of Gameplay Fixes
 
 
