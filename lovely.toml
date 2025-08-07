@@ -712,7 +712,7 @@ end
 #     for i = 1, #G.hand.highlighted do
 #         if G.hand.highlighted[i].ability.group then
 #             group_size = group_size + 1
-        #         end
+#         end
 #     end
 # end
 # '''
@@ -874,8 +874,8 @@ position = 'after'
 match_indent = true
 payload = '''
 
-if G.jokers ~= nil and self:is(Card) and self.area == G.jokers then
-    if next(SMODS.find_card('j_bunc_knight')) then
+    if G.jokers ~= nil and self:is(Card) and self.area == G.jokers then
+        if next(SMODS.find_card('j_bunc_knight')) then
             if break_table.before == nil then
 
                 break_table.before = {}
@@ -887,9 +887,9 @@ if G.jokers ~= nil and self:is(Card) and self.area == G.jokers then
                 break_table.after = break_table.before
                 break_table.node = self
 
-                    end
+            end
+        end
     end
-end
 
 '''
 
@@ -951,15 +951,15 @@ payload = '''
 
 if G.jokers ~= nil then
     if next(SMODS.find_card('j_bunc_doorhanger')) then
-            if _rarity == nil
-            or ((type(_rarity) == 'number') and (_rarity < 0.9))
-            or ((type(_rarity) == 'string') and (_rarity == 'Common')) then
+        if _rarity == nil
+        or ((type(_rarity) == 'number') and (_rarity < 0.9))
+        or ((type(_rarity) == 'string') and (_rarity == 'Common')) then
 
-                _rarity = 0.9
+            _rarity = 0.9
 
-                if pseudorandom('doorhanger'..G.SEED) > 0.98 then
-                    _rarity = 1
-                            end
+            if pseudorandom('doorhanger'..G.SEED) > 0.98 then
+                _rarity = 1
+            end
         end
     end
 end
@@ -1210,14 +1210,14 @@ payload = '''
 
 if G.jokers ~= nil then
     for _, v in ipairs(SMODS.find_card('j_bunc_domino')) do
-            v:calculate_joker({buying_card = true,
-            card = c1,
-            pre_cardarea = pre_cardarea,
-            pre_card_pos = pre_card_pos,
-            pre_card_left = pre_card_left,
-            pre_card_right = pre_card_right})
-            break
-            end
+        v:calculate_joker({buying_card = true,
+        card = c1,
+        pre_cardarea = pre_cardarea,
+        pre_card_pos = pre_card_pos,
+        pre_card_left = pre_card_left,
+        pre_card_right = pre_card_right})
+        break
+    end
 end
 
 '''
@@ -1253,14 +1253,14 @@ local function call_getting_booster_card()
     G.E_MANAGER:add_event(Event{func = function()
         if G.jokers ~= nil then
             for _, v in ipairs(SMODS.find_card('j_bunc_domino')) do
-                    v:calculate_joker({getting_booster_card = true,
-                    card = card,
-                    pre_cardarea = pre_cardarea,
-                    pre_card_pos = pre_card_pos,
-                    pre_card_left = pre_card_left,
-                    pre_card_right = pre_card_right})
-                    break
-                            end
+                v:calculate_joker({getting_booster_card = true,
+                card = card,
+                pre_cardarea = pre_cardarea,
+                pre_card_pos = pre_card_pos,
+                pre_card_left = pre_card_left,
+                pre_card_right = pre_card_right})
+                break
+            end
         end
         return true
     end})
@@ -1279,7 +1279,7 @@ position = 'after'
 match_indent = true
 payload = '''
 if card.ability.consumeable or card.ability.set == 'Enhanced' or card.ability.set == 'Default' or card.ability.set == 'Joker' then
-call_getting_booster_card()
+    call_getting_booster_card()
 end
 
 '''
@@ -2734,7 +2734,7 @@ end
 #                 },
 #                 nodes = {UIBox_dyn_container({create_UIBox_blind_choice('Boss')}, false,
 #                     get_blind_main_colour('Boss'), mix_colours(G.C.BLACK, get_blind_main_colour('Boss'), 0.8))}
-            #             },
+#             },
 #             config = {
 #                 align = "bmi",
 #                 offset = {
