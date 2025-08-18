@@ -7704,6 +7704,8 @@ SMODS.Tag{ -- Eternal
             if context.card and 
                 not context.card.ability.eternal and 
                 not context.card.ability.perishable and 
+                not context.card.ability.bunc_scattering and
+                not context.card.ability.bunc_hindered and
                 context.card.ability.set == 'Joker' and
                 context.card.config.center.eternal_compat
             then
