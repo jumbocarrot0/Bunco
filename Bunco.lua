@@ -6101,6 +6101,7 @@ table.insert(SMODS.Suit.obj_buffer, 1, table.remove(SMODS.Suit.obj_buffer, 2))
 
 SMODS.Atlas{key = 'bunco_resprites_enhanced_contrast', path = 'Resprites/EnhancedContrast.png', px = 71, py = 95}
 SMODS.Atlas{key = 'bunco_resprites_enhanced_contrast_ui', path = 'Resprites/EnhancedUIContrast.png', px = 18, py = 18}
+SMODS.Atlas{key = 'bunco_paperback_enhanced_contrast', path = 'Resprites/EnhancedContrastPaperback.png', px = 71, py = 95}
 
 -- Bunco High Contrast
 
@@ -6121,10 +6122,13 @@ local bunc_hc_colours = {
 for i, suit in ipairs({'Hearts', 'Diamonds', 'Clubs', 'Spades'}) do
     SMODS.DeckSkin.add_palette(SMODS.DeckSkins['default_' .. suit], {
         key = 'recast_contrast',
-        ranks = {'2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace',},
+        ranks = {'2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace', 'paperback_Apostle'},
         display_ranks = {'King', 'Queen', 'Jack'},
         atlas = 'bunc_bunco_resprites_enhanced_contrast',
-        pos_style = 'deck',
+        pos_style = {
+            fallback_style = "deck",
+            ['paperback_Apostle'] = { pos = {x = 0, y = ({0, 2, 1, 3})[i]}, atlas = 'bunc_bunco_paperback_enhanced_contrast'},
+        },
         colour = bunc_hc_colours[suit],
         suit_icon = {
             atlas = 'bunc_bunco_resprites_enhanced_contrast_ui',
@@ -6136,11 +6140,12 @@ for i, suit in ipairs({'Hearts', 'Diamonds', 'Clubs', 'Spades'}) do
         SMODS.Atlas{key = 'collab_'.. collab ..'_alt_hc', path = 'Resprites/collabs/collab_' .. collab .. '_EnhancedContrast.png', px = 71, py = 95}
         SMODS.DeckSkin.add_palette(SMODS.DeckSkins['collab_' .. collab], {
             key = 'recast_contrast',
-            ranks = {'2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace',},
+            ranks = {'2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace', 'paperback_Apostle'},
             display_ranks = {'King', 'Queen', 'Jack'},
             atlas = 'bunc_bunco_resprites_enhanced_contrast',
             pos_style = {
                 fallback_style = "deck",
+                ['paperback_Apostle'] = { pos = {x = 0, y = ({0, 2, 1, 3})[i]}, atlas = 'bunc_bunco_paperback_enhanced_contrast'},
                 ['Jack'] = { pos = {x = 0, y = 0}, atlas = 'bunc_collab_'.. collab ..'_alt_hc'},
                 ['Queen'] = { pos = {x = 1, y = 0}, atlas = 'bunc_collab_'.. collab ..'_alt_hc'},
                 ['King'] = { pos = {x = 2, y = 0}, atlas = 'bunc_collab_'.. collab ..'_alt_hc'},
