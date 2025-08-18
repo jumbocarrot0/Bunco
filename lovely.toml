@@ -390,7 +390,7 @@ payload = '''if self.name == 'Boss Tag' and not BUNCOMOD.content.config.gameplay
 # function generate_card_ui() (Temporary extra chips)
 [[patches]]
 [patches.pattern]
-target = "functions/common_events.lua"
+target = 'functions/common_events.lua'
 pattern = "if main_end then"
 position = "before"
 match_indent = true
@@ -404,7 +404,7 @@ end'''
 # # Linked cards drawing 1/4
 # [[patches]]
 # [patches.pattern]
-# target = "game.lua"
+# target = 'game.lua'
 # pattern = "if G.GAME.current_round.hands_played == 0 and"
 # position = "before"
 # match_indent = true
@@ -417,7 +417,7 @@ end'''
 # # Linked cards drawing 2/4
 # [[patches]]
 # [patches.regex]
-# target = "game.lua"
+# target = 'game.lua'
 # pattern = '(?<indent>[\t ]*).*drawn_to_hand\(\)\n(.*)return true\n(.*)end\n(.*)\n'
 # position = "after"
 # line_prepend = "$indent"
@@ -428,7 +428,7 @@ end'''
 # Linked cards drawing 3/4
 [[patches]]
 [patches.pattern]
-target = "game.lua"
+target = 'game.lua'
 pattern = "G.FUNCS.draw_from_deck_to_hand()"
 position = "after"
 match_indent = true
@@ -443,7 +443,7 @@ G.DRAWING_CARDS = G.STATE
 # Linked cards drawing 4/4
 [[patches]]
 [patches.pattern]
-target = "game.lua"
+target = 'game.lua'
 pattern = "G.CONTROLLER:recall_cardarea_focus('pack_cards')"
 position = "after"
 match_indent = true
@@ -457,7 +457,7 @@ G.E_MANAGER:add_event(Event({func = function() G.DRAWING_CARDS = nil return true
 # A fix for ghost cards
 [[patches]]
 [patches.pattern]
-target = "functions/common_events.lua"
+target = 'functions/common_events.lua'
 pattern = "if from then card = from:remove_card(card) end"
 position = "before"
 match_indent = true
@@ -479,7 +479,7 @@ end
 # # Linked cards can discard
 # [[patches]]
 # [patches.regex]
-# target = "functions/button_callbacks.lua"
+# target = 'functions/button_callbacks.lua'
 # pattern = "(?<indent>[\t ]*)if G.GAME.current_round.discards_left <= 0 or #G.hand.highlighted <= 0 or (?<condition>.*?) then"
 # position = "at"
 # line_prepend = "$indent"
@@ -621,7 +621,7 @@ end
 # Linked cards description
 [[patches]]
 [patches.pattern]
-target = "functions/common_events.lua"
+target = 'functions/common_events.lua'
 pattern = "if main_end then"
 position = "before"
 match_indent = true
@@ -2568,6 +2568,7 @@ payload = '''   if not G.GAME.rerolled_pack then'''
 [patches.pattern]
 target = 'card.lua'
 pattern = 'G.GAME.pack_choices = *'
+times = 1
 position = 'after'
 match_indent = true
 payload = '''end local skip_animation = G.GAME.rerolled_pack and 0 or nil'''
@@ -2676,7 +2677,7 @@ match_indent = true
 payload = '''if self.name == 'Double Tag' and _context.tag.key ~= 'tag_double' and _context.tag.key ~= 'tag_bunc_triple' then'''
 
 
-# Blind Cards 1/3
+# Blind Cards 1/2
 [[patches]]
 [patches.pattern]
 target = 'functions/UI_definitions.lua'
@@ -2696,7 +2697,7 @@ end
 
 '''
 
-# # Blind Cards 2/3
+# # Blind Cards old
 # [[patches]]
 # [patches.pattern]
 # target = 'functions/button_callbacks.lua'
@@ -2762,7 +2763,7 @@ end
 
 # '''
 
-# Blind Cards 3/3 (Blind Animation)
+# Blind Cards 2/2 (Blind Animation)
 [[patches]]
 [patches.pattern]
 target = 'card.lua'
