@@ -8685,6 +8685,11 @@ SMODS.Sticker{ -- Scattering
         card.ability[self.key] = val
     end,
 
+    -- Cross-mod stuff
+    compat_exceptions = {
+        "sarc_cracked_egg"
+    },
+
     badge_colour = HEX('9eacbe'),
 
     order = 5,
