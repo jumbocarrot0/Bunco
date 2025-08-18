@@ -8680,9 +8680,15 @@ SMODS.Atlas({key = 'bunco_stickers', path = 'Stickers/Stickers.png', px = 71, py
 SMODS.Sticker{ -- Scattering
     key = 'scattering',
 
+    should_apply = function(self, card, center, area, bypass_roll)
+        local default_check = SMODS.Sticker.should_apply(self, card, center, area, bypass_roll)
+        local other_sticker_check = not (card.ability.eternal or card.ability.bunc_hindered or card.ability.bunc_reactive)
+        return default_check and other_sticker_check
+    end,
     apply = function(self, card, val)
-        if card.ability.eternal or card.ability.bunc_hindered or card.ability.bunc_reactive then return end
+        -- if card.ability.eternal or card.ability.bunc_hindered or card.ability.bunc_reactive then return end
         card.ability[self.key] = val
+        -- card.config.center.eternal_compat = false
     end,
 
     -- Cross-mod stuff
@@ -8701,10 +8707,16 @@ SMODS.Sticker{ -- Scattering
 SMODS.Sticker{ -- Hindered
     key = 'hindered',
 
+    should_apply = function(self, card, center, area, bypass_roll)
+        local default_check = SMODS.Sticker.should_apply(self, card, center, area, bypass_roll)
+        local other_sticker_check = not (card.ability.eternal or card.ability.bunc_scattering or card.ability.bunc_reactive)
+        return default_check and other_sticker_check
+    end,
     apply = function(self, card, val)
-        if card.ability.eternal or card.ability.bunc_scattering or card.ability.bunc_reactive then return end
+        -- if card.ability.eternal or card.ability.bunc_scattering or card.ability.bunc_reactive then return end
         card.ability[self.key] = val
         card.ability.bunc_hindered_sold = false
+        -- card.config.center.eternal_compat = false
     end,
     calculate = function(self, card, context)
         if context.end_of_round and not context.repetition and not context.individual then
@@ -8723,8 +8735,13 @@ SMODS.Sticker{ -- Hindered
 SMODS.Sticker{ -- Reactive
     key = 'reactive',
 
+    should_apply = function(self, card, center, area, bypass_roll)
+        local default_check = SMODS.Sticker.should_apply(self, card, center, area, bypass_roll)
+        local other_sticker_check = not (card.ability.bunc_hindered or card.ability.bunc_scattering)
+        return default_check and other_sticker_check
+    end,
     apply = function(self, card, val)
-        if card.ability.eternal or card.ability.bunc_scattering or card.ability.bunc_hindered then return end
+        -- if card.ability.bunc_scattering or card.ability.bunc_hindered then return end
         card.ability[self.key] = val
         if G.GAME and G.GAME.blind then G.GAME.blind:debuff_card(card) end
     end,
@@ -8756,7 +8773,7 @@ SMODS.Stake{ -- Cyan
     prefix_config = {above_stake = {mod = false}, applied_stakes = {mod = false}},
 
     modifiers = function()
-        G.GAME.modifiers.enable_scattering_in_shop = true
+        G.GAME.modifiers.enable_bunc_scattering = true
     end,
 
     loc_vars = function(self)
@@ -8786,7 +8803,7 @@ SMODS.Stake{ -- Pink
     above_stake = 'bunc_cyan',
 
     modifiers = function()
-        G.GAME.modifiers.enable_hindered_in_shop = true
+        G.GAME.modifiers.enable_bunc_hindered = true
     end,
 
     loc_vars = function(self)
@@ -8816,7 +8833,7 @@ SMODS.Stake{ -- Magenta
     above_stake = 'bunc_pink',
 
     modifiers = function()
-        G.GAME.modifiers.enable_reactive_in_shop = true
+        G.GAME.modifiers.enable_bunc_reactive = true
     end,
 
     loc_vars = function(self)

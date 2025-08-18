@@ -2928,63 +2928,17 @@ end
 # Eternal Sticker compat
 [[patches]]
 [patches.pattern]
-target = 'functions/common_events.lua'
-pattern = 'card:set_eternal(true)'
-position = 'at'
-match_indent = true
-payload = '''
-
-if not (card.ability.bunc_scattering or card.ability.bunc_hindered or card.ability.bunc_reactive) then
-    card:set_eternal(true)
-end
-
-'''
-
-# Cyan Stake
-[[patches]]
-[patches.pattern]
-target = 'functions/common_events.lua'
-pattern = 'if (area == G.shop_jokers) or (area == G.pack_cards) then'
+target = 'card.lua'
+pattern = 'function Card:set_eternal(_eternal)'
 position = 'after'
 match_indent = true
 payload = '''
 
-if G.GAME.modifiers.enable_scattering_in_shop and pseudorandom(('scattering')..G.GAME.round_resets.ante) > 0.7 then
-    SMODS.Stickers['bunc_scattering']:apply(card, true)
-end
+    if (self.ability.bunc_scattering or self.ability.bunc_hindered) then
+        _eternal = false
+    end
 
 '''
-
-# Pink Stake
-[[patches]]
-[patches.pattern]
-target = 'functions/common_events.lua'
-pattern = 'if (area == G.shop_jokers) or (area == G.pack_cards) then'
-position = 'after'
-match_indent = true
-payload = '''
-
-if G.GAME.modifiers.enable_hindered_in_shop and pseudorandom(('hindered')..G.GAME.round_resets.ante) > 0.7 then
-    SMODS.Stickers['bunc_hindered']:apply(card, true)
-end
-
-'''
-
-# Magenta Stake
-[[patches]]
-[patches.pattern]
-target = 'functions/common_events.lua'
-pattern = 'if (area == G.shop_jokers) or (area == G.pack_cards) then'
-position = 'after'
-match_indent = true
-payload = '''
-
-if G.GAME.modifiers.enable_reactive_in_shop and pseudorandom(('reactive')..G.GAME.round_resets.ante) > 0.7 then
-    SMODS.Stickers['bunc_reactive']:apply(card, true)
-end
-
-'''
-
 
 
 
