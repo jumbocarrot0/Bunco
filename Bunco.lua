@@ -8688,7 +8688,8 @@ SMODS.Sticker{ -- Scattering
     should_apply = function(self, card, center, area, bypass_roll)
         local default_check = SMODS.Sticker.should_apply(self, card, center, area, bypass_roll)
         local other_sticker_check = not (card.ability.eternal or card.ability.bunc_hindered or card.ability.bunc_reactive)
-        return default_check and other_sticker_check
+        local shop_check = (area == G.shop_jokers) or (area == G.pack_cards)
+        return default_check and other_sticker_check and shop_check
     end,
     apply = function(self, card, val)
         -- if card.ability.eternal or card.ability.bunc_hindered or card.ability.bunc_reactive then return end
@@ -8715,7 +8716,8 @@ SMODS.Sticker{ -- Hindered
     should_apply = function(self, card, center, area, bypass_roll)
         local default_check = SMODS.Sticker.should_apply(self, card, center, area, bypass_roll)
         local other_sticker_check = not (card.ability.eternal or card.ability.bunc_scattering or card.ability.bunc_reactive)
-        return default_check and other_sticker_check
+        local shop_check = (area == G.shop_jokers) or (area == G.pack_cards)
+        return default_check and other_sticker_check and shop_check
     end,
     apply = function(self, card, val)
         -- if card.ability.eternal or card.ability.bunc_scattering or card.ability.bunc_reactive then return end
@@ -8743,7 +8745,8 @@ SMODS.Sticker{ -- Reactive
     should_apply = function(self, card, center, area, bypass_roll)
         local default_check = SMODS.Sticker.should_apply(self, card, center, area, bypass_roll)
         local other_sticker_check = not (card.ability.bunc_hindered or card.ability.bunc_scattering)
-        return default_check and other_sticker_check
+        local shop_check = (area == G.shop_jokers) or (area == G.pack_cards)
+        return default_check and other_sticker_check and shop_check
     end,
     apply = function(self, card, val)
         -- if card.ability.bunc_scattering or card.ability.bunc_hindered then return end
