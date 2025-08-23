@@ -1880,7 +1880,7 @@ least_played_poker_hand = 'High Card','''
 [[patches]]
 [patches.pattern]
 target = 'functions/state_events.lua'
-pattern = "check_and_set_high_score('hand', hand_chips*mult)"
+pattern = "check_and_set_high_score('hand',*"
 position = 'after'
 match_indent = true
 payload = '''
@@ -2059,14 +2059,13 @@ end
 
 # '''
 
-# function update_hand_text (Magenta Dagger 5/5)
+# function update_hand_text (Magenta Dagger 4/4)
 [[patches]]
-[patches.pattern]
+[patches.regex]
 target = 'functions/state_events.lua'
-pattern = "ease_to = G.GAME.chips + math.floor(hand_chips*mult),"
+pattern = "ease_to = G\\.GAME\\.chips \\+ math\\.floor\\((.*)\\),"
 position = 'at'
-match_indent = true
-payload = '''ease_to = G.GAME.chips + math.floor(hand_chips * mult) * (G.GAME.blind.antiscore and -1 or 1),'''
+payload = '''ease_to = G.GAME.chips + math.floor($1) * (G.GAME.blind.antiscore and -1 or 1),'''
 
 # # function get_new_boss() (Turquoise Shield 1/2)
 # [[patches]]
@@ -2324,18 +2323,19 @@ if _c.consumeable and (v == 'foil' or v == 'holo' or v == 'polychrome' or v == '
         or (v == 'holo') and {G.P_CENTERS.e_holo.config.extra}
         or (v == 'polychrome') and {G.P_CENTERS.e_polychrome.config.extra}
         or (v == 'bunc_glitter') and {G.P_CENTERS.e_bunc_glitter.config.Xchips}}
-else
+    goto bunco_skip_edition_info_queue
+end
 '''
 
 # Info queue for consumables 2/2
 # Complicated regex just matches the first 'end' after the above patch's pattern
 [[patches]]
-[patches.regex]
+[patches.pattern]
 target = 'functions/common_events.lua'
-pattern = "local t = \\{key = 'e_'\\.\\.v, set = 'Edition', config = \\{\\}\\}((.|\n)*?)(?<indent>[\t ]*)end\n"
-position = 'after'
-line_prepend = "$indent"
-payload = '''end'''
+pattern = "local seal = G.P_SEALS[v] or G.P_SEALS[SMODS.Seal.badge_to_key[v] or '']"
+position = 'before'
+match_indent = true
+payload = '''::bunco_skip_edition_info_queue::'''
 
 # function card_open() (Filigree Tag)
 [[patches]]
