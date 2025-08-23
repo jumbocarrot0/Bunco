@@ -5272,7 +5272,7 @@ SMODS.Atlas({key = 'bunco_polyminoes', path = 'Consumables/Polyminoes.png', px =
 SMODS.ConsumableType{
     key = 'Polymino',
     primary_colour = HEX('424e54'),
-    secondary_colour = G.C.BUNCO_VIRTUAL_DARK or HEX('4fb66f'),
+    secondary_colour = HEX('4fb66f'),
     collection_rows = {4, 4}
 }
 
