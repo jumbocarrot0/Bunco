@@ -6701,6 +6701,9 @@ SMODS.Blind{ -- The Mask
 
     vars = {},
     loc_vars = function(self)
+        G.GAME.current_round.most_played_poker_hand = G.GAME.current_round.most_played_poker_hand or "High Card"
+        G.GAME.current_round.least_played_poker_hand = G.GAME.current_round.least_played_poker_hand or "High Card"
+
         return {vars = {localize(G.GAME.current_round.most_played_poker_hand, 'poker_hands'), localize(G.GAME.current_round.least_played_poker_hand, 'poker_hands')}}
     end,
     collection_loc_vars = function(self)
@@ -6708,6 +6711,9 @@ SMODS.Blind{ -- The Mask
     end,
 
     modify_hand = function(self, cards, poker_hands, text, mult, hand_chips)
+        G.GAME.current_round.most_played_poker_hand = G.GAME.current_round.most_played_poker_hand or "High Card"
+        G.GAME.current_round.least_played_poker_hand = G.GAME.current_round.least_played_poker_hand or "High Card"
+
         if not G.GAME.blind.disabled then
             if G.GAME.last_hand_played == G.GAME.current_round.most_played_poker_hand then
                 G.GAME.blind.triggered = true
@@ -6715,6 +6721,16 @@ SMODS.Blind{ -- The Mask
             end
         end
         return mult, hand_chips, false
+    end,
+
+    in_pool = function(self)
+        if (G.GAME.round_resets.ante >= self.boss.min) and
+            G.GAME.current_round.most_played_poker_hand ~= G.GAME.current_round.most_played_poker_hand 
+        then
+            return true
+        else
+            return false
+        end
     end,
 
     boss_colour = HEX('efcca6'),
