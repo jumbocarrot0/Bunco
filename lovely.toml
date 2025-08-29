@@ -270,46 +270,32 @@ local function add_symbol(text, symbol)
     end
 end
 
-if string.find(assembled_string, localize('Diamonds', 'suits_singular'))
-or string.find(assembled_string, localize('Diamonds', 'suits_plural')) then
-    assembled_string = add_symbol(assembled_string, '♦')
-end
+local suit_symbols = {
+    Diamonds = '♦',
+    Hearts = '♥',
+    Spades = '♠',
+    Clubs = '♣',
+    bunc_Fleurons = '✤',
+    bunc_Halberds = '✠',
+    paperback_Crowns = '♛',
+    paperback_Stars = '★',
+}
+local found_strings = {}
 
-if string.find(assembled_string, localize('Hearts', 'suits_singular'))
-or string.find(assembled_string, localize('Hearts', 'suits_plural')) then
-    assembled_string = add_symbol(assembled_string, '♥')
+-- Ordering the symbol insertion so that symbols appear in the order the words appear in the text
+for key, symbol in pairs(suit_symbols) do
+    local result = string.find(assembled_string, localize(key, 'suits_singular')) or string.find(assembled_string, localize(key, 'suits_plural'))
+    if result then
+        table.insert(found_strings, {result, symbol})
+    end
 end
+table.sort(found_strings, function(a, b)
+    return a[1] > b[1]
+end)
 
-if string.find(assembled_string, localize('Spades', 'suits_singular'))
-or string.find(assembled_string, localize('Spades', 'suits_plural')) then
-    assembled_string = add_symbol(assembled_string, '♠')
+for _, v in ipairs(found_strings) do
+    assembled_string = add_symbol(assembled_string, v[2])
 end
-
-if string.find(assembled_string, localize('Clubs', 'suits_singular'))
-or string.find(assembled_string, localize('Clubs', 'suits_plural')) then
-    assembled_string = add_symbol(assembled_string, '♣')
-end
-
-if string.find(assembled_string, localize('bunc_Fleurons', 'suits_singular'))
-or string.find(assembled_string, localize('bunc_Fleurons', 'suits_plural')) then
-    assembled_string = add_symbol(assembled_string, '✤')
-end
-
-if string.find(assembled_string, localize('bunc_Halberds', 'suits_singular'))
-or string.find(assembled_string, localize('bunc_Halberds', 'suits_plural')) then
-    assembled_string = add_symbol(assembled_string, '✠')
-end
-
-if string.find(assembled_string, localize('paperback_Crowns', 'suits_singular'))
-or string.find(assembled_string, localize('paperback_Crowns', 'suits_plural')) then
-    assembled_string = add_symbol(assembled_string, '♛')
-end
-
-if string.find(assembled_string, localize('paperback_Stars', 'suits_singular'))
-or string.find(assembled_string, localize('paperback_Stars', 'suits_plural')) then
-    assembled_string = add_symbol(assembled_string, '★')
-end
-
 '''
 
 # Luchador Rework 1/2
