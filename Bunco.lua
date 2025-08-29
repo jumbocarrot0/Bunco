@@ -976,6 +976,7 @@ end
 -- Various on-money-gain functions
 
 table.insert(SMODS.calculation_keys, "bunc_new_dollars_mod")
+table.insert(SMODS.other_calculation_keys, "bunc_new_dollars_mod")
 local bunc_original_smods_calculate_individal_effect = SMODS.calculate_individual_effect
 SMODS.calculate_individual_effect = function(effect, scored_card, key, amount, from_edition)
     
@@ -3570,7 +3571,7 @@ bunc_define_joker({ -- Wino
 
 bunc_define_joker({ -- Bounty Hunter
     name = 'Bounty Hunter', position = 52,
-    vars = {{bonus = 1}, {mult = 0}, {unlock = -20}},
+    vars = {{bonus = 1}, {mult = 0}, {unlock = -20}, {being_sold = false}},
     locked_vars = function(self, info_queue, card)
         return {vars = {self.config.extra.unlock}}
     end,
@@ -3585,10 +3586,13 @@ bunc_define_joker({ -- Bounty Hunter
         end
     end,
     calculate = function(self, card, context)
+        if context.selling_card and context.card == card then
+            card.ability.being_sold = true
+        end
         if context.bunc_pre_money_change and context.sign == 1 and not context.blueprint then
             card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.bonus
             local new_mod = to_big(context.mod) - to_big(card.ability.extra.bonus)
-            if card.dissolve ~= nil then
+            if card.ability.being_sold then
                 return {
                     bunc_new_dollars_mod = new_mod,
                     message = localize("bunc_robbed"),
@@ -3609,9 +3613,6 @@ bunc_define_joker({ -- Bounty Hunter
                 }
             end
         end
-        -- if context.get_money and not context.blueprint then
-        --     card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.bonus
-        -- end
         if context.joker_main and card.ability.extra.mult ~= 0 then
             return {
                 message = localize {
