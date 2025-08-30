@@ -821,15 +821,11 @@ if config.gameplay_reworks then
         calculate = function(self, card, context)
             if context.skipping_booster and not context.blueprint then
                 card.ability.mult = card.ability.mult + (card.ability.extra * G.GAME.pack_choices)
-                event({
-                func = function()
-                    card_eval_status_text(card, 'extra', nil, nil, nil, {
-                        message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra * G.GAME.pack_choices}},
-                        colour = G.C.RED,
-                        delay = 0.45,
-                        card = card
-                    })
-                return true end})
+                return {
+                    message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.extra * G.GAME.pack_choices}},
+                    colour = G.C.RED,
+                    delay = 0.45
+                }
             end
         end
     })
@@ -1411,12 +1407,15 @@ bunc_define_joker({ -- Cassette
         end
 
         if context.flip and not context.blueprint then
-            forced_message(G.localization.misc.dictionary['bunc_'..(card.ability.extra.side == 'A' and 'b' or 'a')..'_side'], card, G.C.RED)
             if card.ability.extra.side == 'A' then
                 card.ability.extra.side = 'B'
             else
                 card.ability.extra.side = 'A'
             end
+            return {
+                message = G.localization.misc.dictionary['bunc_'..(card.ability.extra.side == 'A' and 'b' or 'a')..'_side'],
+                colour = G.C.RED
+            }
         end
 
         if context.individual and context.cardarea == G.play then
@@ -1427,8 +1426,7 @@ bunc_define_joker({ -- Cassette
             if other_card:is_suit('Hearts') or other_card:is_suit('Diamonds') or other_card:is_suit('bunc_Fleurons') then
                 if side == 'A' then
                     return {
-                        chips = card.ability.extra.chips,
-                        card = card
+                        chips = card.ability.extra.chips
                     }
                 end
             end
@@ -1436,8 +1434,7 @@ bunc_define_joker({ -- Cassette
             if other_card:is_suit('Spades') or other_card:is_suit('Clubs') or other_card:is_suit('bunc_Halberds') then
                 if side == 'B' then
                     return {
-                        mult = card.ability.extra.mult,
-                        card = card
+                        mult = card.ability.extra.mult
                     }
                 end
             end
@@ -1487,8 +1484,7 @@ bunc_define_joker({ -- Mosaic
         if context.individual and context.cardarea == G.play then
             if context.other_card.config.center == G.P_CENTERS.m_stone then
                 return {
-                    mult = card.ability.extra.mult,
-                    card = card
+                    mult = card.ability.extra.mult
                 }
             end
         end
@@ -1519,13 +1515,7 @@ bunc_define_joker({ -- Voxel
         if context.joker_main then
             if card.ability.extra.xmult ~= 1 then
                 return {
-                    Xmult_mod = card.ability.extra.xmult,
-                    card = card,
-                    message = localize {
-                        type = 'variable',
-                        key = 'a_xmult',
-                        vars = { card.ability.extra.xmult }
-                    }
+                    xmult = card.ability.extra.xmult
                 }
             end
         end
@@ -1596,8 +1586,7 @@ bunc_define_joker({ -- Crop Circles
                     })
                 end
                 return {
-                    mult = suit_mult + rank_mult,
-                    card = card
+                    mult = suit_mult + rank_mult
                 }
             end
         end
@@ -1634,13 +1623,7 @@ bunc_define_joker({ -- Xray
         if context.joker_main then
             if card.ability.extra.xmult ~= 1 then
                 return {
-                    message = localize {
-                        type = 'variable',
-                        key = 'a_xmult',
-                        vars = { card.ability.extra.xmult }
-                    },
-                    Xmult_mod = card.ability.extra.xmult,
-                    card = card
+                    xmult = card.ability.extra.xmult,
                 }
             end
         end
@@ -1748,8 +1731,7 @@ bunc_define_joker({ -- Prehistoric
                 if (aij_ids_op(context.other_card, '==', v.rank))
                 and (v.has_any_suit or context.other_card:is_suit(v.suit)) then
                     return {
-                        mult = card.ability.extra.mult,
-                        card = card
+                        mult = card.ability.extra.mult
                     }
                 end
             end
@@ -1784,7 +1766,10 @@ bunc_define_joker({ -- Linocut
                 event({trigger = 'after', delay = 0.15, func = function() context.scoring_hand[1]:flip(); play_sound('card1', 1); context.scoring_hand[1]:juice_up(0.3, 0.3); return true end })
                 event({trigger = 'after', delay = 0.1,  func = function() context.scoring_hand[1]:change_suit(context.scoring_hand[2].config.card.suit); return true end })
                 event({trigger = 'after', delay = 0.15, func = function() context.scoring_hand[1]:flip(); play_sound('tarot2', 1, 0.6); big_juice(card); context.scoring_hand[1]:juice_up(0.3, 0.3); return true end })
-                forced_message(G.localization.misc.dictionary.bunc_copied, card, G.C.RED, true)
+                return {
+                    message = G.localization.misc.dictionary["bunc_copied"],
+                    colour = G.C.RED
+                }
             end
         end
     end
@@ -1796,7 +1781,7 @@ bunc_define_joker({ -- Ghost Print
     custom_vars = function(self, info_queue, card)
         local vars
         if card.ability.extra.last_hand == 'Nothing' then
-            vars = {G.localization.misc.dictionary.bunc_nothing}
+            vars = {G.GAME.last_hand_played or G.localization.misc.dictionary.bunc_nothing}
         else
             vars = {G.localization.misc['poker_hands'][card.ability.extra.last_hand]}
         end
@@ -1807,17 +1792,21 @@ bunc_define_joker({ -- Ghost Print
     unlocked = true,
     calculate = function(self, card, context)
         if context.joker_main then
-
             if card.ability.extra.last_hand ~= 'Nothing' then
-                mult = mod_mult(mult + G.GAME.hands[card.ability.extra.last_hand].mult)
-                hand_chips = mod_chips(hand_chips + G.GAME.hands[card.ability.extra.last_hand].chips)
-                update_hand_text({delay = 0, sound = '', modded = true}, {chips = hand_chips, mult = mult})
-                forced_message(G.localization.misc['poker_hands'][card.ability.extra.last_hand]..'!', context.blueprint_card or card, G.C.HAND_LEVELS[G.GAME.hands[card.ability.extra.last_hand].level], true)
+                return {
+                    chips = G.GAME.hands[card.ability.extra.last_hand].chips,
+                    mult = G.GAME.hands[card.ability.extra.last_hand].mult,
+                }
             end
+        end
 
-            if not context.blueprint then
-                card.ability.extra.last_hand = G.GAME.last_hand_played
-            end
+        if context.after and not context.blueprint then
+            card.ability.extra.last_hand = G.GAME.last_hand_played
+        end
+    end,
+    add = function(self, card, from_debuff)
+        if not from_debuff then
+            card.ability.extra.last_hand = G.GAME.last_hand_played or "Nothing"
         end
     end
 })
@@ -1857,16 +1846,20 @@ bunc_define_joker({ -- Basement
     calculate = function(self, card, context)
         if context.end_of_round and G.GAME.blind.boss and not context.other_card then
             if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-                if not context.blueprint then
-                    forced_message(localize('k_plus_spectral'), card, G.C.SECONDARY_SET.Spectral)
-                else
-                    forced_message(localize('k_plus_spectral'), context.blueprint_card, G.C.SECONDARY_SET.Spectral)
-                end
                 G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-                local spectral = create_card('Spectral', G.consumeables, nil, nil, nil, nil, nil)
-                spectral:add_to_deck()
-                G.consumeables:emplace(spectral)
-                G.GAME.consumeable_buffer = 0
+                G.E_MANAGER:add_event(Event({
+                    func = function() 
+                        local spectral = create_card('Spectral', G.consumeables, nil, nil, nil, nil, nil)
+                        spectral:add_to_deck()
+                        G.consumeables:emplace(spectral)
+                        G.GAME.consumeable_buffer = 0
+                        return true
+                    end
+                }))
+                return {
+                    message = localize('k_plus_spectral'),
+                    colour = G.C.SECONDARY_SET.Spectral
+                }
             end
         end
     end
@@ -1882,19 +1875,16 @@ bunc_define_joker({ -- Shepherd
         if context.before and context.poker_hands ~= nil and next(context.poker_hands['Pair']) and not context.blueprint then
             card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.bonus
 
-            forced_message('+'..tostring(card.ability.extra.chips)..' '..G.localization.misc.dictionary.bunc_chips, card, G.C.BLUE, true)
+            return {
+                message = '+'..tostring(card.ability.extra.chips)..' '..G.localization.misc.dictionary["bunc_chips"],
+                colour = G.C.BLUE
+            }
         end
 
         if context.joker_main then
             if card.ability.extra.chips ~= 0 then
                 return {
-                    message = localize {
-                        type = 'variable',
-                        key = 'a_chips',
-                        vars = { card.ability.extra.chips }
-                    },
-                    chip_mod = card.ability.extra.chips,
-                    card = card
+                    chips = card.ability.extra.chips
                 }
             end
         end
@@ -1944,13 +1934,7 @@ bunc_define_joker({ -- Joker Knight
         if context.joker_main then
             if card.ability.extra.mult ~= 0 then
                 return {
-                    message = localize {
-                        type = 'variable',
-                        key = 'a_mult',
-                        vars = { card.ability.extra.mult }
-                    },
-                    mult_mod = card.ability.extra.mult,
-                    card = card
+                    mult = card.ability.extra.mult
                 }
             end
         end
@@ -2038,13 +2022,7 @@ bunc_define_joker({ -- Dogs Playing Poker
 
             if condition then
                 return {
-                    Xmult_mod = card.ability.extra.xmult,
-                    card = card,
-                    message = localize {
-                        type = 'variable',
-                        key = 'a_xmult',
-                        vars = { card.ability.extra.xmult }
-                    },
+                    xmult = card.ability.extra.xmult,
                 }
             end
         end
@@ -2072,8 +2050,7 @@ bunc_define_joker({ -- Righthook
 
             return {
                 message = localize('k_again_ex'),
-                repetitions = repetitions,
-                card = card
+                repetitions = repetitions
             }
         end
     end
@@ -2149,12 +2126,21 @@ bunc_define_joker({ -- Carnival
 
                 if joker_to_destroy and not card.getting_sliced then
                     joker_to_destroy.getting_sliced = true
-                    card:juice_up(0.8, 0.8)
                     card.ability.extra.ante = G.GAME.round_resets.ante
                     ease_ante(-1)
-                    forced_message(G.localization.misc.dictionary.bunc_loop, card, G.C.BLACK)
-                    joker_to_destroy:start_dissolve({G.C.BLACK}, nil, 1.6)
-                    play_sound('slice1', 0.96+math.random()*0.08)
+                    -- forced_message(G.localization.misc.dictionary.bunc_loop, card, G.C.BLACK)
+                    G.E_MANAGER:add_event(Event({
+                        func = function() 
+                            card:juice_up(0.8, 0.8)
+                            joker_to_destroy:start_dissolve({G.C.BLACK}, nil, 1.6)
+                            play_sound('slice1', 0.96+math.random()*0.08)
+                            return true
+                        end
+                    }))
+                    return {
+                        message = G.localization.misc.dictionary["bunc_loop"],
+                        colour = G.C.BLACK,
+                    }
                 end
             end
         end
@@ -2276,7 +2262,11 @@ bunc_define_joker({ -- Fingerprints
             -- not needed, but good style to fail fast
             card.ability.extra.scoring_card_set = nil
 
-            forced_message(localize('k_upgrade_ex'), card, G.C.CHIPS, true)
+            -- forced_message(localize('k_upgrade_ex'), card, G.C.CHIPS, true)
+            return {
+                message = localize('k_upgrade_ex'),
+                colour = G.C.CHIPS
+            }
         end
     end
 })
@@ -2298,10 +2288,11 @@ bunc_define_joker({ -- Zero Shapiro
             if context.other_card:get_id() == 11 or context.other_card:get_id() == 12 or context.other_card:get_id() == 13 or SMODS.has_no_rank(context.other_card) then
                 if SMODS.pseudorandom_probability(card, pseudorandom('zero_shapiro'..G.SEED), 1, card.ability.extra.odds, 'bunc_zero_shapiro') then
                     return {
-                        extra = {message = '+'..localize{type = 'name_text', key = 'tag_d_six', set = 'Tag'}, colour = G.C.GREEN},
-                        card = card,
+                        message = '+'..localize{type = 'name_text', key = 'tag_d_six', set = 'Tag'},
+                        blocking = false,
+                        colour = G.C.GREEN,
                         func = function()
-                            event({func = function()
+                            event({trigger="before", delay = 0.7 * 1.25, func = function()
                                 add_tag(Tag('tag_d_six'))
                                 return true
                             end})
@@ -2321,8 +2312,9 @@ bunc_define_joker({ -- Nil Bill
     unlocked = true,
     calculate = function(self, card, context)
         if context.remove_playing_cards then
-            ease_dollars(card.ability.extra.bonus * #context.removed)
-            forced_message('$'..card.ability.extra.bonus * #context.removed, card, G.C.MONEY)
+            return {
+                dollars = card.ability.extra.bonus * #context.removed
+            }
         end
     end
 })
@@ -2349,7 +2341,10 @@ bunc_define_joker({ -- Bierdeckel
             end
 
             -- maybe juice all held cards, that'd be fun
-            forced_message(localize('k_upgrade_ex'), context.blueprint_card or card, G.C.CHIPS, true)
+            return {
+                message = localize('k_upgrade_ex'),
+                colour = G.C.CHIPS
+            }
         end
     end,
     set_ability = function(self, card, initial, delay_sprites)
@@ -2560,12 +2555,7 @@ bunc_define_joker({ -- Gameplan
 
             if mult ~= 0 then
                 return {
-                    message = localize {
-                        type = 'variable',
-                        key = 'a_mult',
-                        vars = { mult }
-                    },
-                    mult_mod = mult,
+                    mult = mult,
                     card = context.other_joker
                 }
             end
@@ -2620,16 +2610,10 @@ bunc_define_joker({ -- Conquest
         end
         if context.joker_main then
             return {
-                message = localize {
-                    type = 'variable',
-                    key = 'a_chips',
-                    vars = { card.ability.extra.chips }
-                },
-                chip_mod = card.ability.extra.chips,
-                card = context.blueprint_card or card
+                chips = card.ability.extra.chips
             }
         end
-    end
+    end,
 })
 
 bunc_define_joker({ -- Hierarchy of Needs
@@ -2687,13 +2671,7 @@ bunc_define_joker({ -- Hierarchy of Needs
         if context.joker_main then
             if card.ability.extra.mult ~= 0 then
                 return {
-                    message = localize {
-                        type = 'variable',
-                        key = 'a_mult',
-                        vars = { card.ability.extra.mult }
-                    },
-                    mult_mod = card.ability.extra.mult,
-                    card = card
+                    mult = card.ability.extra.mult
                 }
             end
         end
@@ -2864,10 +2842,14 @@ bunc_define_joker({ -- Juggalo
                 {'e_holo', 'e_foil', 'e_polychrome', 'e_bunc_glitter'})
                 if consumable then
                     event({func = function()
+                        big_juice(consumable)
                         consumable:set_edition(edition, true)
                         return true
                     end})
-                    forced_message(localize('k_upgrade_ex'), card, G.C.RED, true, consumable)
+                    return {
+                        message = localize('k_upgrade_ex'),
+                        colour = G.C.RED
+                    }
                 end
             end
         end
@@ -2938,13 +2920,7 @@ bunc_define_joker({ -- Headshot
 
             if face_amount == 1 then
                 return {
-                    Xmult_mod = card.ability.extra.xmult,
-                    card = card,
-                    message = localize {
-                        type = 'variable',
-                        key = 'a_xmult',
-                        vars = { card.ability.extra.xmult }
-                    },
+                    xmult = card.ability.extra.xmult,
                 }
             end
         end
@@ -3016,13 +2992,7 @@ bunc_define_joker({ -- Trigger Finger
         end
         if context.joker_main then
             return {
-                Xmult_mod = card.ability.extra.xmult,
-                card = card,
-                message = localize {
-                    type = 'variable',
-                    key = 'a_xmult',
-                    vars = { card.ability.extra.xmult }
-                },
+                xmult = card.ability.extra.xmult,
             }
         end
     end
@@ -3037,7 +3007,10 @@ bunc_define_joker({ -- Hopscotch
     calculate = function(self, card, context)
         if context.before and context.poker_hands ~= nil and next(context.poker_hands['Straight']) then
             ease_discard(card.ability.extra.discard)
-            forced_message('+'..card.ability.extra.discard..' '..localize('b_discard'), card, G.C.RED, true)
+            return {
+                message = '+'..card.ability.extra.discard..' '..localize('b_discard'),
+                colour = G.C.RED
+            }
         end
     end
 })
@@ -3123,7 +3096,7 @@ bunc_define_joker({ -- Puzzle Board
     blueprint = true, eternal = true, perishable = true,
     unlocked = true,
     calculate = function(self, card, context)
-        if context.using_consumeable and context.consumeable.ability.set == 'Tarot' then
+        if context.using_consumeable and context.consumeable.ability.set == 'Tarot' and #G.hand.highlighted > 0 then
             if SMODS.pseudorandom_probability(card, 'puzzle_board'..G.SEED, 1, card.ability.extra.odds, 'bunc_puzzle_board') then
                 local cards = {}
                 local edition = poll_edition('wheel_of_fortune', nil, true, true)
@@ -3140,9 +3113,10 @@ bunc_define_joker({ -- Puzzle Board
                     end
                 return true end})
             else
-                event({trigger = 'after', func = function()
-                    forced_message(localize('k_nope_ex'), card, G.C.RED)
-                return true end})
+                return {
+                    message = localize('k_nope_ex'),
+                    colour = G.C.RED,
+                }
             end
         end
     end
@@ -3260,18 +3234,15 @@ bunc_define_joker({ -- Protester
                 end
             end
             if raised_card then
-                event({delay = 0.7 * 1.25, trigger = 'before', func = function()
-                    play_sound('generic1', nil, 1)
-                    extra_juice(card)
-                    big_juice(raised_card)
-                return true end})
+                return {
+                    message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}
+                }
             end
         end
         if context.joker_main then
             if card.ability.extra.chips ~= 0 then
                 return {
-                    message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}},
-                    chip_mod = card.ability.extra.chips,
+                    chips = card.ability.extra.chips,
                 }
             end
         end
@@ -3280,7 +3251,10 @@ bunc_define_joker({ -- Protester
                 card.ability.extra.rank = -huge_number
                 card.ability.extra.chips = 0
 
-                forced_message(localize('k_reset'), card, G.C.RED, true)
+                return {
+                    message = localize('k_reset'),
+                    colour = G.C.red_card
+                }
             end
         end
     end
@@ -3312,7 +3286,6 @@ bunc_define_joker({ -- Doodle
             event({func = function ()
                 if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
                     local copy
-                    forced_message(localize('k_duplicated_ex'), context.blueprint_card or card, nil, true, copy)
                     card.ability.extra.active = false
                     copy = copy_card(context.consumeable)
                     copy:add_to_deck()
@@ -3320,6 +3293,9 @@ bunc_define_joker({ -- Doodle
                 end
                 return true
             end})
+            return {
+                message = localize('k_duplicated_ex'),
+            }
         end
     end,
     add = function(self, card)
@@ -3373,8 +3349,7 @@ bunc_define_joker({ -- Disproportionality
         if context.joker_main then
             local temp_chips = pseudorandom('disproportionality', card.ability.extra.min, card.ability.extra.max)
             return {
-                message = localize{type='variable',key='a_chips',vars={temp_chips}},
-                chip_mod = temp_chips
+                chips = temp_chips,
             }
         end
     end
@@ -3420,17 +3395,9 @@ bunc_define_joker({ -- On Broadway
                 end
             end
             if face then
-                hand_chips = mod_chips(hand_chips + card.ability.extra.chips)
-                update_hand_text({delay = 0}, {chips = hand_chips})
-                forced_message('+'..tostring(card.ability.extra.chips), card, G.C.CHIPS, true)
                 return {
-                    message = localize {
-                        type = 'variable',
-                        key = 'a_mult',
-                        vars = { card.ability.extra.mult }
-                    },
-                    mult_mod = card.ability.extra.mult,
-                    card = card
+                    chips = card.ability.extra.chips,
+                    mult = card.ability.extra.mult
                 }
             end
         end
@@ -3457,23 +3424,13 @@ bunc_define_joker({ -- Rasta
                 end
             end
             if not enhancement then return {
-                message = localize {
-                    type = 'variable',
-                    key = 'a_mult',
-                    vars = { card.ability.extra.mult }
-                },
-                mult_mod = card.ability.extra.mult,
+                mult = card.ability.extra.mult,
                 card = card
             } end
         end
         if context.joker_main and not context.scoring_hand then
             return {
-                message = localize {
-                    type = 'variable',
-                    key = 'a_mult',
-                    vars = { card.ability.extra.mult }
-                },
-                mult_mod = card.ability.extra.mult,
+                mult = card.ability.extra.mult,
                 card = card
             }
         end
@@ -3490,13 +3447,7 @@ bunc_define_joker({ -- Critic
         if context.joker_main then
             local temp_chips = G.GAME.blind.chips
             if math.floor(hand_chips * mult) < (temp_chips / card.ability.extra.fraction) then return {
-                Xmult_mod = card.ability.extra.xmult,
-                card = card,
-                message = localize {
-                    type = 'variable',
-                    key = 'a_xmult',
-                    vars = { card.ability.extra.xmult }
-                },
+                xmult = card.ability.extra.xmult,
             } end
         end
     end
@@ -3518,7 +3469,10 @@ bunc_define_joker({ -- Cellphone
             card.ability.extra.cards_to_hand = context.scoring_hand
         end
         if context.bunc_press_play and card.ability.extra.active and G.GAME.current_round.hands_played == 0 then
-            forced_message(G.localization.misc.dictionary.bunc_accepted, card, G.C.GREEN)
+            return {
+                message = G.localization.misc.dictionary.bunc_accepted,
+                colour = G.C.GREEN
+            }
         end
         if context.after and G.GAME.current_round.hands_played == 0 then
             event({func = function ()
@@ -3530,7 +3484,10 @@ bunc_define_joker({ -- Cellphone
         end
         if context.pre_discard and card.ability.extra.active then
             card.ability.extra.active = false
-            forced_message(G.localization.misc.dictionary.bunc_declined, card, G.C.RED, true)
+            return {
+                message = G.localization.misc.dictionary.bunc_declined,
+                colour = G.C.RED
+            }
         end
     end,
     set_ability = function(self, card, initial, delay_sprites)
@@ -3615,12 +3572,7 @@ bunc_define_joker({ -- Bounty Hunter
         end
         if context.joker_main and card.ability.extra.mult ~= 0 then
             return {
-                message = localize {
-                    type = 'variable',
-                    key = 'a_mult',
-                    vars = {card.ability.extra.mult}
-                },
-                mult_mod = card.ability.extra.mult,
+                mult = card.ability.extra.mult,
                 card = card
             }
         end
@@ -3691,8 +3643,7 @@ bunc_define_joker({ -- Mousetrap
                 end
             else
                 return {
-                    message = localize{type='variable', key='a_chips', vars={card.ability.extra.chips}},
-                    chip_mod = card.ability.extra.chips,
+                    chips = card.ability.extra.chips,
                 }
             end
         end
@@ -4026,13 +3977,7 @@ bunc_define_joker({ -- Rubber Band Ball
         if context.joker_main then
             if card.ability.extra.xmult ~= 1 then
                 return {
-                    message = localize {
-                        type = 'variable',
-                        key = 'a_xmult',
-                        vars = { card.ability.extra.xmult }
-                    },
-                    Xmult_mod = card.ability.extra.xmult,
-                    card = card
+                    xmult = card.ability.extra.xmult,
                 }
             end
         end
@@ -4150,12 +4095,7 @@ bunc_define_joker({ -- Games Collector
         if context.joker_main then
             if card.ability.extra.chips ~= 0 then
                 return {
-                    message = localize {
-                        type = 'variable',
-                        key = 'a_chips',
-                        vars = { card.ability.extra.chips }
-                    },
-                    chip_mod = card.ability.extra.chips,
+                    chips = card.ability.extra.chips,
                     card = card
                 }
             end
@@ -4189,12 +4129,7 @@ bunc_define_joker({ -- Jumper
         if context.joker_main then
             if card.ability.extra.chips ~= 0 then
                 return {
-                    message = localize {
-                        type = 'variable',
-                        key = 'a_chips',
-                        vars = { card.ability.extra.chips }
-                    },
-                    chip_mod = card.ability.extra.chips,
+                    chips = card.ability.extra.chips,
                     card = card
                 }
             end
@@ -4360,12 +4295,7 @@ bunc_define_joker({ -- Robot
         if context.joker_main then
             if card.ability.extra.mult ~= 0 then
                 return {
-                    message = localize {
-                        type = 'variable',
-                        key = 'a_mult',
-                        vars = { card.ability.extra.mult }
-                    },
-                    mult_mod = card.ability.extra.mult,
+                    mult = card.ability.extra.mult,
                     card = card
                 }
             end
@@ -4468,8 +4398,9 @@ bunc_define_joker({ -- Wishalloy
         if context.individual and context.cardarea == G.play and context.other_card:is_suit('bunc_Fleurons') then
             if SMODS.pseudorandom_probability(card, 'wishalloy'..G.SEED, 1, card.ability.extra.odds, 'bunc_wishalloy') then
                 local value = context.other_card:get_chip_bonus()
-                ease_dollars(value)
-                forced_message('$'..value, context.other_card, G.C.MONEY, true, card)
+                return {
+                    dollars = value,
+                }
             end
         end
     end
@@ -4521,8 +4452,10 @@ bunc_define_joker({ -- Magic Wand
         elseif context.after and context.poker_hands ~= nil and not next(context.poker_hands['bunc_Spectrum']) and not context.blueprint then
             if card.ability.extra.mult ~= 0 then
                 card.ability.extra.mult = 0
-
-                forced_message(localize('k_reset'), card, G.C.RED)
+                return {
+                    message = localize('k_reset'),
+                    colour = G.C.RED
+                }
             end
         end
 
@@ -4553,21 +4486,29 @@ bunc_define_joker({ -- Starfruit
     },
     calculate = function(self, card, context)
         if context.before and context.poker_hands ~= nil and next(context.poker_hands['bunc_Spectrum']) and not context.blueprint then
-            forced_message(localize('k_level_up_ex'), card, G.C.RED, true)
-            level_up_hand(card, context.scoring_name, false, 1)
+            return {
+                message = localize('k_level_up_ex'),
+                colour = G.C.RED,
+                func = function()
+                    level_up_hand(card, context.scoring_name, false, 1)
+                end
+            }
         end
 
         if context.end_of_round and not context.other_card and not context.blueprint then
             if SMODS.pseudorandom_probability(card, 'starfruit'..G.SEED, 1, card.ability.extra.odds, 'bunc_starfruit') then
-
-                forced_message(localize('k_eaten_ex'), card, G.C.FILTER, true)
-                card:start_dissolve()
-
+                event({func = function()
+                    card:start_dissolve()
+                    return true
+                end})
+                return {
+                    message = localize('k_eaten_ex'),
+                    G.C.FILTER
+                }
             else
-
-                forced_message(localize('k_safe_ex'), card, nil, true)
-                card.ability.extra.condition = false
-
+                return {
+                    message = localize('k_safe_ex')
+                }
             end
         end
     end
@@ -4671,11 +4612,18 @@ bunc_define_joker({ -- ROYGBIV
                     end
 
                     if cards and #cards > 0 then
-                        forced_message('+'..localize{type = 'name_text', key = 'e_polychrome', set = 'Edition'}, card)
-                        for i = 1, #cards do
-                            local other_card = cards[i]
-                            other_card:set_edition({polychrome = true})
-                        end
+                        event({func = function()
+                            for i = 1, #cards do
+                                local other_card = cards[i]
+                                other_card:set_edition({polychrome = true}, true, true)
+                                other_card:juice_up()
+                            end
+                            play_sound('polychrome1', 1.2, 0.7)
+                            return true
+                        end})
+                        return {
+                            message = '+'..localize{type = 'name_text', key = 'e_polychrome', set = 'Edition'}
+                        }
                     end
                 end
             end
@@ -4701,13 +4649,7 @@ bunc_define_joker({ -- Rigoletto
         if context.joker_main then
             if card.ability.extra.xmult ~= 1 then
                 return {
-                    Xmult_mod = card.ability.extra.xmult,
-                    card = card,
-                    message = localize {
-                        type = 'variable',
-                        key = 'a_xmult',
-                        vars = { card.ability.extra.xmult }
-                    }
+                    xmult = card.ability.extra.xmult,
                 }
             end
         end
@@ -7556,6 +7498,52 @@ SMODS.Tag{ -- Fluorescent
     end
 }
 
+SMODS.Tag{ -- Filigree
+    key = 'filigree',
+
+    config = {type = 'standard_pack_opened'},
+    loc_vars = function(self, info_queue)
+        info_queue[#info_queue+1] = {set = 'Other', key = 'bunc_exotic_cards'}
+        return {}
+    end,
+    apply = function(self, tag, context)
+        if context.type == self.config.type then
+            tag:instayep('+', G.C.BUNCO_EXOTIC, function()
+                return true
+            end)
+            event({
+                trigger = 'after',
+                delay = 0,
+                blockable = false,
+                blocking = false,
+                func = function()
+                    if G.pack_cards and G.pack_cards.cards ~= nil and G.pack_cards.cards[1] and G.pack_cards.VT.y < G.ROOM.T.h then
+
+                        enable_exotics()
+
+                        for _, v in ipairs(G.pack_cards.cards) do
+                            if (not v:is_suit('bunc_Fleurons') and not v:is_suit('bunc_Halberds')) or SMODS.has_any_suit(v) then
+                                local suits = {'bunc_Fleurons', 'bunc_Halberds'}
+                                local suit = pseudorandom_element(suits, pseudoseed('filigree'..G.SEED))
+                                v:change_suit(suit)
+                            end
+                        end
+
+                        return true
+                    end
+                end
+            })
+            tag.triggered = true
+            return true
+        end
+    end,
+
+    pos = coordinate_from_atlas_index(1),
+    atlas = 'bunco_tags_exotic',
+
+    in_pool = BUNCOMOD.funcs.exotic_in_pool
+}
+
 SMODS.Tag{ -- Chips
     key = 'chips',
 
@@ -7670,52 +7658,6 @@ SMODS.Tag{ -- Xchip
     atlas = 'bunco_tags_hand',
 
     in_pool = function() return false end
-}
-
-SMODS.Tag{ -- Filigree
-    key = 'filigree',
-
-    config = {type = 'standard_pack_opened'},
-    loc_vars = function(self, info_queue)
-        info_queue[#info_queue+1] = {set = 'Other', key = 'bunc_exotic_cards'}
-        return {}
-    end,
-    apply = function(self, tag, context)
-        if context.type == self.config.type then
-            tag:instayep('+', G.C.BUNCO_EXOTIC, function()
-                return true
-            end)
-            event({
-                trigger = 'after',
-                delay = 0,
-                blockable = false,
-                blocking = false,
-                func = function()
-                    if G.pack_cards and G.pack_cards.cards ~= nil and G.pack_cards.cards[1] and G.pack_cards.VT.y < G.ROOM.T.h then
-
-                        enable_exotics()
-
-                        for _, v in ipairs(G.pack_cards.cards) do
-                            if (not v:is_suit('bunc_Fleurons') and not v:is_suit('bunc_Halberds')) or SMODS.has_any_suit(v) then
-                                local suits = {'bunc_Fleurons', 'bunc_Halberds'}
-                                local suit = pseudorandom_element(suits, pseudoseed('filigree'..G.SEED))
-                                v:change_suit(suit)
-                            end
-                        end
-
-                        return true
-                    end
-                end
-            })
-            tag.triggered = true
-            return true
-        end
-    end,
-
-    pos = coordinate_from_atlas_index(1),
-    atlas = 'bunco_tags_exotic',
-
-    in_pool = BUNCOMOD.funcs.exotic_in_pool
 }
 
 SMODS.Tag{ -- Eternal
@@ -8574,7 +8516,10 @@ function calculate_cracker_cards(context)
                                     trigger = 'after',
                                     blockable = false,
                                     delay = 0.5 * dissolve_time,
-                                    func = (function() childParts:fade(0.5 * dissolve_time) return true end)
+                                    func = (function() 
+                                        childParts:fade(0.5 * dissolve_time) 
+                                        return true 
+                                    end)
                                 })
 
                                 cracker_card:start_dissolve({HEX('ffdfaa')}, nil, dissolve_time_fac)
