@@ -1093,29 +1093,25 @@ function BUNCOMOD.content.set_debuff(card)
         if G.jokers.cards[my_pos + 1] and G.jokers.cards[my_pos + 1].config.center.key == 'j_bunc_gameplan' and not G.jokers.cards[my_pos + 1].debuff then return true end
     end
 
-    -- Conquest
+    -- Reactive
 
+    local reactive_condition
+    for _, v in pairs(G.GAME.round_resets.blind_states) do
+        if v == 'Skipped' then
+            reactive_condition = true
+        end
+    end
     for i = 1, #G.jokers.cards do
-        if G.jokers.cards[i].config.center.key == 'j_bunc_conquest' then
-            if G.jokers.cards[i].ability.extra.joker ~= 0 and card == G.jokers.cards[i].ability.extra.joker then
+        if card == G.jokers.cards[i] and G.jokers.cards[i].ability.bunc_reactive then
+            if not reactive_condition then
                 return true
             end
         end
-    end
 
-    -- Reactive
+        -- Conquest
 
-    for i = 1, #G.jokers.cards do
-        if card == G.jokers.cards[i] and G.jokers.cards[i].ability.bunc_reactive then
-            local condition
-            for _, v in pairs(G.GAME.round_resets.blind_states) do
-                if v == 'Skipped' then
-                    condition = true
-                end
-            end
-            if not condition then
-                return true
-            end
+        if card.ability.bunc_conquest_chosen then
+            return true
         end
     end
 
@@ -2584,6 +2580,7 @@ bunc_define_joker({ -- Conquest
     remove = function(self, card)
         if G.jokers then
             for i = 1, #G.jokers.cards do
+                if G.jokers.cards[i].ability.bunc_conquest_chosen == card.unique_val then G.jokers.cards[i].ability.bunc_conquest_chosen = nil end
                 G.GAME.blind:debuff_card(G.jokers.cards[i])
             end
         end
@@ -2592,20 +2589,35 @@ bunc_define_joker({ -- Conquest
         if context.setting_blind and not context.blueprint then
             local my_pos = nil
             for i = 1, #G.jokers.cards do
-                if G.jokers.cards[i] == card then my_pos = i; break end
+                if G.jokers.cards[i] == card then my_pos = i end
+                if G.jokers.cards[i].ability.bunc_conquest_chosen == card.unique_val then G.jokers.cards[i].ability.bunc_conquest_chosen = nil end
             end
 
             if #G.jokers.cards > 1 then
-                card.ability.extra.joker = G.jokers.cards[math.random(#G.jokers.cards)]
-                while card.ability.extra.joker == G.jokers.cards[my_pos] do
-                    card.ability.extra.joker = G.jokers.cards[math.random(#G.jokers.cards)]
-                end
-            else
-                card.ability.extra.joker = 0
-            end
+                event({func = function()
+                    local random_index = math.random(#G.jokers.cards - 1)
+                    if random_index >= my_pos then
+                        random_index = random_index + 1
+                    end
+                    G.jokers.cards[random_index].ability.bunc_conquest_chosen = card.unique_val
+                    G.GAME.blind:debuff_card(G.jokers.cards[random_index])
+                    big_juice(G.jokers.cards[random_index])
+                    return true
+                end})
 
-            if card.ability.extra.joker ~= 0 then
-                forced_message(G.localization.misc.dictionary.bunc_debuffed, card, G.C.RED, true, card.ability.extra.joker)
+                -- Using forced_message since SMOD will stil display message if debuffed
+                -- forced_message(G.localization.misc.dictionary["bunc_debuffed"], card, G.C.RED)
+                event({delay = 0.7 * 1.25, func = function()
+                    if not card.debuffed then
+                        card_eval_status_text(
+                            card,
+                            'extra',
+                            nil, percent, nil,
+                            {message = G.localization.misc.dictionary["bunc_debuffed"], colour = G.C.RED, instant = true}
+                        )
+                    end
+                    return true
+                end})
             end
         end
         if context.joker_main then
