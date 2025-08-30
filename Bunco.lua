@@ -1402,14 +1402,14 @@ bunc_define_joker({ -- Cassette
             card:flip()
         end
 
-        if context.flip and not context.blueprint then
+        if context.flip and not context.blueprint and context.card_flipped == card then
             if card.ability.extra.side == 'A' then
                 card.ability.extra.side = 'B'
             else
                 card.ability.extra.side = 'A'
             end
             return {
-                message = G.localization.misc.dictionary['bunc_'..(card.ability.extra.side == 'A' and 'b' or 'a')..'_side'],
+                message = G.localization.misc.dictionary['bunc_'..(card.ability.extra.side == 'A' and 'a' or 'b')..'_side'],
                 colour = G.C.RED
             }
         end
