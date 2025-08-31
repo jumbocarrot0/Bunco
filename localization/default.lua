@@ -667,8 +667,8 @@ return {
             j_bunc_dread = {
                 ['name'] = 'Dread',
                 ['text'] = {
-                    [1] = 'After scoring your {C:attention}last{} hand,',
-                    [2] = 'upgrade it by {C:attention}#1# levels{}',
+                    [1] = 'After scoring {C:attention}final{} hand of',
+                    [2] = 'round, upgrade it by {C:attention}#1# levels{}',
                     [3] = 'and {C:attention}destroy{} scored cards',
                     [4] = '{C:inactive,s:0.8}All levels gained by this Joker',
                     [5] = '{C:inactive,s:0.8}are lost on its removal'
@@ -707,7 +707,7 @@ return {
                 ['name'] = 'Ghost Print',
                 ['text'] = {
                     [1] = 'Gives Chips and Mult',
-                    [2] = 'from last {C:attention}hand type{} played',
+                    [2] = 'of last {C:attention}hand type{} played',
                     [3] = '{C:inactive}(Last poker hand: #1#)'
                 }
             },
