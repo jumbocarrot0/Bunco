@@ -2116,7 +2116,6 @@ bunc_define_joker({ -- Carnival
                     joker_to_destroy.getting_sliced = true
                     card.ability.extra.ante = G.GAME.round_resets.ante
                     ease_ante(-1)
-                    -- forced_message(G.localization.misc.dictionary.bunc_loop, card, G.C.BLACK)
                     G.E_MANAGER:add_event(Event({
                         func = function() 
                             card:juice_up(0.8, 0.8)
@@ -2609,7 +2608,6 @@ bunc_define_joker({ -- Conquest
                 end})
 
                 -- Using forced_message since SMOD will stil display message if debuffed
-                -- forced_message(G.localization.misc.dictionary["bunc_debuffed"], card, G.C.RED)
                 event({delay = 0.7 * 1.25, func = function()
                     if not card.debuffed then
                         card_eval_status_text(
@@ -4105,7 +4103,6 @@ bunc_define_joker({ -- Games Collector
                     colour = G.C.CHIPS
                 }
             end
-            -- forced_message(localize('k_upgrade_ex'), card, G.C.CHIPS)
         end
         if context.joker_main then
             if card.ability.extra.chips ~= 0 then
@@ -8608,7 +8605,6 @@ SMODS.Enhancement({ -- Copper
 
                                     local streak_card = streak_cards[streak_index]
                                     event({func = function() big_juice(streak_card) return true end})
-                                    --forced_message(localize('bunc_repeat'), streak_card, G.C.YELLOW, streak_index == 1)
 
                                 end
 
