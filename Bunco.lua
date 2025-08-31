@@ -1657,46 +1657,38 @@ bunc_define_joker({ -- Dread
             end
 
             if context.after and G.GAME.current_round.hands_left <= 0 and context.scoring_name then
-                ---- Event (1): display message
-                forced_message(localize('k_level_up_ex'), card, G.C.RED, true)
-                ---- Events (2): animate level up
-                -- line copied from planet use
-                update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(context.scoring_name, 'poker_hands'),chips = G.GAME.hands[context.scoring_name].chips, mult = G.GAME.hands[context.scoring_name].mult, level=G.GAME.hands[context.scoring_name].level})
-                -- Has immediate effects
-                level_up_hand(card, context.scoring_name, false, card.ability.extra.levels)
-                card.ability.extra.level_up_list[context.scoring_name] =
-                    (card.ability.extra.level_up_list[context.scoring_name] or 0) + card.ability.extra.levels
-                local trash_list = card.ability.extra.trash_list
-                ---- Event (3): start_dissolve() on every card to trash
-                -- start_dissolve() calls run concurrently with blocking events.
-                -- To treat them as a normal event, wrap them in a
-                -- 'before' event with delay equal to how long start_dissolve() takes
-
-                -- (From Firch) UPD: Trying to make this work with other Dread copies a bit better,
-                -- added an additional check if the cards are already destroyed.
-                -- Without this check a second Dread would cause a destroying sound to play
-                -- despite not having any cards to destroy
-                local dissolve_time_fac = 3
-                event({
-                    trigger = 'before',
-                    delay = 0.7*dissolve_time_fac*1.051,
+                return {
+                    message = localize('k_level_up_ex'),
+                    colour = G.C.RED,
                     func = function()
-                        big_juice(card)
-                        for _, card_to_trash in ipairs(trash_list) do
-                            if not card_to_trash.removed then
-                                card_to_trash:start_dissolve(nil, nil, dissolve_time_fac)
+                        update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(context.scoring_name, 'poker_hands'),chips = G.GAME.hands[context.scoring_name].chips, mult = G.GAME.hands[context.scoring_name].mult, level=G.GAME.hands[context.scoring_name].level})
+                        level_up_hand(card, context.scoring_name, false, card.ability.extra.levels)
+                        card.ability.extra.level_up_list[context.scoring_name] = (card.ability.extra.level_up_list[context.scoring_name] or 0) + card.ability.extra.levels
+                        update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
+
+                        local trash_list = card.ability.extra.trash_list
+                        local dissolve_time_fac = 3
+                        event({
+                            trigger = 'before',
+                            delay = 0.7*dissolve_time_fac*1.051,
+                            func = function()
+                                big_juice(card)
+                                for _, card_to_trash in ipairs(trash_list) do
+                                    if not card_to_trash.removed then
+                                        card_to_trash:start_dissolve(nil, nil, dissolve_time_fac)
+                                    end
+                                end
+                                return true
                             end
+                        })
+                        
+                        for _, card_to_trash in ipairs(trash_list) do
+                            card_to_trash.destroyed = true
                         end
-                        return true
+                        SMODS.calculate_context({remove_playing_cards = true, removed = trash_list})
+                        card.ability.extra.trash_list = {}
                     end
-                })
-                update_hand_text({delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
-                -- Has immediate effects, so make sure this is set for other mods
-                for _, card_to_trash in ipairs(trash_list) do
-                    card_to_trash.destroyed = true
-                end
-                SMODS.calculate_context({remove_playing_cards = true, removed = trash_list})
-                card.ability.extra.trash_list = {}
+                }
             end
         end
     end,
