@@ -788,7 +788,7 @@ payload = '''
 
 if self.config.center.key == 'j_bunc_cassette' then
     self:flip()
-    self:calculate_joker({flip = true})
+    SMODS.calculate_context({flip = true, card_flipped = self})
 end
 
 '''
