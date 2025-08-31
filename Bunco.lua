@@ -2242,27 +2242,38 @@ bunc_define_joker({ -- Fingerprints
     unlocked = true,
     calculate = function(self, card, context)
         if context.after and context.scoring_name ~= nil and context.scoring_hand and not context.blueprint then
-            card.ability.extra.scoring_card_set = {}
-            for i = 1, #context.scoring_hand do
-                card.ability.extra.scoring_card_set[context.scoring_hand[i].unique_val] = true
+            if ((SMODS.calculate_round_score() + G.GAME.chips) - G.GAME.blind.chips) >= 0 then
+                card.ability.extra.scoring_card_set = {}
+                for i = 1, #context.scoring_hand do
+                    local other_card = context.scoring_hand[i]
+                    if not other_card.debuff then
+                        event({func = function()
+                            big_juice(other_card)
+                            return true
+                        end})
+                        
+                        -- Save upgraded cards to actually upgrade after end_round() triggers
+                        card.ability.extra.scoring_card_set[other_card.unique_val] = true
+                    end
+                end
+                return {
+                    message = localize('k_upgrade_ex'),
+                    colour = G.C.CHIPS
+                }
             end
         end
 
-        if context.end_of_round and not context.other_card and not context.blueprint then
-            for _, v in ipairs(G.playing_cards) do
-                if card.ability.extra.scoring_card_set[v.unique_val] then
-                    v.ability = v.ability or {}
-                    v.ability.temporary_extra_chips = (v.ability.temporary_extra_chips or 0) + card.ability.extra.bonus
+        if context.end_of_round and context.cardarea == G.jokers and not context.blueprint then
+            if card.ability.extra.scoring_card_set then
+                for _, v in ipairs(G.playing_cards) do
+                    if card.ability.extra.scoring_card_set[v.unique_val] then
+                        v.ability = v.ability or {}
+                        v.ability.temporary_extra_chips = (v.ability.temporary_extra_chips or 0) + card.ability.extra.bonus
+                    end
                 end
+                -- not needed, but good style to fail fast
+                card.ability.extra.scoring_card_set = nil
             end
-            -- not needed, but good style to fail fast
-            card.ability.extra.scoring_card_set = nil
-
-            -- forced_message(localize('k_upgrade_ex'), card, G.C.CHIPS, true)
-            return {
-                message = localize('k_upgrade_ex'),
-                colour = G.C.CHIPS
-            }
         end
     end
 })
