@@ -7252,7 +7252,7 @@ SMODS.Atlas({key = 'bunco_decks', path = 'Decks/Decks.png', px = 71, py = 95})
 SMODS.Back{ -- Fairy
 	key = 'fairy',
 
-    config = {amount = 4},
+    config = {amount = 4, used = false},
     loc_vars = function(self)
         return {vars = {self.config.amount, localize{type = 'name_text', set = 'Other', key = 'bunc_exotic_cards'}}}
     end,
@@ -7263,9 +7263,11 @@ SMODS.Back{ -- Fairy
         enable_exotics()
     end,
     calculate = function(self, back, context)
-        if context.round_eval and G.GAME.last_blind and G.GAME.last_blind.boss then
+        if context.end_of_round and context.beat_boss then
+            if self.config.used then return end
+            self.config.used = true
             event({
-                func = (function()
+                func = function()
                     local numbers = {}
                     for _, v in ipairs(SMODS.Rank.obj_buffer) do
                         local r = SMODS.Ranks[v]
@@ -7278,13 +7280,25 @@ SMODS.Back{ -- Fairy
                     for i = 1, self.config.amount do
                         local rank = pseudorandom_element(numbers, pseudoseed('fairy'..G.SEED))
                         local suit = pseudorandom_element(suits, pseudoseed('fairy'..G.SEED))
-                        table.insert(cards, create_playing_card({front = G.P_CARDS[suit .. '_' .. rank]}, G.deck, false, false, {G.C.BUNCO_EXOTIC}))
+                        local card = create_playing_card({front = G.P_CARDS[suit .. '_' .. rank]}, G.play, false, false, {G.C.BUNCO_EXOTIC})
+                        table.insert(cards, card)
                     end
+
+                    event({
+                        func = function()
+                            for _ = 1, #cards do
+                                draw_card(G.play,G.deck, 90,'up', nil)
+                            end
+                            return true
+                        end
+                    })
 
                     playing_card_joker_effects(cards)
 
+                    self.config.used = false
+
                     return true
-                end)
+                end
             })
         end
     end,
