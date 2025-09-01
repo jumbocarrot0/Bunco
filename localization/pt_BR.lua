@@ -134,30 +134,6 @@ return {
                     [2] = '{C:bunc_fleurons}Florões{} ou {C:bunc_halberds}Alabardas{}'
                 }
             },
-            bunc_consumable_edition_foil = {
-                ['name'] = 'Laminado',
-                ['text'] = {
-                    [1] = 'Crie uma {C:attention}Marca de Fichas'
-                }
-            },
-            bunc_consumable_edition_holo = {
-                ['name'] = 'Holográfico',
-                ['text'] = {
-                    [1] = 'Crie uma {C:attention}Marca de Multi'
-                }
-            },
-            bunc_consumable_edition_polychrome = {
-                ['name'] = 'Policromático',
-                ['text'] = {
-                    [1] = 'Crie uma {C:attention}Marca Megamulti'
-                }
-            },
-            bunc_consumable_edition_bunc_glitter = {
-                ['name'] = 'Glitter',
-                ['text'] = {
-                    [1] = 'Crie uma {C:attention}Marca Ultrafichas'
-                }
-            },
 
             -- Undiscovered
 
@@ -1585,7 +1561,32 @@ return {
                     [1] = 'Não pode ser virado, selecionado',
                     [2] = 'forçadamente ou receber desvantagem'
                 }
-            }
+            },
+
+            e_bunc_consumable_edition_foil = {
+                ['name'] = 'Laminado',
+                ['text'] = {
+                    [1] = 'Crie uma {C:attention}Marca de Fichas'
+                }
+            },
+            e_bunc_consumable_edition_holo = {
+                ['name'] = 'Holográfico',
+                ['text'] = {
+                    [1] = 'Crie uma {C:attention}Marca de Multi'
+                }
+            },
+            e_bunc_consumable_edition_polychrome = {
+                ['name'] = 'Policromático',
+                ['text'] = {
+                    [1] = 'Crie uma {C:attention}Marca Megamulti'
+                }
+            },
+            e_bunc_consumable_edition_bunc_glitter = {
+                ['name'] = 'Glitter',
+                ['text'] = {
+                    [1] = 'Crie uma {C:attention}Marca Ultrafichas'
+                }
+            },
         },
         Voucher = {
             v_bunc_lamination = {

@@ -201,30 +201,6 @@ return {
                     [2] = '{C:bunc_fleurons}花葉{}或{C:bunc_halberds}斧槍{}花色的卡牌'
                 }
             },
-            bunc_consumable_edition_foil = {
-                ['name'] = '銀箔',
-                ['text'] = {
-                    [1] = '產生一個{C:attention}籌碼標籤'
-                }
-            },
-            bunc_consumable_edition_holo = {
-                ['name'] = '全息',
-                ['text'] = {
-                    [1] = '產生一個{C:attention}倍數標籤'
-                }
-            },
-            bunc_consumable_edition_polychrome = {
-                ['name'] = '彩色',
-                ['text'] = {
-                    [1] = '產生一個{C:attention}超級倍數標籤'
-                }
-            },
-            bunc_consumable_edition_bunc_glitter = {
-                ['name'] = '閃光',
-                ['text'] = {
-                    [1] = '產生一個{C:attention}超級籌碼標籤'
-                }
-            },
 
             -- Undiscovered
 
@@ -1655,7 +1631,32 @@ return {
                     [1] = '這張牌不會被翻起，減益',
                     [2] = '或強制選擇'
                 }
-            }
+            },
+
+            e_bunc_consumable_edition_foil = {
+                ['name'] = '銀箔',
+                ['text'] = {
+                    [1] = '產生一個{C:attention}籌碼標籤'
+                }
+            },
+            e_bunc_consumable_edition_holo = {
+                ['name'] = '全息',
+                ['text'] = {
+                    [1] = '產生一個{C:attention}倍數標籤'
+                }
+            },
+            e_bunc_consumable_edition_polychrome = {
+                ['name'] = '彩色',
+                ['text'] = {
+                    [1] = '產生一個{C:attention}超級倍數標籤'
+                }
+            },
+            e_bunc_consumable_edition_bunc_glitter = {
+                ['name'] = '閃光',
+                ['text'] = {
+                    [1] = '產生一個{C:attention}超級籌碼標籤'
+                }
+            },
         },
         Voucher = {
             v_bunc_lamination = {

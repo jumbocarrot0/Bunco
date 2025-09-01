@@ -95,10 +95,6 @@ end
 
 function BUNCOMOD.content.process_loc_text()
     G.P_CENTERS['bunc_exotic_cards'] = {key = 'bunc_exotic_cards', set = 'Other'}
-    G.P_CENTERS['bunc_consumable_edition_foil'] = {key = 'bunc_consumable_edition_foil', set = 'Other'}
-    G.P_CENTERS['bunc_consumable_edition_holo'] = {key = 'bunc_consumable_edition_holo', set = 'Other'}
-    G.P_CENTERS['bunc_consumable_edition_polychrome'] = {key = 'bunc_consumable_edition_polychrome', set = 'Other'}
-    G.P_CENTERS['bunc_consumable_edition_bunc_glitter'] = {key = 'bunc_consumable_edition_bunc_glitter', set = 'Other'}
 end
 
 -- Mod icon
@@ -8846,6 +8842,41 @@ SMODS.Stake:take_ownership('gold', {
     applied_stakes = {'bunc_magenta'},
     above_stake = 'bunc_magenta'
 })
+
+
+-- Consumable editions in collection
+-- These are only for the collection, not for any other in-game use
+-- Should have a better way to organise this
+
+local consumable_editions ={
+    {key="foil", tag="tag_bunc_chips"},
+    {key="holo", tag="tag_bunc_mult"},
+    {key="polychrome", tag="tag_bunc_xmult"},
+    {key="bunc_glitter", tag="tag_bunc_xchips"}
+}
+
+if next(SMODS.find_mod("allinjest")) then
+    table.insert(consumable_editions, {key="aij_glimmer", tag="tag_bunc_aij_balance", dependencies="allinjest"})
+    table.insert(consumable_editions, {key="aij_stellar", tag="tag_bunc_aij_levelled", dependencies="allinjest"})
+end
+
+for i, v in ipairs(consumable_editions) do
+    SMODS.Edition {
+        key = 'e_bunc_consumable_edition_' .. v.key,
+        shader = v.key,
+        atlas = 'bunco_resprites_tarots',
+        pos = { x = 0, y = 0 },
+        -- no_collection = true,
+        prefix_config = { key = false, shader = false },
+        skip_debug = true,
+        loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue + 1] = {key = v.tag, set = 'Tag', specific_vars = G.P_TAGS[v.tag].loc_vars(self, info_queue).vars}
+            -- return {vars = {G.P_CENTERS["e_foil"].loc_vars(self, info_queue, card)}}
+        end,
+        dependencies = v.dependencies
+    }
+end
+
 
 -- Mod compatibility
 
