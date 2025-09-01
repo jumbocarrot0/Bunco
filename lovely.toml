@@ -2192,7 +2192,7 @@ match_indent = true
 payload = '''
 
 for i = 1, #G.GAME.tags do
-    G.GAME.tags[i]:apply_to_run({type = 'hand_played', before = true})
+    G.GAME.tags[i]:apply_to_run({type = 'hand_played', before = true, scoring_name = text})
 end
 
 '''
@@ -2207,7 +2207,7 @@ match_indent = true
 payload = '''
 
 for i = 1, #G.GAME.tags do
-    G.GAME.tags[i]:apply_to_run({type = 'hand_played', after = true})
+    G.GAME.tags[i]:apply_to_run({type = 'hand_played', after = true, scoring_name = text})
 end
 
 '''
@@ -2288,8 +2288,13 @@ position = 'before'
 match_indent = true
 payload = '''
 
-local edition = poll_edition('standard_edition'..G.GAME.round_resets.ante, consumable_edition.rate or 0, true, consumable_edition.forced or false,
-{'e_holo', 'e_foil', 'e_polychrome', 'e_bunc_glitter'})
+local options = {'e_holo', 'e_foil', 'e_polychrome', 'e_bunc_glitter'}
+if next(SMODS.find_mod("allinjest")) then
+    table.insert(options, 'e_aij_glimmer')
+    table.insert(options, 'e_aij_stellar')
+end
+
+local edition = poll_edition('standard_edition'..G.GAME.round_resets.ante, consumable_edition.rate or 0, true, consumable_edition.forced or false, options)
 if not card.edition then
     for _, card_type in ipairs(SMODS.ConsumableType.ctype_buffer) do
         if card.ability.set == card_type then
@@ -3367,9 +3372,65 @@ payload = '''
 local target = {}
 if _stake_center and type(_stake_center.loc_vars) == "function" then
     res = _stake_center:loc_vars() or {}
-    target.vars = res.vars or target.vars
-    target.key = res.key or target.key
-    target.set = res.set or target.set
-end
-if _stake_center then localize{type = 'descriptions', key = target.key or _stake_center.key, set = target.set or _stake_center.set, nodes = ret_nodes, vars = target.vars} end
-'''
+
+# Dynamic Collection sorting
+
+# Put score-mod and negative sticker tags last in collection
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/overrides.lua"]'
+pattern = '''local tag_tab = SMODS.collection_pool(G.P_TAGS)'''
+position = 'after'
+payload = '''
+table.sort(tag_tab, function(a,b)
+    if a.config and a.config.negative_effect then
+        if b.config and b.config.negative_effect then
+            return a.order < b.order
+        else
+            return false -- a is sticker tag, b is not
+        end
+    else
+        if b.config and b.config.negative_effect then
+            return true -- a is not sticker tag, b is
+        else
+            if a.config and a.config.type == "hand_played" then
+                if b.config and b.config.type == "hand_played" then
+                    return a.order < b.order
+                else
+                    return false -- a is hand-mod tag, b is not
+                end
+            else
+                if b.config and b.config.type == "hand_played" then
+                    return true -- a is not hand-mod tag, b is
+                else
+                    return a.order < b.order -- regular tags
+                end
+            end
+        end
+    end
+end)'''
+match_indent = true
+
+# Put consumable editions last in collection
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/ui.lua"]'
+pattern = '''local pool = SMODS.collection_pool(_pool)'''
+position = 'after'
+payload = '''
+do
+    local is_array = pool[1]
+    if is_array then
+        local bunc_consumable_editions = {}
+        for i=#pool, 1, -1 do
+            if pool[i].key:sub(1, 26) == "e_bunc_consumable_edition_" then
+                table.insert(bunc_consumable_editions, pool[i])
+                table.remove(pool, i)
+            end
+        end
+        for i=#bunc_consumable_editions, 1, -1 do
+            table.insert(pool, bunc_consumable_editions[i])
+        end
+    end
+end'''
+match_indent = true

@@ -1689,6 +1689,23 @@ return {
                 }
             },
 
+            -- All in Jest edition tags
+
+            tag_bunc_aij_balance = {
+                ['name'] = 'Balance Tag',
+                ['text'] = {
+                    [1] = '{C:aij_plasma}Balances{} {C:attention}#1#%{} of',
+                    [2] = '{C:chips}Chips{} and {C:mult}Mult{} next hand'
+                }
+            },
+            tag_bunc_aij_levelled = {
+                ['name'] = 'Levelled Tag',
+                ['text'] = {
+                    [1] = '{C:chips}+#1#{} Chips and {C:mult}+#2#{} Mult',
+                    [2] = 'per level of next hand'
+                }
+            },
+
             -- Exotic tags
 
             tag_bunc_filigree = {
@@ -1785,6 +1802,20 @@ return {
                 ['name'] = 'Glitter',
                 ['text'] = {
                     [1] = 'Create an {C:attention}Ultrachips Tag',
+                    [2] = 'on use'
+                }
+            },
+            e_bunc_consumable_edition_aij_glimmer = {
+                ['name'] = 'Glimmer',
+                ['text'] = {
+                    [1] = 'Create a {C:attention}Balance Tag',
+                    [2] = 'on use'
+                }
+            },
+            e_bunc_consumable_edition_aij_stellar = {
+                ['name'] = 'Stellar',
+                ['text'] = {
+                    [1] = 'Create a {C:attention}Levelled Tag',
                     [2] = 'on use'
                 }
             },

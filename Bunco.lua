@@ -7712,7 +7712,7 @@ SMODS.Tag{ -- Eternal
 SMODS.Tag{ -- Perishable
     key = 'perishable',
 
-    config = {type = 'store_joker_modify'},
+    config = {type = 'store_joker_modify', negative_effect = true},
     loc_vars = function(self, info_queue)
         info_queue[#info_queue + 1] = {key = 'perishable', set = 'Other', vars = {G.GAME.perishable_rounds or 1, G.GAME.perishable_rounds or G.GAME.perishable_rounds}}
         return {}
@@ -7751,7 +7751,7 @@ SMODS.Tag{ -- Perishable
 SMODS.Tag{ -- Scattering
     key = 'scattering',
 
-    config = {type = 'store_joker_modify'},
+    config = {type = 'store_joker_modify', negative_effect = true},
     loc_vars = function(self, info_queue)
         info_queue[#info_queue + 1] = {key = 'bunc_scattering', set = 'Other'}
         return {}
@@ -7790,7 +7790,7 @@ SMODS.Tag{ -- Scattering
 SMODS.Tag{ -- Hindered
     key = 'hindered',
 
-    config = {type = 'store_joker_modify'},
+    config = {type = 'store_joker_modify', negative_effect = true},
     loc_vars = function(self, info_queue)
         info_queue[#info_queue + 1] = {key = 'bunc_hindered', set = 'Other'}
         return {}
@@ -7829,7 +7829,7 @@ SMODS.Tag{ -- Hindered
 SMODS.Tag{ -- Reactive
     key = 'reactive',
 
-    config = {type = 'store_joker_modify'},
+    config = {type = 'store_joker_modify', negative_effect = true},
     loc_vars = function(self, info_queue)
         info_queue[#info_queue + 1] = {key = 'bunc_reactive', set = 'Other'}
         return {}
@@ -7867,7 +7867,7 @@ SMODS.Tag{ -- Reactive
 SMODS.Tag{ -- Rental
     key = 'rental',
 
-    config = {type = 'store_joker_modify'},
+    config = {type = 'store_joker_modify', negative_effect = true},
     loc_vars = function(self, info_queue)
         info_queue[#info_queue+1] = {key = 'rental', set = 'Other', vars = {G.GAME.rental_rate or 1}}
         return {}
@@ -8884,6 +8884,9 @@ if _G["JokerDisplay"] then
     filesystem.load(BUNCOMOD.content.path..'compat/jokerdisplay.lua')()
 end
 
+if next(SMODS.find_mod("allinjest")) then
+    filesystem.load(BUNCOMOD.content.path..'compat/allinjest.lua')()
+end
 
 if next(SMODS.find_mod("partner")) then
     filesystem.load(BUNCOMOD.content.path..'compat/partner.lua')()
