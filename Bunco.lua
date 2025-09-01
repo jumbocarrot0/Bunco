@@ -8854,6 +8854,10 @@ if _G["JokerDisplay"] then
 end
 
 
+if next(SMODS.find_mod("partner")) then
+    filesystem.load(BUNCOMOD.content.path..'compat/partner.lua')()
+end
+
 if next(SMODS.find_mod("CardSleeves")) then
     filesystem.load(BUNCOMOD.content.path..'compat/CardSleeves.lua')()
 end
