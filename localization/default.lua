@@ -1957,8 +1957,8 @@ return {
                 ['name'] = 'Fairy Sleeve',
                 ['text'] = {
                     [1] = 'After defeating each',
-                    [2] = '{C:attention}Boss Blind{}, add #2#',
-                    [3] = 'random {C:bunco_exotic,T:bunc_exotic_cards}#1#',
+                    [2] = '{C:attention}Boss Blind{}, add #1#',
+                    [3] = 'random {C:bunco_exotic,T:bunc_exotic_cards}#2#',
                     [4] = 'to your deck'
                 }
             },

@@ -8852,3 +8852,8 @@ SMODS.Stake:take_ownership('gold', {
 if _G["JokerDisplay"] then
     filesystem.load(BUNCOMOD.content.path..'compat/jokerdisplay.lua')()
 end
+
+
+if next(SMODS.find_mod("CardSleeves")) then
+    filesystem.load(BUNCOMOD.content.path..'compat/CardSleeves.lua')()
+end
