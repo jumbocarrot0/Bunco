@@ -2289,7 +2289,7 @@ end
 
 '''
 
-# Info queue for consumables 1/2
+# Info queue for consumables
 [[patches]]
 [patches.pattern]
 target = 'functions/common_events.lua'
@@ -2297,31 +2297,25 @@ pattern = "local t = {key = 'e_'..v, set = 'Edition', config = {}}"
 position = 'before'
 match_indent = true
 payload = '''
-if _c.consumeable and (v == 'foil' or v == 'holo' or v == 'polychrome' or v == 'bunc_glitter') then
-    info_queue[#info_queue + 1] = G.P_CENTERS['bunc_consumable_edition_'..v]
-    info_queue[#info_queue + 1] = {
-    key = (v == 'foil') and 'tag_bunc_chips'
-        or (v == 'holo') and 'tag_bunc_mult'
-        or (v == 'polychrome') and 'tag_bunc_xmult'
-        or (v == 'bunc_glitter') and 'tag_bunc_xchips',
-    set = 'Tag',
-    specific_vars = (v == 'foil') and {G.P_CENTERS.e_foil.config.extra}
-        or (v == 'holo') and {G.P_CENTERS.e_holo.config.extra}
-        or (v == 'polychrome') and {G.P_CENTERS.e_polychrome.config.extra}
-        or (v == 'bunc_glitter') and {G.P_CENTERS.e_bunc_glitter.config.Xchips}}
-    goto bunco_skip_edition_info_queue
+if _c.consumeable and (v == 'foil' or v == 'holo' or v == 'polychrome' or v == 'bunc_glitter' or v == "aij_glimmer" or v == "aij_stellar") then
+    v = "bunc_consumable_edition_" .. v
+    ed_key = "bunc_consumable_edition_" .. ed_key
 end
 '''
 
-# Info queue for consumables 2/2
-# Complicated regex just matches the first 'end' after the above patch's pattern
+# Badge for edition consumables
+# G.UIDEF.card_h_popup()
 [[patches]]
 [patches.pattern]
-target = 'functions/common_events.lua'
-pattern = "local seal = G.P_SEALS[v] or G.P_SEALS[SMODS.Seal.badge_to_key[v] or '']"
+target = 'functions/UI_definitions.lua'
+pattern = '''badges[#badges + 1] = create_badge(localize(v, "labels"), get_badge_colour(v))'''
 position = 'before'
 match_indent = true
-payload = '''::bunco_skip_edition_info_queue::'''
+times = 1
+payload = '''
+if v:sub(1, 24) == 'bunc_consumable_edition_' then v = v:sub(25) end
+if v == "holo" then v = "holographic" end
+'''
 
 # function card_open() (Filigree Tag)
 [[patches]]
