@@ -247,30 +247,6 @@ return {
                     [2] = '{C:bunc_fleurons}Fleuron{} or {C:bunc_halberds}Halberd{} suit'
                 }
             },
-            bunc_consumable_edition_foil = {
-                ['name'] = 'Foil',
-                ['text'] = {
-                    [1] = 'Create a {C:attention}Chips Tag'
-                }
-            },
-            bunc_consumable_edition_holo = {
-                ['name'] = 'Holographic',
-                ['text'] = {
-                    [1] = 'Create a {C:attention}Mult Tag'
-                }
-            },
-            bunc_consumable_edition_polychrome = {
-                ['name'] = 'Polychrome',
-                ['text'] = {
-                    [1] = 'Create a {C:attention}Megamult Tag'
-                }
-            },
-            bunc_consumable_edition_bunc_glitter = {
-                ['name'] = 'Glitter',
-                ['text'] = {
-                    [1] = 'Create a {C:attention}Ultrachips Tag'
-                }
-            },
 
             -- Undiscovered
 
@@ -1781,7 +1757,37 @@ return {
                     [1] = 'Cannot be flipped, debuffed',
                     [2] = 'or forced to be selected'
                 }
-            }
+            },
+
+
+            e_bunc_consumable_edition_foil = {
+                name = 'Foil',
+                ['text'] = {
+                    [1] = 'Create a {C:attention}Chips Tag',
+                    [2] = 'on use'
+                }
+            },
+            e_bunc_consumable_edition_holo = {
+                ['name'] = 'Holographic',
+                ['text'] = {
+                    [1] = 'Create a {C:attention}Mult Tag',
+                    [2] = 'on use'
+                }
+            },
+            e_bunc_consumable_edition_polychrome = {
+                ['name'] = 'Polychrome',
+                ['text'] = {
+                    [1] = 'Create a {C:attention}Megamult Tag',
+                    [2] = 'on use'
+                }
+            },
+            e_bunc_consumable_edition_bunc_glitter = {
+                ['name'] = 'Glitter',
+                ['text'] = {
+                    [1] = 'Create an {C:attention}Ultrachips Tag',
+                    [2] = 'on use'
+                }
+            },
         },
         Voucher = {
             v_bunc_lamination = {

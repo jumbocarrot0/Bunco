@@ -201,30 +201,6 @@ return { -- Translation by VisJoker
                     [2] = '{C:bunc_fleurons}花饰{}或{C:bunc_halberds}戟{}花色的卡牌'
                 }
             },
-            bunc_consumable_edition_foil = {
-                ['name'] = '箔片',
-                ['text'] = {
-                    [1] = '创建一个{C:attention}筹码标签'
-                }
-            },
-            bunc_consumable_edition_holo = {
-                ['name'] = '全息',
-                ['text'] = {
-                    [1] = '创建一个{C:attention}倍数标签'
-                }
-            },
-            bunc_consumable_edition_polychrome = {
-                ['name'] = '多色',
-                ['text'] = {
-                    [1] = '创建一个{C:attention}巨倍标签'
-                }
-            },
-            bunc_consumable_edition_bunc_glitter = {
-                ['name'] = '闪光',
-                ['text'] = {
-                    [1] = '创建一个{C:attention}超筹码标签'
-                }
-            },
 
             -- 未发现
 
@@ -1686,7 +1662,32 @@ return { -- Translation by VisJoker
                     [1] = '不能被翻面、减益',
                     [2] = '或强制选择'
                 }
-            }
+            },
+
+            e_bunc_consumable_edition_foil = {
+                ['name'] = '箔片',
+                ['text'] = {
+                    [1] = '创建一个{C:attention}筹码标签'
+                }
+            },
+            e_bunc_consumable_edition_holo = {
+                ['name'] = '全息',
+                ['text'] = {
+                    [1] = '创建一个{C:attention}倍数标签'
+                }
+            },
+            e_bunc_consumable_edition_polychrome = {
+                ['name'] = '多色',
+                ['text'] = {
+                    [1] = '创建一个{C:attention}巨倍标签'
+                }
+            },
+            e_bunc_consumable_edition_bunc_glitter = {
+                ['name'] = '闪光',
+                ['text'] = {
+                    [1] = '创建一个{C:attention}超筹码标签'
+                }
+            },
         },
         Voucher = {
             v_bunc_lamination = {

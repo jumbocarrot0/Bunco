@@ -201,30 +201,6 @@ return { -- Translation by Shinosan
                     [2] = '{C:bunc_fleurons}Hoa{} hoặc {C:bunc_halberds}Rìu{}'
                 }
             },
-            bunc_consumable_edition_foil = {
-                ['name'] = 'Tráng Bạc',
-                ['text'] = {
-                    [1] = 'Tạo một {C:attention}Nhãn Chip'
-                }
-            },
-            bunc_consumable_edition_holo = {
-                ['name'] = 'Lấp Lánh',
-                ['text'] = {
-                    [1] = 'Tạo một {C:attention}Nhãn +Nhân'
-                }
-            },
-            bunc_consumable_edition_polychrome = {
-                ['name'] = 'Đa Sắc',
-                ['text'] = {
-                    [1] = 'Tạo một {C:attention}Nhãn XNhân'
-                }
-            },
-            bunc_consumable_edition_bunc_glitter = {
-                ['name'] = 'Long Lanh',
-                ['text'] = {
-                    [1] = 'Tạo một {C:attention}Nhãn XChip'
-                }
-            },
 
             -- Undiscovered
 
@@ -1741,7 +1717,32 @@ return { -- Translation by Shinosan
                     [1] = 'không thể lật, suy yếu',
                     [2] = 'hoặc bị buộc phải chọn'
                 }
-            }
+            },
+
+            e_bunc_consumable_edition_foil = {
+                ['name'] = 'Tráng Bạc',
+                ['text'] = {
+                    [1] = 'Tạo một {C:attention}Nhãn Chip'
+                }
+            },
+            e_bunc_consumable_edition_holo = {
+                ['name'] = 'Lấp Lánh',
+                ['text'] = {
+                    [1] = 'Tạo một {C:attention}Nhãn +Nhân'
+                }
+            },
+            e_bunc_consumable_edition_polychrome = {
+                ['name'] = 'Đa Sắc',
+                ['text'] = {
+                    [1] = 'Tạo một {C:attention}Nhãn XNhân'
+                }
+            },
+            e_bunc_consumable_edition_bunc_glitter = {
+                ['name'] = 'Long Lanh',
+                ['text'] = {
+                    [1] = 'Tạo một {C:attention}Nhãn XChip'
+                }
+            },
         },
         Voucher = {
             v_bunc_lamination = {

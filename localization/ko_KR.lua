@@ -199,30 +199,6 @@ return {
                     [2] = '{C:bunc_halberds}할버드{} 수트의 카드'
                 }
             },
-            bunc_consumable_edition_foil = {
-                ['name'] = '포일',
-                ['text'] = {
-                    [1] = '{C:attention}칩{} 태그를 만듭니다'
-                }
-            },
-            bunc_consumable_edition_holo = {
-                ['name'] = '홀로그래픽',
-                ['text'] = {
-                    [1] = '{C:attention}배수{} 태그를 만듭니다'
-                }
-            },
-            bunc_consumable_edition_polychrome = {
-                ['name'] = '폴리크롬',
-                ['text'] = {
-                    [1] = '{C:attention}메가배수{} 태그를 만듭니다'
-                }
-            },
-            bunc_consumable_edition_bunc_glitter = {
-                ['name'] = '반짝반짝',
-                ['text'] = {
-                    [1] = '{C:attention}울트라칩{} 태그를 만듭니다'
-                }
-            },
 
             -- Undiscovered
 
@@ -1715,7 +1691,32 @@ return {
                     [1] = '뒤집히거나 디버프당하거나',
                     [2] = '강제로 선택될 수 없습니다'
                 }
-            }
+            },
+
+            e_bunc_consumable_edition_foil = {
+                ['name'] = '포일',
+                ['text'] = {
+                    [1] = '{C:attention}칩{} 태그를 만듭니다'
+                }
+            },
+            e_bunc_consumable_edition_holo = {
+                ['name'] = '홀로그래픽',
+                ['text'] = {
+                    [1] = '{C:attention}배수{} 태그를 만듭니다'
+                }
+            },
+            e_bunc_consumable_edition_polychrome = {
+                ['name'] = '폴리크롬',
+                ['text'] = {
+                    [1] = '{C:attention}메가배수{} 태그를 만듭니다'
+                }
+            },
+            e_bunc_consumable_edition_bunc_glitter = {
+                ['name'] = '반짝반짝',
+                ['text'] = {
+                    [1] = '{C:attention}울트라칩{} 태그를 만듭니다'
+                }
+            },
         },
         Voucher = {
             v_bunc_lamination = {

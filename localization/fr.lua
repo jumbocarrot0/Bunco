@@ -206,30 +206,6 @@ return {
                     [2] = 'les couleurs {C:bunc_fleurons}Fleuron{} ou {C:bunc_halberds}Hallebarde{}'
                 }
             },
-            bunc_consumable_edition_foil = {
-                ['name'] = 'Brillante',
-                ['text'] = {
-                    [1] = 'Crée un {C:attention}Badge jetons'
-                }
-            },
-            bunc_consumable_edition_holo = {
-                ['name'] = 'Holographique',
-                ['text'] = {
-                    [1] = 'Crée un {C:attention}Badge multi.'
-                }
-            },
-            bunc_consumable_edition_polychrome = {
-                ['name'] = 'Polychrome',
-                ['text'] = {
-                    [1] = 'Crée un {C:attention}Badge megamulti.'
-                }
-            },
-            bunc_consumable_edition_bunc_glitter = {
-                ['name'] = 'Pailletée',
-                ['text'] = {
-                    [1] = 'Crée un {C:attention}Badge ultrajetons'
-                }
-            },
 
             -- Undiscovered
 
@@ -1735,7 +1711,32 @@ return {
                     [1] = 'Ne peut pas être retourné, affaibli',
                     [2] = 'ou forcé à être sélectionné'
                 }
-            }
+            },
+            
+            bunc_consumable_edition_foil = {
+                ['name'] = 'Brillante',
+                ['text'] = {
+                    [1] = 'Crée un {C:attention}Badge jetons'
+                }
+            },
+            bunc_consumable_edition_holo = {
+                ['name'] = 'Holographique',
+                ['text'] = {
+                    [1] = 'Crée un {C:attention}Badge multi.'
+                }
+            },
+            bunc_consumable_edition_polychrome = {
+                ['name'] = 'Polychrome',
+                ['text'] = {
+                    [1] = 'Crée un {C:attention}Badge megamulti.'
+                }
+            },
+            bunc_consumable_edition_bunc_glitter = {
+                ['name'] = 'Pailletée',
+                ['text'] = {
+                    [1] = 'Crée un {C:attention}Badge ultrajetons'
+                }
+            },
         },
         Voucher = {
             v_bunc_lamination = {
