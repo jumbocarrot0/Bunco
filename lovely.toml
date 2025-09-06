@@ -2238,14 +2238,6 @@ if used_tarot.edition then
         add_tag(Tag('tag_bunc_xchips'))
         play_sound('generic1')
         discover_card(G.P_CENTERS['e_bunc_consumable_edition_bunc_glitter'])
-    elseif used_tarot.edition.aij_glimmer then
-        add_tag(Tag('tag_bunc_aij_balance'))
-        play_sound('generic1')
-        discover_card(G.P_CENTERS['e_bunc_consumable_edition_aij_glimmer'])
-    elseif used_tarot.edition.aij_stellar then
-        add_tag(Tag('tag_bunc_aij_levelled'))
-        play_sound('generic1')
-        discover_card(G.P_CENTERS['e_bunc_consumable_edition_aij_stellar'])
     end
 end
 
@@ -2309,7 +2301,7 @@ pattern = "local t = {key = 'e_'..v, set = 'Edition', config = {}}"
 position = 'before'
 match_indent = true
 payload = '''
-if _c.consumeable and (v == 'foil' or v == 'holo' or v == 'polychrome' or v == 'bunc_glitter' or v == "aij_glimmer" or v == "aij_stellar") then
+if _c.consumeable and (v == 'foil' or v == 'holo' or v == 'polychrome' or v == 'bunc_glitter') then
     v = "bunc_consumable_edition_" .. v
     ed_key = "bunc_consumable_edition_" .. ed_key
 end
