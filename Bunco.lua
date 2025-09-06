@@ -8855,11 +8855,6 @@ local consumable_editions ={
     {key="bunc_glitter", tag="tag_bunc_xchips"}
 }
 
-if next(SMODS.find_mod("allinjest")) then
-    table.insert(consumable_editions, {key="aij_glimmer", tag="tag_bunc_aij_balance", dependencies="allinjest"})
-    table.insert(consumable_editions, {key="aij_stellar", tag="tag_bunc_aij_levelled", dependencies="allinjest"})
-end
-
 for i, v in ipairs(consumable_editions) do
     SMODS.Edition {
         key = 'e_bunc_consumable_edition_' .. v.key,
