@@ -18,14 +18,14 @@ Partner_API.Partner {
     loc_vars = function(self, info_queue, card)
         local link_level = self:get_link_level()
         local benefits = 1
-        if link_level == 1 then benefits = 2 end
+        if link_level >= 1 then benefits = link_level + 1 end
         return { vars = { card.ability.extra.chips * benefits, card.ability.extra.chip_mod * benefits } }
     end,
     calculate = function(self, card, context)
         if context.joker_main and card.ability.extra.chips >= 1 then
             local link_level = self:get_link_level()
             local benefits = 1
-            if link_level == 1 then benefits = 2 end
+            if link_level >= 1 then benefits = link_level + 1 end
             return {
                 message = localize { type = "variable", key = "a_chips", vars = { card.ability.extra.chips * benefits } },
                 chip_mod = card.ability.extra.chips * benefits,
@@ -141,7 +141,7 @@ Partner_API.Partner {
 
         local link_level = self:get_link_level()
         local benefits = 1
-        if link_level == 1 then benefits = 2 end
+        if link_level >= 1 then benefits = link_level + 1 end
         return { vars = { card.ability.extra.cost, card.ability.extra.max_highlighted * benefits }, key = self.key ..
         (benefits > 1 and "_1" or "") }
     end,
@@ -150,7 +150,7 @@ Partner_API.Partner {
             if ((to_big(G.GAME.dollars) - to_big(G.GAME.bankrupt_at)) >= to_big(card.ability.extra.cost)) then
                 local link_level = self:get_link_level()
                 local benefits = 1
-                if link_level == 1 then benefits = 2 end
+                if link_level >= 1 then benefits = link_level + 1 end
                 if G.hand and #G.hand.highlighted > 0 and #G.hand.highlighted <= card.ability.extra.max_highlighted * benefits then
                     G.E_MANAGER:add_event(Event({
                         trigger = 'after',
