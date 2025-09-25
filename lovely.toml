@@ -3361,19 +3361,6 @@ payload = '''
     end
 '''
 
-# Stake loc_vars
-[[patches]]
-[patches.pattern]
-target = 'functions/UI_definitions.lua'
-pattern = "if _stake_center then localize{type = 'descriptions', key = _stake_center.key, set = _stake_center.set, nodes = ret_nodes} end"
-position = "at"
-match_indent = true
-payload = '''
-local target = {}
-if _stake_center and type(_stake_center.loc_vars) == "function" then
-    res = _stake_center:loc_vars() or {}
-'''
-
 # Dynamic Collection sorting
 
 # Put score-mod and negative sticker tags last in collection
