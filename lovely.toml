@@ -3372,6 +3372,7 @@ payload = '''
 local target = {}
 if _stake_center and type(_stake_center.loc_vars) == "function" then
     res = _stake_center:loc_vars() or {}
+'''
 
 # Dynamic Collection sorting
 
