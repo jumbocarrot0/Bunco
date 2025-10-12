@@ -3329,8 +3329,7 @@ bunc_define_joker({ -- Disproportionality
             [2] = "at file 'chip_mod.lua:",
             [3] = "'",
             [4] = "ERROR",
-            [5] = "Stack Traceback",
-            [6] = "NOT A REAL BUG"
+            [5] = "Stack Traceback"
         }
         --for i = 1, #r_chips do
         --    r_chips[i] = text[2]..r_chips[i]..text[3]
@@ -3341,7 +3340,7 @@ bunc_define_joker({ -- Disproportionality
                 {n = G.UIT.O, config = {object = DynaText({string = {
                     {string = text[1]}, {string = text[1]}, {string = text[1]}, {string = text[1]}, {string = text[1]}, {string = text[1]},
                     {string = text[4], colour = G.C.JOKER_GREY},
-                    {string = text[5]}, {string = text[6]},
+                    {string = text[5]},
                 }, colours = {G.C.L_BLACK}, random_element = true, pop_in_rate = 9999999, silent = true, pop_delay = 0.2, scale = 0.32, min_cycle_time = 0})}},
             }},
             {n = G.UIT.R, config = {align = "cm", padding = 0.02}, nodes = {
