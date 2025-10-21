@@ -8663,7 +8663,7 @@ SMODS.Sticker{ -- Scattering
 
     should_apply = function(self, card, center, area, bypass_roll)
         local default_check = SMODS.Sticker.should_apply(self, card, center, area, bypass_roll)
-        local other_sticker_check = not (card and card.ability) and (card.ability.eternal or card.ability.bunc_hindered or card.ability.bunc_reactive)
+        local other_sticker_check = not ((card and card.ability) and (card.ability.eternal or card.ability.bunc_hindered or card.ability.bunc_reactive))
         local shop_check = (area == G.shop_jokers) or (area == G.pack_cards)
         return default_check and other_sticker_check and shop_check
     end,
@@ -8691,7 +8691,7 @@ SMODS.Sticker{ -- Hindered
 
     should_apply = function(self, card, center, area, bypass_roll)
         local default_check = SMODS.Sticker.should_apply(self, card, center, area, bypass_roll)
-        local other_sticker_check = not (card and card.ability) and (card.ability.eternal or card.ability.bunc_scattering or card.ability.bunc_reactive)
+        local other_sticker_check = not ((card and card.ability) and (card.ability.eternal or card.ability.bunc_scattering or card.ability.bunc_reactive))
         local shop_check = (area == G.shop_jokers) or (area == G.pack_cards)
         return default_check and other_sticker_check and shop_check
     end,
@@ -8720,7 +8720,7 @@ SMODS.Sticker{ -- Reactive
 
     should_apply = function(self, card, center, area, bypass_roll)
         local default_check = SMODS.Sticker.should_apply(self, card, center, area, bypass_roll)
-        local other_sticker_check = not (card and card.ability) and (card.ability.bunc_hindered or card.ability.bunc_scattering)
+        local other_sticker_check = not ((card and card.ability) and (card.ability.bunc_hindered or card.ability.bunc_scattering))
         local shop_check = (area == G.shop_jokers) or (area == G.pack_cards)
         return default_check and other_sticker_check and shop_check
     end,
