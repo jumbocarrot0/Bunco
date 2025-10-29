@@ -201,9 +201,8 @@ return {
             p_bunc_blind = {
                 ['name'] = 'Paquete de ciegas',
                 ['text'] = {
-                    [1] = 'Elige una de hasta',
-                    [2] = '{C:attention}#1# ciegas jefe{} para',
-                    [3] = 'reemplazar en esta apuesta inicial'
+                    [1] = 'Elige {C:attention}1{} de hasta {C:attention}#1# Ciegas Jefe{}',
+                    [2] = 'para cambiar la actual',
                 }
             },
             p_bunc_virtual_normal = {
@@ -308,17 +307,17 @@ return {
             c_bunc_adjustment = {
                 ['name'] = 'El Ajuste',
                 ['text'] = {
-                    [1] = 'Mejora hasta {C:attention}#1#{}',
-                    [2] = 'cartas seleccionadas a',
-                    [3] = '{C:attention}#2#s'
+                    [1] = 'Mejora hasta {C:attention}#1#{} cartas',
+                    [2] = 'seleccionadas',
+                    [3] = 'a {C:attention}Cartas Galletas'
                 },
             },
             c_bunc_art = {
                 ['name'] = 'El Arte',
                 ['text'] = {
-                    [1] = 'Mejora {C:attention}#1#{}',
-                    [2] = 'cartas seleccionadas a',
-                    [3] = '{C:attention}#2#'
+                    [1] = 'Mejora {C:attention}#1#{} cartas',
+                    [2] = 'seleccionadas',
+                    [3] = 'a {C:attention}#2#'
                 },
             },
             c_bunc_universe = {
@@ -707,9 +706,8 @@ return {
                 ['text'] = {
                     [1] = 'Al derrotar la {C:attention}Ciega Jefe{},',
                     [2] = '{C:red}destruyes{} un comodín al azar y',
-                    [3] = 'retrocedes una apuesta, la proxima vez',
+                    [3] = 'retrocedes 1 apuesta, la próxima vez',
                     [4] = 'solo funciona en una apuesta mayor'
-                    -- TODO needs a line for whether it's active / ante it will be active
                 },
                 ['unlock'] = {
                     [1] = 'Retrocede a la',
@@ -719,8 +717,9 @@ return {
             j_bunc_sledgehammer = {
                 ['name'] = 'Martillo',
                 ['text'] = {
-                    [1] = 'Las {C:attention}Cartas de Vidrio{} otorgan {X:mult,C:white}X#1#{}',
-                    [2] = 'Multi adicional pero siempre se rompen'
+                    [1] = 'Las {C:attention}Cartas de Vidrio{}',
+                    [2] = 'otorgan {X:mult,C:white}X#1#{} Multi adicional',
+                    [3] = 'pero siempre se rompen'
                 },
                 ['unlock'] = {
                     [1] = 'Juega una mano de 5 cartas',
@@ -905,8 +904,8 @@ return {
             j_bunc_headshot = {
                 ['name'] = 'Disparo a la cabeza',
                 ['text'] = {
-                    [1] = '{X:mult,C:white}X#1#{} Multi si la mano jugada',
-                    [2] = 'Anota una sola {C:attention}carta de figura{}',
+                    [1] = '{X:mult,C:white}X#1#{} Multi si la mano anota',
+                    [2] = 'una sola {C:attention}carta de figura{}',
                 }
             },
             j_bunc_trigger_finger = {
@@ -945,8 +944,8 @@ return {
                     [1] = 'Al usar cartas del {C:tarot}Tarot{}, hay',
                     [2] = 'una prob. de {C:green}#1# en #2#{} de otorgar',
                     [3] = 'edición {C:dark_edition}Laminada{}, {C:dark_edition}Holográfica{}, o',
-                    [4] = '{C:dark_edition}Polícroma{} a una',
-                    [5] = 'carta seleccionada'
+                    [4] = '{C:dark_edition}Polícroma{} a una carta',
+                    [5] = 'seleccionada'
                 }
             },
             j_bunc_vandalism = {
@@ -966,9 +965,10 @@ return {
             j_bunc_protester = {
                 ['name'] = 'Protestante',
                 ['text'] = {
-                    [1] = 'Agrega {C:attention}#1#X{} el valor la categoría',
-                    [2] = 'más alta descartada esta ronda como {C:blue}fichas',
-                    [3] = '{C:inactive}(Actualmente {C:chips}+#2#{C:inactive} fichas)'
+                    [1] = 'Agrega {C:attention}#1#X{} el valor la',
+                    [2] = 'categoría más alta descartada',
+                    [3] = 'esta ronda como {C:blue}fichas',
+                    [4] = '{C:inactive}(Actualmente {C:chips}+#2#{C:inactive} Fichas)'
                 }
             },
             j_bunc_doodle = {
@@ -985,7 +985,7 @@ return {
                 }
             },
             j_bunc_disproportionality = {
-                ['name'] = 'Desproporcionalidad',
+                ['name'] = '{s:0.9}Desproporcionalidad{}',
                 ['text'] = {
                     [1] = ''
                 }
@@ -1032,7 +1032,7 @@ return {
                 ['text'] = {
                     [1] = '{C:attention}Regresa{} las cartas anotadas a la mano',
                     [2] = 'después de la primera jugada de la ronda',
-                    [3] = 'si no se usó ningun {C:red}descarte'
+                    [3] = 'si no se usó ningún {C:red}descarte'
                 }
             },
             j_bunc_wino = {
@@ -1678,7 +1678,36 @@ return {
                     [1] = 'No puede voltearse, debilitarse',
                     [2] = 'o ser forzado a seleccionarse'
                 }
-            }
+            },
+            -- Consumible Editions
+            e_bunc_consumable_edition_foil = {
+                name = 'Laminada',
+                ['text'] = {
+                    [1] = 'Crea una etiqueta de',
+                    [2] = '{C:attention}Fichas{} al usarse'
+                }
+            },
+            e_bunc_consumable_edition_holo = {
+                ['name'] = 'Holográfica',
+                ['text'] = {
+                    [1] = 'Crea una etiqueta',
+                    [2] = '{C:attention}Multi{} al usarse'
+                }
+            },
+            e_bunc_consumable_edition_polychrome = {
+                ['name'] = 'Policroma',
+                ['text'] = {
+                    [1] = 'Crea una etiqueta',
+                    [2] = '{C:attention}Megamulti{} al usarse'
+                }
+            },
+            e_bunc_consumable_edition_bunc_glitter = {
+                ['name'] = 'Brillantina',
+                ['text'] = {
+                    [1] = 'Crea una etiqueta de',
+                    [2] = '{C:attention}Ultrafichas{} al usarse'
+                }
+            },
         },
         Voucher = {
             v_bunc_lamination = {
