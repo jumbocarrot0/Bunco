@@ -1966,7 +1966,7 @@ end
 
 '''
 
-# G.FUNCS.discard_cards_from_highlighted (Magenta Dagger 1/5)
+# G.FUNCS.discard_cards_from_highlighted (Magenta Dagger 1/4)
 [[patches]]
 [patches.pattern]
 target = 'functions/state_events.lua'
@@ -1984,7 +1984,7 @@ end
 
 '''
 
-# G.FUNCS.play_cards_from_highlighted (Magenta Dagger 2/5)
+# G.FUNCS.play_cards_from_highlighted (Magenta Dagger 2/4)
 [[patches]]
 [patches.pattern]
 target = 'functions/state_events.lua'
@@ -2015,7 +2015,7 @@ end
 
 '''
 
-# G.FUNCS.play_cards_from_highlighted (Magenta Dagger 3/5)
+# G.FUNCS.play_cards_from_highlighted (Magenta Dagger 3/4)
 # Wildcard for talisman compat
 [[patches]]
 [patches.pattern]
@@ -2030,20 +2030,6 @@ if G.GAME.blind.antiscore then
 end
 
 '''
-
-# # G.FUNCS.play_cards_from_highlighted (Magenta Dagger 4/5)
-# # Will fail with talisman installed
-# [[patches]]
-# [patches.pattern]
-# target = 'functions/state_events.lua'
-# pattern = "G.FUNCS.evaluate_play = function(e)"
-# position = 'after'
-# match_indent = true
-# payload = '''
-
-# local antiscore = G.GAME.blind.antiscore
-
-# '''
 
 # function update_hand_text (Magenta Dagger 4/4)
 [[patches]]
