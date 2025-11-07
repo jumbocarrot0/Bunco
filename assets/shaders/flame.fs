@@ -37,15 +37,16 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
     MY_HIGHP_OR_MEDIUMP vec2 sv2 = vec2(0.,0.);
 
     for(int i=0; i < 5; i++) {
-		sv2 += sv + 0.05*sv2.yx*(mod(float(i), 2.)>1.?-1.:1.) + 0.3*(cos(length(sv)*0.411) + 0.3344*sin(length(sv)) - 0.23*cos(length(sv)));
-		sv  += 0.5*vec2(
-                    cos(cos(sv2.y) + speed*0.0812)*sin(3.22 + (sv2.x) - speed*0.1531),
-                    sin(-sv2.x*1.21222 + 0.113785*speed)*cos(sv2.y*0.91213 - 0.13582*speed));
-	}    
+      sv2 += sv + (0.05*sv2.yx*(mod(float(i), 2.)>1.?-1.:1.)) + (0.3*(cos(length(sv)*0.411) + 0.3344*sin(length(sv)) - 0.23*cos(length(sv))));
+      sv  += 0.5*vec2(
+        (cos(cos(sv2.y) + speed*0.0812)*sin(3.22 + (sv2.x) - speed*0.1531)),
+        (sin(-sv2.x*1.21222 + 0.113785*speed)*cos(sv2.y*0.91213 - 0.13582*speed))
+      );
+    }
 
     //Make the smoke amount range from 0 - 2
-    MY_HIGHP_OR_MEDIUMP float smoke_res = max(0.,((length((sv - flame_up_vec)/scale_fac*5.)+ 0.1*(length(uv_scaled_centered) - 0.5))*(2./(2.+ intensity*0.2)))) ;
-    MY_HIGHP_OR_MEDIUMP smoke_res = intensity < 0.1 ? 1.: smoke_res + max(0., 2. - 0.3*intensity)*max(0., 2.*(uv_scaled_centered.y - 0.5)*(uv_scaled_centered.y - 0.5));
+    MY_HIGHP_OR_MEDIUMP float smoke_res = (max(0.,((length((sv - flame_up_vec)/scale_fac*5.)+ 0.1*(length(uv_scaled_centered) - 0.5))*(2./(2.+ intensity*0.2)))));
+    smoke_res = intensity < 0.1 ? 1.: smoke_res + max(0., 2. - 0.3*intensity)*max(0., 2.*(uv_scaled_centered.y - 0.5)*(uv_scaled_centered.y - 0.5));
 
     if(abs(uv.x) > 0.4){
         smoke_res = smoke_res + 10.*(abs(uv.x) - 0.4);
