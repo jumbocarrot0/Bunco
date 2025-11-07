@@ -142,30 +142,6 @@ return { -- Random line added BC I wrote the wrong repo name
                     [2] = 'de {C:bunc_fleurons}Florón{} o {C:bunc_halberds}Alabarda{}'
                 }
             },
-            bunc_consumable_edition_foil = {
-                ['name'] = 'Laminada',
-                ['text'] = {
-                    [1] = 'Crea una {C:attention}etiqueta de fichas'
-                }
-            },
-            bunc_consumable_edition_holo = {
-                ['name'] = 'Holográfica',
-                ['text'] = {
-                    [1] = 'Crea una {C:attention}etiqueta multi'
-                }
-            },
-            bunc_consumable_edition_polychrome = {
-                ['name'] = 'Polícroma',
-                ['text'] = {
-                    [1] = 'Crea una {C:attention}etiqueta megamulti'
-                }
-            },
-            bunc_consumable_edition_bunc_glitter = {
-                ['name'] = 'Brillantina',
-                ['text'] = {
-                    [1] = 'Crea una {C:attention}etiqueta de ultrafichas'
-                }
-            },
             Enhanced = {
                 m_bunc_copper = {
                     ['name'] = 'Carta de Cobre',
