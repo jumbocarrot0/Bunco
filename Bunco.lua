@@ -6930,16 +6930,15 @@ SMODS.Blind{ -- The Cadaver
     end,
 
     in_pool = function(self)
-        local face_card = false
+        local face_cards = 0
         if G.playing_cards then
             for _, card in pairs(G.playing_cards) do
                 if card:is_face() then
-                    face_card = true
-                    break
+                    face_card = face_cards + 1
                 end
             end
         end
-        return (G.GAME.round_resets.ante >= self.boss.min) and face_card or false
+        return (G.GAME.round_resets.ante >= self.boss.min) and face_cards > 3 or false
     end,
 
     boss_colour = HEX('a132d5'),
