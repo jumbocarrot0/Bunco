@@ -4,12 +4,12 @@
 	#define MY_HIGHP_OR_MEDIUMP mediump
 #endif
 
-MY_HIGHP_OR_MEDIUMP extern number time;
-MY_HIGHP_OR_MEDIUMP extern number vort_speed;
-MY_HIGHP_OR_MEDIUMP extern vec4 colour_1;
-MY_HIGHP_OR_MEDIUMP extern vec4 colour_2;
-MY_HIGHP_OR_MEDIUMP extern number mid_flash;
-MY_HIGHP_OR_MEDIUMP extern number vort_offset;
+extern MY_HIGHP_OR_MEDIUMP number time;
+extern MY_HIGHP_OR_MEDIUMP number vort_speed;
+extern MY_HIGHP_OR_MEDIUMP vec4 colour_1;
+extern MY_HIGHP_OR_MEDIUMP vec4 colour_2;
+extern MY_HIGHP_OR_MEDIUMP number mid_flash;
+extern MY_HIGHP_OR_MEDIUMP number vort_offset;
 
 #define BLACK 0.6*vec4(79./255.,99./255., 103./255., 1./0.6)
 
