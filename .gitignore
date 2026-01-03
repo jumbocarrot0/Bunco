@@ -3,3 +3,5 @@ promos
 Source
 *.pdn
 *.zip
+python_output
+*.py

@@ -1476,8 +1476,9 @@ return {
             bl_bunc_blade = {
                 ['name'] = 'The Blade',
                 ['text'] = {
-                    [1] = 'First time score exceeds #1#',
-                    [2] = 'makes played hand score 0'
+                    [1] = 'The first hand that',
+                    [2] = 'scores over #1#',
+                    [3] = 'scores 0 instead'
                 }
             },
             bl_bunc_claw = {
