@@ -1,4 +1,4 @@
-BUNCOMOD = {vars = {}, funcs = {}, content = SMODS.current_mod}
+BUNCOMOD = {vars = {}, funcs = {bunc_alias_type = type}, content = SMODS.current_mod}
 local filesystem = NFS or love.filesystem
 
 local config = BUNCOMOD.content.config
@@ -981,7 +981,7 @@ end
 
 local bunc_original_ease_dollars = ease_dollars
 function ease_dollars(mod, instant)
-if G.GAME.Trident and (to_big(mod) <= to_big(0)) then -- Vermilion Trident 1/2
+    if G.GAME.Trident and (to_big(mod) <= to_big(0)) then -- Vermilion Trident 1/2
         G.GAME.ante_purchases = (G.GAME.ante_purchases or 0) + 1
     end
     
@@ -1008,6 +1008,9 @@ if G.GAME.Trident and (to_big(mod) <= to_big(0)) then -- Vermilion Trident 1/2
             mod = mod, 
             sign = (to_big(mod) < to_big(0) and -1 or to_big(mod) > to_big(0) and 1 or 0)
         })
+        if G.GAME.round_resets.blind_choices.Boss == "bl_bunc_stone" then
+            BUNCOMOD.funcs.bunc_refresh_boss_blind()
+        end
     else
         G.E_MANAGER:add_event(Event({
         trigger = 'immediate',
@@ -1017,10 +1020,14 @@ if G.GAME.Trident and (to_big(mod) <= to_big(0)) then -- Vermilion Trident 1/2
                 mod = mod, 
                 sign = (to_big(mod) < to_big(0) and -1 or to_big(mod) > to_big(0) and 1 or 0)
             })
+            if G.GAME.round_resets.blind_choices.Boss == "bl_bunc_stone" then
+                BUNCOMOD.funcs.bunc_refresh_boss_blind()
+            end
             return true
         end
         }))
     end
+
 end
 
 local bunc_original_game_update = Game.update
@@ -1050,6 +1057,14 @@ function Game:update(dt)
                 G.GAME.blind:debuff_card(G.jokers.cards[i])
             end
         end
+    end
+
+    -- (Vermilion Trident 2/2)
+    if G.GAME.round_resets.blind_choices and G.GAME.round_resets.blind_choices.Boss and G.GAME.round_resets.blind_choices.Boss == 'bl_bunc_final_trident' then 
+        G.GAME.Trident = true
+    else
+        G.GAME.Trident = false
+        G.GAME.ante_purchases = 0
     end
 
     bunc_original_game_update(self, dt)
@@ -6465,8 +6480,9 @@ SMODS.PokerHandPart{ -- Deal base
 
 SMODS.PokerHand{ -- Deal
     key = 'Deal',
-    above_hand = 'Flush Five',
+    above_hand = 'bunc_Spectrum Five',
     visible = false,
+    no_collection = true,
     chips = 0,
     mult = 0,
     l_chips = 0,
@@ -6481,23 +6497,17 @@ SMODS.PokerHand{ -- Deal
 
 SMODS.Atlas({key = 'bunco_blinds', path = 'Blinds/Blinds.png', px = 34, py = 34, frames = 21, atlas_table = 'ANIMATION_ATLAS'})
 SMODS.Atlas({key = 'bunco_blinds_finisher', path = 'Blinds/BlindsFinisher.png', px = 34, py = 34, frames = 21, atlas_table = 'ANIMATION_ATLAS'})
-local bunc_refresh_boss_blind = function ()
+BUNCOMOD.funcs.bunc_refresh_boss_blind = function ()
     if G.GAME.blind.boss or not G.blind_select_opts then return end
 
     local par = G.blind_select_opts.boss.parent
     if par and par.config.object then
-        -- G.blind_select_opts.boss:remove()
+        G.blind_select_opts.boss:remove()
         G.blind_select_opts.boss = UIBox{
             T = {par.T.x, 0, 0, 0},
-            definition = {
-                n = G.UIT.ROOT,
-                config = {
-                    align = "cm",
-                    colour = G.C.CLEAR
-                },
-                nodes = {UIBox_dyn_container({create_UIBox_blind_choice('Boss')}, false,
-                    get_blind_main_colour('Boss'), mix_colours(G.C.BLACK, get_blind_main_colour('Boss'), 0.8))}
-            },
+            definition = { n = G.UIT.ROOT, config = { align = "cm", colour = G.C.CLEAR }, nodes = {
+              UIBox_dyn_container({ create_UIBox_blind_choice('Boss') }, false, get_blind_main_colour('Boss'), mix_colours(G.C.BLACK, get_blind_main_colour('Boss'), 0.8))
+            } },
             config = {
                 align = "bmi",
                 offset = {
@@ -6777,6 +6787,10 @@ SMODS.Blind{ -- The Stone
     key = 'stone',
     boss = {min = 4},
 
+    bunc_blind_amount_display = function(self, blind, base_blind_amount, mult)
+        return base_blind_amount * (mult + math.floor(to_number(G.GAME.dollars) / 10))
+    end,
+
     set_blind = function(self, reset, silent)
         if not reset then
             G.GAME.blind.original_chips = G.GAME.blind.chips
@@ -6819,9 +6833,35 @@ SMODS.Blind{ -- The Stone
     atlas = 'bunco_blinds'
 }
 
+local bunc_add_tag_ref = add_tag
+function add_tag(_tag)
+    local ret = bunc_add_tag_ref(_tag)
+    if G.GAME.round_resets.blind_choices.Boss == "bl_bunc_sand" then
+        G.E_MANAGER:add_event(Event({
+        trigger = 'immediate',
+        func = function()
+            BUNCOMOD.funcs.bunc_refresh_boss_blind()
+            return true
+        end
+        }))
+    end
+    return ret
+end
+local bunc_tag_remove_ref = Tag.remove
+function Tag:remove()
+    local ret = bunc_tag_remove_ref(self)
+    if G.GAME.round_resets.blind_choices.Boss == "bl_bunc_sand" then
+        BUNCOMOD.funcs.bunc_refresh_boss_blind()
+    end
+    return ret
+end
 SMODS.Blind{ -- The Sand
     key = 'sand',
     boss = {min = 4},
+
+    bunc_blind_amount_display = function(self, blind, base_blind_amount, mult)
+        return base_blind_amount * (mult + #G.HUD_tags)
+    end,
 
     set_blind = function(self, reset, silent)
         if not reset then
@@ -7118,6 +7158,13 @@ SMODS.Blind{ -- Vermilion Trident
 
     dollars = 8,
 
+    bunc_blind_amount_display = function(self, blind, base_blind_amount, mult)
+        return base_blind_amount * (mult + G.GAME.ante_purchases)
+    end,
+
+    calculate = function(self, blind, context)
+    end,
+
     set_blind = function(self, reset, silent)
         if not reset then
             G.GAME.blind.original_chips = G.GAME.blind.chips
@@ -7197,6 +7244,10 @@ SMODS.Blind{ -- Magenta Dagger
 SMODS.Blind{ -- Turquoise Shield
     key = 'final_shield',
     boss = {showdown = true, min = 10, max = 10},
+
+    bunc_blind_amount_display = function(self, blind, base_blind_amount, mult)
+        return base_blind_amount * mult + (G.GAME.overscore or 0)
+    end,
 
     dollars = 8,
 
@@ -8270,38 +8321,8 @@ G.FUNCS.use_blind_card = function(e)
     e.config.button = nil
 
     if G.blind_select_opts.boss then
-        bunc_refresh_boss_blind()
+        BUNCOMOD.funcs.bunc_refresh_boss_blind()
     end
-
-    -- local par = G.blind_select_opts.boss.parent
-    -- if G.blind_select_opts.boss and par and par.config.object then
-    --     G.blind_select_opts.boss:remove()
-    --     G.blind_select_opts.boss = UIBox{
-    --         T = {par.T.x, 0, 0, 0},
-    --         definition = {
-    --             n = G.UIT.ROOT,
-    --             config = {
-    --                 align = "cm",
-    --                 colour = G.C.CLEAR
-    --             },
-    --             nodes = {UIBox_dyn_container({create_UIBox_blind_choice('Boss')}, false,
-    --                 get_blind_main_colour('Boss'), mix_colours(G.C.BLACK, get_blind_main_colour('Boss'), 0.8))}
-    --         },
-    --         config = {
-    --             align = "bmi",
-    --             offset = {
-    --                 x = 0,
-    --                 y = G.ROOM.T.y + 9
-    --             },
-    --             major = par,
-    --             xy_bond = 'Weak'
-    --         }
-    --     }
-    --     par.config.object = G.blind_select_opts.boss
-    --     par.config.object:recalculate()
-    --     G.blind_select_opts.boss.parent = par
-    --     G.blind_select_opts.boss.alignment.offset.y = 0
-    -- end
 
     G.PROFILES[G.SETTINGS.profile].blind_cards_used = (G.PROFILES[G.SETTINGS.profile].blind_cards_used or 0) + 1
     if G.PROFILES[G.SETTINGS.profile].blind_cards_used then

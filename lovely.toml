@@ -1948,23 +1948,28 @@ end
 ##############################
    # FINISHER BOSS BLINDS #
 ##############################
-# function get_new_boss() (Vermilion Trident 2/2)
+
+
+# create_UIBox_blind_choice
+# Allow for modification to displayed blind amount without changing mult
 [[patches]]
 [patches.pattern]
-target = 'game.lua'
-pattern = 'function Game:update(dt)'
+target = 'functions/UI_definitions.lua'
+pattern = "local blind_amt = *"
 position = 'after'
 match_indent = true
 payload = '''
 
-if G.GAME.round_resets.blind_choices and G.GAME.round_resets.blind_choices.Boss and G.GAME.round_resets.blind_choices.Boss == 'bl_bunc_final_trident' then
-    G.GAME.Trident = true
-else
-    G.GAME.Trident = false
-    G.GAME.ante_purchases = 0
+if BUNCOMOD.funcs.bunc_alias_type(blind_choice.config.bunc_blind_amount_display) == 'function' then
+    ret = blind_choice.config:bunc_blind_amount_display(blind_choice.config, get_blind_amount(G.GAME.round_resets.blind_ante), blind_choice.config.mult)
+    if BUNCOMOD.funcs.bunc_alias_type(ret) == "number" then
+        blind_amt = ret * G.GAME.starting_params.ante_scaling
+        blind_amt = blind_amt 
+    end
 end
 
 '''
+
 
 # G.FUNCS.discard_cards_from_highlighted (Magenta Dagger 1/4)
 [[patches]]
@@ -2393,16 +2398,16 @@ end
 [[patches]]
 [patches.pattern]
 target = 'card.lua'
-pattern = "SMODS.calculate_context({open_booster = true, card = self})"
+pattern = "SMODS.calculate_context({open_booster = true, card = self*"
 position = 'after'
 match_indent = true
 payload = '''
 
 for i = 1, #G.GAME.tags do
-    if (self.ability.name == 'Standard Pack' or
-    self.ability.name == 'Jumbo Standard Pack' or
-    self.ability.name == 'Mega Standard Pack') then
-        if G.GAME.tags[i]:apply_to_run({type = 'standard_pack_opened'}) then break end
+    if self.config.center.kind == 'Standard' then
+        if G.GAME.tags[i]:apply_to_run({type = 'standard_pack_opened'}) then 
+            break
+        end
     end
 end
 
@@ -2987,7 +2992,7 @@ match_indent = true
 payload = '''
 
     if (self.ability.bunc_scattering or self.ability.bunc_hindered) then
-        _eternal = false
+        _eternal = nil
     end
 
 '''
@@ -3179,7 +3184,7 @@ match_indent = true
 payload = ''',
 ability_text[1] and blind.boss and {n=G.UIT.R, config={align = "cm"}, nodes={
     {n=G.UIT.T, config={text = blind.boss.showdown and localize('bunc_final_blind') or (localize('bunc_min_ante')..' '..(blind.boss.min or '?')), scale = 0.3, colour = G.C.UI.TEXT_INACTIVE}}
-}},
+}}
 '''
 
 # Remove exotic suit customization while locked
@@ -3332,22 +3337,4 @@ payload = '''
             }}
         }}
     end
-'''
-
-# Stake loc_vars
-[[patches]]
-[patches.pattern]
-target = 'functions/UI_definitions.lua'
-pattern = "if _stake_center then localize{type = 'descriptions', key = _stake_center.key, set = _stake_center.set, nodes = ret_nodes} end"
-position = "at"
-match_indent = true
-payload = '''
-local target = {}
-if _stake_center and type(_stake_center.loc_vars) == "function" then
-    res = _stake_center:loc_vars() or {}
-    target.vars = res.vars or target.vars
-    target.key = res.key or target.key
-    target.set = res.set or target.set
-end
-if _stake_center then localize{type = 'descriptions', key = target.key or _stake_center.key, set = target.set or _stake_center.set, nodes = ret_nodes, vars = target.vars} end
 '''

@@ -1518,15 +1518,17 @@ return {
             bl_bunc_depths = {
                 ['name'] = 'The Depths',
                 ['text'] = {
-                    [1] = 'After Play, gain Eternal,',
-                    [2] = 'Perishable, or Scattering tag'
+                    [1] = 'After Play, gain an',
+                    [2] = 'Eternal, Perishable,',
+                    [3] = 'or Scattering tag'
                 }
             },
             bl_bunc_chasm = {
                 ['name'] = 'The Chasm',
                 ['text'] = {
-                    [1] = 'After Play, gain Hindered,',
-                    [2] = 'Reactive, or Rental tag'
+                    [1] = 'After Play, gain a',
+                    [2] = 'Hindered, Reactive,',
+                    [3] = 'or Rental tag'
                 }
             },
 
@@ -1535,36 +1537,41 @@ return {
             bl_bunc_final_crown = {
                 ['name'] = 'Chartreuse Crown',
                 ['text'] = {
-                    [1] = 'All Spade, Heart, Club, and Diamond',
-                    [2] = 'base suit cards are debuffed'
+                    [1] = 'All Spade, Heart,',
+                    [2] = 'Club, and Diamond',
+                    [3] = 'cards are debuffed'
                 }
             },
             bl_bunc_final_trident = {
                 ['name'] = 'Vermilion Trident',
                 ['text'] = {
                     [1] = '+1X Base score for',
-                    [2] = 'every purchase this Ante'
+                    [2] = 'every purchase',
+                    [3] = 'this Ante',
                 }
             },
             bl_bunc_final_tower = {
                 ['name'] = 'Indigo Tower',
                 ['text'] = {
-                    [1] = 'Cards not played previously',
-                    [2] = 'this Ante are debuffed'
+                    [1] = 'Cards not played',
+                    [2] = 'previously this',
+                    [3] = 'Ante are debuffed'
                 }
             },
             bl_bunc_final_dagger = {
                 ['name'] = 'Magenta Dagger',
                 ['text'] = {
-                    [1] = 'Discarding cards plays them',
-                    [2] = 'and subtracts scored value'
+                    [1] = 'Discarding cards',
+                    [2] = 'instead plays them and',
+                    [3] = 'subtracts scored value'
                 }
             },
             bl_bunc_final_shield = {
                 ['name'] = 'Turquoise Shield',
                 ['text'] = {
-                    [1] = 'Excess score this Ante adds',
-                    [2] = "to this blind's required score"
+                    [1] = 'Excess score this',
+                    [2] = 'Ante adds to this',
+                    [3] = "blind's required score"
                 }
             }
         },
