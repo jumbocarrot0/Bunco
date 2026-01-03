@@ -3206,7 +3206,7 @@ match_indent = true
 payload = ''',
 ability_text[1] and blind.boss and {n=G.UIT.R, config={align = "cm"}, nodes={
     {n=G.UIT.T, config={text = blind.boss.showdown and localize('bunc_final_blind') or blind.boss.all_in_jest and blind.boss.all_in_jest.pit and localize('bunc_aij_pit_blind') or (localize('bunc_min_ante')..' '..(blind.boss.min or '?')), scale = 0.3, colour = G.C.UI.TEXT_INACTIVE}}
-}},
+}}
 '''
 
 # Remove exotic suit customization while locked
