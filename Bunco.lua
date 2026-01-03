@@ -2983,7 +2983,7 @@ bunc_define_joker({ -- Trigger Finger
         end
     end,
     calculate = function(self, card, context)
-        if context.bunc_trigger_finger_highlight_card and (G.STATE == G.STATES.SELECTING_HAND or G.STATE == G.STATES.DRAW_TO_HAND) then
+        if context.bunc_trigger_finger_highlight_card and (G.STATE == G.STATES.SELECTING_HAND or G.STATE == G.STATES.DRAW_TO_HAND) and G.GAME.STOP_USE <= 0 then
             local cards = {}
             for i = 1, #G.hand.highlighted do
                 table.insert(cards, G.hand.highlighted[i])
@@ -2996,6 +2996,8 @@ bunc_define_joker({ -- Trigger Finger
                 end
                 if G.hand.highlighted then
                     G.FUNCS.play_cards_from_highlighted()
+                    G.STATE = G.STATES.HAND_PLAYED
+                    G.STATE_COMPLETE = true
                 end
                 if G.SETTINGS.SOUND.bunc_trigger_finger_volume == 0 then
                     return {
