@@ -1760,7 +1760,149 @@ return {
                     [1] = 'Next shop Joker',
                     [2] = 'will gain {C:attention}Rental{} sticker'
                 }
-            }
+            },
+
+            -- All in Jest gold tags
+
+            tag_bunc_aij_gold_breaking = {
+                ['name'] = 'Smite Tag',
+                ['text'] = {
+                    [1] = 'Disables the',
+                    [2] = '{C:attention}Boss Blind{}',
+                    [3] = 'and set its requirement',
+                    [4] = 'to {C:attention}0.5X base{}'
+                }
+            },
+            tag_bunc_aij_gold_arcade = {
+                ['name'] = 'Extraterrestrial Tag',
+                ['text'] = {
+                    [1] = 'Gives a free',
+                    [2] = '{C:bunco_virtual_dark}',
+                    [3] = 'with a copy of',
+                    [4] = '{C:spectral}the 8{}'
+                }
+            },
+            tag_bunc_aij_gold_triple = {
+                ['name'] = 'Kaleidoscopic Tag',
+                ['text'] = {
+                    [1] = 'Gives two {C:money}Gold{} copies of the',
+                    [2] = 'next selected {C:attention}Tag{}',
+                    [3] = '{s:0.8,C:attention}Triple Tag{s:0.8} excluded'
+                }
+            },
+            tag_bunc_aij_gold_glitter = {
+                ['name'] = ' Tag',
+                ['text'] = {
+                    [1] = 'Apply {C:dark_edition}Glitter{} to',
+                    [2] = 'the rightmost base',
+                    [3] = 'edition joker '
+                }
+            },
+            tag_bunc_aij_gold_fluorescent = {
+                ['name'] = ' Tag',
+                ['text'] = {
+                    [1] = 'Apply {C:dark_edition}Fluorescent{} to',
+                    [2] = '{C:attention}all{} enhanced cards in the deck',
+                    [3] = 'that have no edition'
+                }
+            },
+            tag_bunc_aij_gold_filigree = {
+                ['name'] = ' Tag',
+                ['text'] = {
+                    [1] = 'Next {C:attention}Standard Pack{} opened',
+                    [2] = 'has {C:attention}unlimited{} picks and',
+                    [3] = 'only {C:attention}enhanced{} {C:bunco_exotic}Exotic cards',
+                    [4] = 'with {C:dark_edition}editions{} and {C:attention}seals{}'
+                }
+            },
+
+            tag_bunc_aij_gold_chips = {
+                ['name'] = 'Chips Tag',
+                ['text'] = {
+                    [1] = '{C:chips}+#1#{} Chips next hand'
+                }
+            },
+            tag_bunc_aij_gold_mult = {
+                ['name'] = 'Mult Tag',
+                ['text'] = {
+                    [1] = '{C:mult}+#1#{} Mult next hand',
+                }
+            },
+            tag_bunc_aij_gold_xmult = {
+                ['name'] = 'Megamult Tag',
+                ['text'] = {
+                    [1] = '{X:mult,C:white}X#1#{} Mult next hand',
+                }
+            },
+            tag_bunc_aij_gold_xchips = {
+                ['name'] = 'Ultrachips Tag',
+                ['text'] = {
+                    [1] = '{X:chips,C:white}X#1#{} Chips next hand'
+                }
+            },
+
+            -- All in Jest edition tags
+
+            tag_bunc_aij_gold_balance = {
+                ['name'] = 'Balance Tag',
+                ['text'] = {
+                    [1] = '{C:aij_plasma}Balances{} {C:attention}#1#%{} of',
+                    [2] = '{C:chips}Chips{} and {C:mult}Mult{} next hand'
+                }
+            },
+            tag_bunc_aij_gold_levelled = {
+                ['name'] = 'Levelled Tag',
+                ['text'] = {
+                    [1] = '{C:chips}+#1#{} Chips and {C:mult}+#2#{} Mult',
+                    [2] = 'per level of next hand'
+                }
+            },
+
+            tag_bunc_aij_gold_eternal = {
+                ['name'] = 'Paradoxical Tag',
+                ['text'] = {
+                    [1] = 'Shop has a free',
+                    [2] = '{C:attention}Eternal{} joker',
+                    [3] = '{E:1}that shouldn\'t be eternal{}'
+                }
+            },
+            tag_bunc_aij_gold_perishable = {
+                ['name'] = 'Perishable Tag',
+                ['text'] = {
+                    [1] = 'Next shop Joker',
+                    [2] = 'will gain {C:attention}Perishable{} sticker'
+                }
+            },
+            tag_bunc_aij_gold_scattering = {
+                ['name'] = 'Scattering Tag',
+                ['text'] = {
+                    [1] = 'Next shop Joker',
+                    [2] = 'will gain {C:attention}Scattering{} sticker'
+                }
+            },
+            tag_bunc_aij_gold_hindered = {
+                ['name'] = 'Hindered Tag',
+                ['text'] = {
+                    [1] = 'Next shop Joker',
+                    [2] = 'will gain {C:attention}Hindered{} sticker'
+                }
+            },
+            tag_bunc_aij_gold_reactive = {
+                ['name'] = 'Reactive Tag',
+                ['text'] = {
+                    [1] = 'Apply the {C:attention}Reactive{}',
+                    [2] = 'sticker to a random Joker',
+                    [3] = 'and gain a {C:edition}Stereoscopic{} Tag'
+                }
+            },
+            tag_bunc_aij_gold_rental = {
+                ['name'] = 'Rental Tag',
+                ['text'] = {
+                    [1] = 'Shop has a {C:attention}Rental{}',
+                    [2] = '{C:money}Economic{} joker',
+                    [3] = 'with {C:attention}doubled{} values'
+                }
+            },
         },
         Edition = {
             e_bunc_glitter = {
