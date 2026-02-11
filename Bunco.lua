@@ -2244,7 +2244,7 @@ bunc_define_joker({ -- Fingerprints
     unlocked = true,
     calculate = function(self, card, context)
         if context.after and context.scoring_name ~= nil and context.scoring_hand and not context.blueprint then
-            if ((SMODS.calculate_round_score() + G.GAME.chips) - G.GAME.blind.chips) >= 0 then
+            if ((SMODS.calculate_round_score() + G.GAME.chips) - G.GAME.blind.chips) >= to_big(0) then
                 card.ability.extra.scoring_card_set = {}
                 for i = 1, #context.scoring_hand do
                     local other_card = context.scoring_hand[i]
