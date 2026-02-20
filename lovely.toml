@@ -1688,7 +1688,7 @@ match_indent = true
 payload = '''
 
 if G.GAME.played_ranks ~= nil then
-    local max_rank = nil
+    local max_rank = '2'
     local max_count = -1
 
     for _, rank in ipairs(SMODS.Rank.obj_buffer) do
