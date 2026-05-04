@@ -9,7 +9,7 @@
 	"main_file": "Bunco.lua",
 	"version": "5.4.8b~JumboFork",
 	"dependencies": [
-		"Steamodded (>=1.0.0~BETA-0827)",
+		"Steamodded (>=1.0.0~BETA-1501a)",
 		"Lovely (>=0.7.1)"
 	],
 	"conflicts": [

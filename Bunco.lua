@@ -1,5 +1,5 @@
 BUNCOMOD = {vars = {}, funcs = {bunc_alias_type = type}, content = SMODS.current_mod}
-local filesystem = NFS or love.filesystem
+local filesystem = SMODS.NFS or NFS or love.filesystem
 
 local config = BUNCOMOD.content.config
 
@@ -480,7 +480,55 @@ end
 
 -- Shaders
 
-SMODS.Shader({key = 'pinch', path = 'pinch.fs'})
+for index = 1, 5 do
+    SMODS.ScreenShader({
+        key = 'pinch' .. index, 
+        path = 'pinch.fs', 
+        should_apply = function(self)
+            if BUNCOMOD.content.config.high_quality_shaders then
+                return G.FORCEFIELD_CARDS and #G.FORCEFIELD_CARDS > 0
+            else
+                return false
+            end
+        end,
+        send_vars = function(self)
+            G.FORCEFIELD_CARDS = G.FORCEFIELD_CARDS or {}
+
+            local card = G.FORCEFIELD_CARDS[index]
+
+            if BUNCOMOD.content.config.high_quality_shaders
+                and card
+                and not card.removed
+                and card.states.visible 
+            then
+                local w, h = love.graphics.getWidth(), love.graphics.getHeight() -- Get the size
+
+                local card_position = {
+                (card.VT.x + (card.VT.w / 2) + G.ROOM.T.x) * G.TILESCALE * G.TILESIZE * G.CANV_SCALE,
+                (card.VT.y + (card.VT.h / 2) + G.ROOM.T.y + 0.1) * G.TILESCALE * G.TILESIZE * G.CANV_SCALE}
+
+                local dissolve_mult = 1 - (card.dissolve or 0)
+
+                return {
+                    position = card_position,
+                    screen_size = {w, h},
+                    radius = (card.config and card.config.forcefield and card.config.forcefield.radius or 160) * (1.2 + math.sin((index * 3.0) + G.TIMERS.REAL / 2.0) / 3.0) * dissolve_mult,
+                    strength = (card.config and card.config.forcefield and card.config.forcefield.strength or -0.5) * (0.8 - math.cos((index * 3.0) + G.TIMERS.REAL / 2.0) / 3.0) * dissolve_mult,
+                }
+
+            elseif (not card) or (card.removed) then
+                table.remove(G.FORCEFIELD_CARDS, index)
+            end
+
+            return {
+                position = {0, 0},
+                screen_size = {1, 1},
+                radius = 1,
+                strength = 0
+            }
+        end,
+    })
+end
 
 if config.high_quality_shaders then
     local background_shader = NFS.read(BUNCOMOD.content.path..'assets/shaders/background.fs')
