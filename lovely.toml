@@ -2984,7 +2984,7 @@ local crackers_in_hand = false
 
 for i = 1, #G.hand.cards do
     if G.hand.cards[i] and G.hand.cards[i].highlighted
-    and G.hand.cards[i].config.center == G.P_CENTERS.m_bunc_cracker
+    and SMODS.has_enhancement(G.hand.cards[i], "m_bunc_cracker")
     and not G.hand.cards[i].debuff then
         crackers_in_hand = true
         break
@@ -2993,7 +2993,7 @@ end
 
 for i = 1, #G.hand.cards do
     if G.hand.cards[i] and G.hand.cards[i].highlighted
-    and (((G.hand.cards[i].config.center == G.P_CENTERS.m_bunc_cracker) and not G.hand.cards[i].debuff) or (crackers_in_hand and #SMODS.find_card('j_bunc_pica', false) > 0)) then
+    and (((SMODS.has_enhancement(G.hand.cards[i], "m_bunc_cracker")) and not G.hand.cards[i].debuff) or (crackers_in_hand and #SMODS.find_card('j_bunc_pica', false) > 0)) then
         table.insert(G.hand.crackers_highlighted, G.hand.cards[i])
         G.hand:remove_from_highlighted(G.hand.cards[i], true)
     end
@@ -3050,7 +3050,7 @@ if G.hand.crackers_highlighted and #G.hand.crackers_highlighted >= 1 then
 
     if #G.play.cards ~= 0 then
         for i=1, #G.hand.highlighted do
-            if G.hand.highlighted[i] and G.hand.highlighted[i].config.center == G.P_CENTERS.m_bunc_cracker then
+            if G.hand.highlighted[i] and SMODS.has_enhancement(G.hand.highlighted[i], "m_bunc_cracker") then
                 if G.hand.highlighted[i]:is_face() then inc_career_stat('c_face_cards_played', 1) end
                 G.hand.highlighted[i].base.times_played = G.hand.highlighted[i].base.times_played + 1
                 G.hand.highlighted[i].ability.played_this_ante = true

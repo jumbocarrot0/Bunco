@@ -4307,7 +4307,7 @@ bunc_define_joker({ -- Kite Experiment
         local condition = false
         if G.playing_cards then
             for k, v in pairs(G.playing_cards) do
-                if v.config.center == G.P_CENTERS.m_bunc_copper then condition = true break end
+                if SMODS.has_enhancement(v, "m_bunc_copper") then condition = true break end
             end
         end
         return condition
@@ -4351,7 +4351,7 @@ bunc_define_joker({ -- Robot
         local condition = false
         if G.playing_cards then
             for k, v in pairs(G.playing_cards) do
-                if v.config.center == G.P_CENTERS.m_bunc_copper then condition = true break end
+                if SMODS.has_enhancement(v, "m_bunc_copper") then condition = true break end
             end
         end
         return condition
@@ -4408,7 +4408,7 @@ bunc_define_joker({ -- Pica
         local condition = false
         if G.playing_cards then
             for k, v in pairs(G.playing_cards) do
-                if v.config.center == G.P_CENTERS.m_bunc_cracker then condition = true break end
+                if SMODS.has_enhancement(v, "m_bunc_cracker") then condition = true break end
             end
         end
         return condition
@@ -8566,7 +8566,7 @@ function calculate_cracker_cards(context)
     if #SMODS.find_card('j_bunc_hardtack', false) <= 0 then
         local crackers_total = {}
         for _, cracker_card in ipairs(context.full_hand) do
-            if cracker_card.marked_cracker and cracker_card.config.center == G.P_CENTERS.m_bunc_cracker and not cracker_card.debuff then
+            if cracker_card.marked_cracker and SMODS.has_enhancement(cracker_card, "m_bunc_cracker") and not cracker_card.debuff then
                 if not cracker_card.destroyed then
                     table.insert(crackers_total, cracker_card)
 
